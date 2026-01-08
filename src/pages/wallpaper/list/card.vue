@@ -7,7 +7,7 @@
           :key="index"
           class="grid-item"
         >
-          <div class="image-wrapper" :style="{width:width+'px',height:height+'px'}">
+          <div class="image-wrapper" style="align-content: center">
             <t-image-viewer
               :key="item.url"
               :images="imageList"
@@ -40,7 +40,7 @@
             </t-tooltip>
             <t-tooltip content="下载">
               <download-icon class="icon"/>
-              <t-button size="small" theme="primary" variant="text"  @click="handleDownload(item)">下载</t-button>
+              <t-button size="small" theme="primary" variant="text" @click="handleDownload(item)">下载</t-button>
             </t-tooltip>
           </div>
         </div>
@@ -103,16 +103,22 @@ export default Vue.extend({
       switch (this.searchForm.cateName) {
         // 动态壁纸
         case 'dynamic':
-          return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg';
+          this.width = 284;
+          this.height = 140;
+          return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,w_'+ this.width + ',h_' + this.height;
         // 手机
         case 'iphone':
           this.width = 160;
-          this.height = 360;
-          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.width;
+          this.height = 320;
+          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
         // 带鱼屏
         case 'widescreen':
           this.height = 160;
           this.width = 320;
+          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
+        case  'ai':
+          this.width = 160;
+          this.height = 248;
           return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
         // 默认
         default:

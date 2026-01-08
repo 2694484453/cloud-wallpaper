@@ -1,4 +1,4 @@
-export const download = async (url: string, name) => {
+export const download = async (url: string, name: string) => {
   // 1. 创建一个 a 标签
   const link = document.createElement('a');
   // 2. 设置下载地址
