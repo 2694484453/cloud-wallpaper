@@ -18,5 +18,9 @@ export default [
     path: '/sponsor',
     name: 'sponsor',
     component: () => import('@/pages/wallpaper/sponsor/index.vue'),
+  },
+  {
+    path: '/download',
+    name: 'download',
   }
 ]

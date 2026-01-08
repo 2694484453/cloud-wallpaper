@@ -18,62 +18,7 @@
           </span>
         </t-space>
       </t-space>
-      <div class="image-grid">
-        <t-space v-for="(item,index) in data" direction="vertical">
-          <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'">
-            <t-card
-              :bordered="true"
-              hover-shadow
-              class="list-card"
-              header-bordered
-            >
-              <template #title>
-                <div class="card-header">
-                  {{ item.name }}
-                </div>
-              </template>
-              <template #cover>
-                <t-image-viewer
-                  :key="item.url"
-                  :images="imageList"
-                  :index="index"
-                  :default-index="index">
-                  <template #trigger="{ open }">
-                    <div @click="open(index)">
-                      <t-image
-                        class="hover-pointer"
-                        :style="{ width: '284px', height: '160px' }"
-                        :src="item.url +
-                             (searchForm.cateName !=='dynamic' ? '?x-oss-process=image/resize,w_300,h_160,m_fill':'?x-oss-process=video/snapshot,t_0,f_jpg')"/>
-                    </div>
-                  </template>
-                </t-image-viewer>
-              </template>
-              <!-- 优化：将统计信息放在左侧 -->
-              <template #footer>
-                <div class="card-footer">
-                  <t-tooltip content="浏览次数">
-                    <browse-icon/>
-                    <span>{{ item.viewCount }}次</span>
-                  </t-tooltip>
-                  <t-tooltip content="下载次数" style="margin-left: 16px;">
-                    <download-icon/>
-                    <span>{{ item.downloadCount }}次</span>
-                  </t-tooltip>
-                  <t-tooltip content="查看" style="margin-left: 16px;">
-                    <info-circle-icon/>
-                    <a @click="handleDetail(item)">详情</a>
-                  </t-tooltip>
-                  <t-tooltip content="下载" style="margin-left: 16px;">
-                    <download-icon/>
-                    <a @click="handleDownload(item)">下载</a>
-                  </t-tooltip>
-                </div>
-              </template>
-            </t-card>
-          </t-skeleton>
-        </t-space>
-      </div>
+      <ImageCard :data="data" :imageList="imageList" :data-loading="dataLoading" :search-form="searchForm"/>
       <t-space :style="{ width: '100%', height: '160px'}" v-show="data.length === 0">
         <t-empty v-show="dataLoading==false && data.length ==0"/>
       </t-space>
@@ -98,17 +43,17 @@
 import Vue from 'vue';
 import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
 import Footer from "@/layouts/components/Footer.vue";
-import {BrowseIcon, DownloadIcon, InfoCircleIcon} from 'tdesign-icons-vue';
+
 import {download} from "@/utils/download";
+import ImageCard from "@/pages/wallpaper/list/card.vue";
 
 export default Vue.extend({
   name: 'ListBase',
   components: {
+    ImageCard,
     Footer,
     WallpaperHeader,
-    BrowseIcon,
-    DownloadIcon,
-    InfoCircleIcon
+
   },
   data: function () {
     return {
@@ -156,6 +101,7 @@ export default Vue.extend({
     this.searchForm.size = savedSize ? Number.parseInt(savedSize) : 24;
     this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName') ?? this.searchForm.cateName;
     this.getList();
+    this.toggle();
   },
   watch: {
     "searchForm.current"(newVal, oldVal) {
@@ -256,19 +202,14 @@ export default Vue.extend({
     onCurrentChange(current: number) {
       this.searchForm.current = current;
     },
-    handleDetail(item: any) {
-      localStorage.setItem('wallpaper.detail', JSON.stringify(item));
-      const url = "/info?id=" + item.id + (this.searchForm.cateName === 'dynamic' ? "&cateName=dynamic" : "");
-      // 作为统计使用
-      this.$router.push(url);
+    toggle() {
+      this.$notify.info({
+        title: '提醒',
+        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～',
+        duration: 5000,
+        closeBtn: true,
+      });
     },
-    handleDownload(item: any) {
-      // 执行下载
-      download(item.url, item.name);
-      const url = "/download?id=" + item.id + (this.searchForm.cateName === 'dynamic' ? "&cateName=dynamic" : "");
-      // 作为统计使用
-      this.$router.push(url);
-    }
   },
 });
 </script>
@@ -311,54 +252,6 @@ export default Vue.extend({
   padding: 10px 0;
 }
 
-/* 1. 优化卡片样式 */
-.list-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-// 卡片顶部的标题栏
-.card-header {
-  width: 100%;
-  color: #1d1c1c;
-  font-size: 12px;
-  text-align: left;
-  // 关键CSS：实现文字过长自动省略
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.t-card__cover {
-  border-radius: 12px !important;
-  overflow: hidden;
-}
-
-.t-card__cover img {
-  border-radius: 12px !important;
-  transition: transform 0.3s;
-}
-
-.t-card:hover img {
-  transform: scale(1.05);
-}
-
-/* 5. 自定义Footer布局，将图标放在左侧 */
-.card-footer {
-  display: flex;
-  align-items: center;
-  color: #666;
-  font-size: 12px;
-}
-
-.card-footer .t-icon {
-  margin-right: 4px;
-  font-size: 16px;
-  color: #9ea6a6; /* 图标主题色 */
-}
-
 /* 分页等其他样式保持不变 */
 .pagination-wrap {
   margin-top: 10px;
@@ -370,78 +263,4 @@ export default Vue.extend({
   cursor: pointer !important; /* 确保覆盖其他样式 */
 }
 
-.tdesign-demo-image-viewer__ui-image {
-  width: 100%;
-  height: 100%;
-  display: inline-flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  border-radius: var(--td-radius-small);
-  overflow: hidden;
-}
-
-.tdesign-demo-image-viewer__ui-image--hover {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: var(--td-text-color-anti);
-  line-height: 22px;
-  transition: 0.2s;
-}
-
-.tdesign-demo-image-viewer__ui-image:hover .tdesign-demo-image-viewer__ui-image--hover {
-  opacity: 1;
-  cursor: pointer;
-}
-
-.tdesign-demo-image-viewer__ui-image--img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  cursor: pointer;
-  position: absolute;
-}
-
-.tdesign-demo-image-viewer__ui-image--footer {
-  padding: 0 16px;
-  height: 56px;
-  width: 100%;
-  line-height: 56px;
-  font-size: 16px;
-  position: absolute;
-  bottom: 0;
-  color: var(--td-text-color-anti);
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
-  display: flex;
-  box-sizing: border-box;
-}
-
-.tdesign-demo-image-viewer__ui-image--title {
-  flex: 1;
-}
-
-.tdesign-demo-popup__reference {
-  margin-left: 16px;
-}
-
-.tdesign-demo-image-viewer__ui-image--icons .tdesign-demo-icon {
-  cursor: pointer;
-}
-
-.tdesign-demo-image-viewer__base {
-  width: 160px;
-  height: 160px;
-  margin: 10px;
-  border: 4px solid var(--td-bg-color-secondarycontainer);
-  border-radius: var(--td-radius-medium);
-}
 </style>

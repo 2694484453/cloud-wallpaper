@@ -1,5 +1,5 @@
 //
-export const zImageJson = (value) => {
+export const zImageJson = (value: any) => {
   return {
     model: "z-image-turbo",
     input: {

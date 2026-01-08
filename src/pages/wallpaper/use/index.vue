@@ -1,11 +1,107 @@
 <template>
   <div class="container">
-    <!-- 提示词区域 -->
-    <t-space align="center" direction="horizontal">
-      <t-button theme="primary" tag="a" href="/" variant="text">返回首页</t-button>
-      <t-button theme="warning" tag="a" variant="text">今日剩余次数:{{ remainTimes }}</t-button>
-    </t-space>
-    <ImageGenerator/>
+    <div class="section">
+      <h3>提示词</h3>
+      <div class="input-group">
+        <t-textarea
+          v-model="formData.prompt"
+          placeholder="输入提示词..."
+          :autosize="{minRows: 5, maxRows:10}"
+          :maxlength="200"
+        />
+        <t-button @click="importRandom" theme="primary" size="large" class="btn">从随机词库导入</t-button>
+      </div>
+    </div>
+    <!-- 反向提示词区域 -->
+    <div class="section">
+      <h3>反向提示词</h3>
+      <t-textarea
+        v-model="formData.negative_prompt"
+        placeholder="输入负面提示词..."
+        :autosize="{minRows: 5, maxRows:10}"
+        :maxlength="200"
+      />
+    </div>
+    <!-- 参数设置区域 -->
+    <div class="section">
+      <h3>参数设置</h3>
+      <div class="grid">
+        <div>
+          <label>宽度:</label>
+          <t-input v-model.number="formData.width" type="number" class="input"/>
+        </div>
+        <div>
+          <label>高度:</label>
+          <t-input v-model.number="formData.height" type="number" class="input"/>
+        </div>
+        <div>
+          <label>步数:</label>
+          <t-input v-model.number="formData.steps" type="number" class="input"/>
+        </div>
+        <div>
+          <label>CFG:</label>
+          <t-input v-model.number="formData.cfg" type="number" class="input"/>
+        </div>
+        <div>
+          <label>模型:</label>
+          <t-select v-model="formData.model_index" class="select">
+            <t-space v-for="(item,index) in models">
+              <t-option :key="index" :value="index">{{ item }}</t-option>
+            </t-space>
+          </t-select>
+        </div>
+      </div>
+
+      <!-- 复选框行 -->
+      <div class="checkbox-row">
+        <label>
+          <t-input v-model="formData.prompt" type="checkbox"/>
+          附加推荐质量提示词
+        </label>
+        <label>
+          <t-input v-model="formData.negative_prompt" type="checkbox"/>
+          使用负面词条
+        </label>
+        <label>
+          <t-input v-model="formData.seed" type="checkbox"/>
+          随机种子
+        </label>
+      </div>
+
+      <div>
+        <label>种子:</label>
+        <t-input
+          v-model.number="formData.seed"
+          type="number"
+          class="input"
+        />
+      </div>
+    </div>
+    <!-- 图片预览区域 -->
+    <div class="section">
+      <h3>图片预览</h3>
+      <div class="preview">
+        <t-loading v-show="dataLoading"/>
+        <t-empty v-show="!dataLoading && generatedImage != null && generatedImage !==''"/>
+      </div>
+      <t-button @click="viewInBrowser">
+        在浏览器中查看原文件
+      </t-button>
+    </div>
+    <!-- 日志区域 -->
+    <div class="section">
+      <h3>日志</h3>
+      <div class="log">
+        <p>{{ logMessage }}</p>
+        <ul>
+          <li v-for="(item, index) in logTips" :key="index">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- 生成按钮 -->
+    <t-button @click="generateImage" theme="primary" size="large" :disabled="dataLoading">生成图像</t-button>
   </div>
 </template>
 
