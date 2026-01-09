@@ -14,6 +14,9 @@
       <div>
         <!-- 信息卡片 -->
         <t-card :bordered="false" class="info-card">
+          <template #actions>
+            <t-button theme="primary" size="medium" @click="openCropper">裁剪图片</t-button>
+          </template>
           <template>
             <t-descriptions title="壁纸详情">
               <t-descriptions-item label="名称">{{ wallpaperData.name }}</t-descriptions-item>
@@ -39,6 +42,23 @@
           </template>
         </t-card>
       </div>
+      <!-- 图片裁剪对话框 -->
+      <t-dialog
+        :visible.sync="showCropperDialog"
+        :header="false"
+        :footer="false"
+        :close-btn="true"
+        :width="800"
+        :close-on-click-overlay="false"
+      >
+        <RemoteImageCropper
+          :image-src="wallpaperData.url"
+          :image-title="wallpaperData.name"
+          :width="284"
+          :height="160"
+          @crop-complete="handleCropComplete"
+        />
+      </t-dialog>
     </t-space>
   </div>
 </template>
@@ -48,10 +68,13 @@ import Vue from 'vue';
 import DesktopPreview from '@/components/preview/desktop.vue'
 import PhonePreview from "@/components/preview/phone.vue";
 import VideoPreview from "@/components/preview/video.vue";
+import RemoteImageCropper from "@/components/image/RemoteImageCropper.vue";
+import {download} from "@/utils/download";
 
 export default Vue.extend({
   name: 'WallpaperDetail',
   components: {
+    RemoteImageCropper,
     VideoPreview,
     PhonePreview,
     DesktopPreview
@@ -75,7 +98,8 @@ export default Vue.extend({
         createTime: '2023-10-25',
       },
       deviceType: '',
-      cateName: ""
+      cateName: "",
+      showCropperDialog: false,
     };
   },
   mounted() {
@@ -90,7 +114,7 @@ export default Vue.extend({
   },
   methods: {
     // 格式化浏览量/热度显示 (例如：1.2w+)
-    formatViews(number) {
+    formatViews(number: number) {
       if (number > 1000 && number < 1000) {
         return (number / 1000).toFixed(1) + "k+"
       }
@@ -127,6 +151,24 @@ export default Vue.extend({
       else {
         return 'desktop';
       }
+    },
+    openCropper() {
+      // 打开裁剪对话框
+      this.showCropperDialog = true;
+    },
+    handleCropComplete(croppedImage) {
+      // 裁剪完成后处理
+      console.log("裁剪完成:", croppedImage);
+
+      // 这里可以添加处理逻辑：
+      // 1. 保存裁剪后的图片
+      // 2. 更新当前图片预览
+      // 3. 上传到服务器
+    },
+    handleDownload(item: object) {
+      download(item.url, item.name);
+      const url = "/download?id=" + item.id + (this.searchForm.cateName === 'dynamic' ? "&cateName=dynamic" : "");
+      this.$router.push(url);
     }
   },
 });
