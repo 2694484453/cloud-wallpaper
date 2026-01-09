@@ -5,139 +5,28 @@
       <t-button theme="primary" tag="a" href="/" variant="text">返回首页</t-button>
       <t-button theme="warning" tag="a" variant="text">今日剩余次数:{{ remainTimes }}</t-button>
     </t-space>
+    <!--生成-->
     <ImageGenerator/>
   </div>
 </template>
 
 <script>
-import {zImageJson, acgJson} from "@/config/json";
+import ImageGenerator from "@/components/model/index.vue";
 
 export default {
-  name: 'ImageGenerator',
+  name: 'AiIndex',
+  components: {ImageGenerator},
   data() {
     return {
-      models: [
-        'Miaomiao Harem vPred Dogma 1.1',
-        'Another Model v1.0',
-      ],
-      model: 'Miaomiao Harem vPred Dogma 1.1',
-      qualityPrompt: true,
-      negativeTerms: true,
-      randomSeed: true,
-      // 图片预览
-      generatedImage: '',
-      // 日志
-      logMessage: '您对测试生成的内容负全部责任。',
-      logTips: [
-        'xxx',
-        'xxx'
-      ],
-      formData: {
-        prompt: "a beautiful anime girl, detailed face, high quality",
-        negative_prompt: "blurry, low quality, distorted",
-        width: 512,
-        height: 512,
-        steps: 20,
-        cfg: 7.0,
-        model_index: 0,
-        seed: -1
-      },
       dataLoading: false,
       logs: "",
       remainTimes: 20
     }
   },
-  watch: {
-    "formData.prompt"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.prompt', newVal);
-      }
-    },
-    "formData.width"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.width', newVal);
-      }
-    },
-    "formData.height"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.height', newVal);
-      }
-    },
-    "formData.cfg"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.cfg', newVal);
-      }
-    },
-    "formData.seed"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.seed', newVal);
-      }
-    }
-  },
   mounted() {
-    this.formData.prompt = localStorage.getItem('wallpaper.generate.prompt') ?? '';
-    const cfg = localStorage.getItem('wallpaper.generate.cfg');
-    this.formData.cfg = cfg ? Number.parseFloat(cfg) : 7.0;
-    const width = localStorage.getItem('wallpaper.generate.width');
-    this.formData.width = width ? Number.parseInt(width) : 512;
-    const height = localStorage.getItem('wallpaper.generate.height') ?? 512;
-    this.formData.height = height ? Number.parseInt(height) : 512;
-    const seed = localStorage.getItem('wallpaper.generate.seed');
-    this.formData.seed = seed ? Number.parseInt(seed) : -1;
-    this.formData.negative_prompt = localStorage.getItem('wallpaper.generate.negative_prompt') ?? '';
-    const steps = localStorage.getItem('wallpaper.generate.steps')
-    this.formData.steps = steps ? Number.parseInt(steps) : 20;
+    this.getRemainTimes();
   },
   methods: {
-    // 从随机词库导入提示词
-    importRandom() {
-      // 示例：模拟导入逻辑（可替换为实际接口调用）
-      this.formData.prompt += '1girl, solo, barefoot, feet, halo, purple eyes, toes, looking at viewer, white hair, sitting, side ponytail, foreshortening, long hair, gloves, hair ornament, foot focus, blush, bare legs, soles, white gloves, indoors, frills, bangs, couch';
-      this.$message?.info('已从随机词库导入提示词'); // 若使用 Element UI
-    },
-    // 生成图像逻辑（需对接后端接口）
-    generateImage() {
-      this.dataLoading = true;
-      // 示例：模拟生成图像（实际需上传参数到后端，获取图片 URL/Base64）
-      this.generatedImage = 'https://via.placeholder.com/300'; // 占位图
-      this.acgRequest();
-    },
-    aiYunZImageRequest() {
-      this.formData.extend = false;
-      this.$request.post('/wallpaper/ai/z-image', zImageJson(this.formData)).then((res) => {
-        this.generatedImage = res.data.output.choices[0].message.content[0].image;
-      }).catch((err) => {
-      }).finally(() => {
-        this.dataLoading = false;
-      })
-    },
-    acgRequest() {
-      this.$request.post('/wallpaper/ai/generate_image', acgJson(this.formData)).then((res) => {
-        this.logs = res.data;
-        if (res.data.code === 200) {
-          this.$message?.success(res.data.msg);
-          this.generatedImage = res.data.data.url;
-        } else {
-          this.$message?.error(res.data.msg);
-        }
-      }).catch((err) => {
-      }).finally(() => {
-        this.dataLoading = false;
-      })
-    },
-    // 在浏览器中查看原文件
-    viewInBrowser() {
-      if (this.generatedImage) {
-        window.open(this.generatedImage, '_blank');
-      } else {
-        this.$message?.warning('请先生成图像');
-      }
-    },
     getRemainTimes() {
       this.$request.get('/wallpaper/ai/remain', {}).then((res) => {
         if (res.data.code === 200) {
@@ -158,41 +47,11 @@ export default {
   background: #f9f9f9;
 }
 
-.section {
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 h3 {
   color: #333;
   margin-top: 0;
   font-size: 16px;
   font-weight: bold;
-}
-
-.input-group {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.btn {
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.btn:hover {
-  background: #e0e0e0;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
 }
 
 .grid div {
@@ -206,55 +65,10 @@ label {
   color: #666;
 }
 
-.input,
-.select {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  background: #fff;
-}
-
-.select {
-  height: 34px;
-}
-
-.checkbox-row {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-}
-
 .checkbox-row label {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
-  color: #666;
-}
-
-.preview {
-  height: 250px;
-  border: 1px dashed #ddd;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f5f5f5;
-  margin-bottom: 10px;
-}
-
-.preview-img {
-  max-width: 100%;
-  max-height: 280px;
-  object-fit: contain;
-}
-
-.log {
-  background: #f5f5f5;
-  padding: 12px;
-  border-radius: 4px;
   font-size: 14px;
   color: #666;
 }
@@ -268,4 +82,3 @@ label {
   margin: 4px 0;
 }
 </style>
-</>
