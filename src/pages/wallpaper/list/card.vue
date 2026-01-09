@@ -1,13 +1,15 @@
 <template>
   <div class="image-grid-container">
-    <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'">
-      <div class="grid-container">
-        <div
-          v-for="(item, index) in data"
-          :key="index"
-          class="grid-item"
-        >
-          <div class="image-wrapper" style="align-content: center">
+
+    <div class="grid-container">
+      <div
+        v-for="(item, index) in data"
+        :key="index"
+        class="grid-item"
+      >
+        <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'"
+                    >
+          <div class="image-wrapper" style="align-content: center" >
             <t-image-viewer
               :key="item.url"
               :images="imageList"
@@ -43,9 +45,9 @@
               <t-button size="small" theme="primary" variant="text" @click="handleDownload(item)">下载</t-button>
             </t-tooltip>
           </div>
-        </div>
+        </t-skeleton>
       </div>
-    </t-skeleton>
+    </div>
   </div>
 </template>
 
