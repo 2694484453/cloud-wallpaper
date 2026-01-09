@@ -105,7 +105,7 @@ export default Vue.extend({
         case 'dynamic':
           this.width = 284;
           this.height = 140;
-          return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,w_'+ this.width + ',h_' + this.height;
+          return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,w_' + this.width + ',h_' + this.height;
         // 手机
         case 'iphone':
           this.width = 160;
@@ -116,7 +116,13 @@ export default Vue.extend({
           this.height = 160;
           this.width = 320;
           return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
+        // ai
         case  'ai':
+          this.width = 160;
+          this.height = 248;
+          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
+        // fuli
+        case 'fuli':
           this.width = 160;
           this.height = 248;
           return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
