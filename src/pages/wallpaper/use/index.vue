@@ -4,10 +4,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import ImageGenerator from "@/components/model/index.vue";
 
-export default {
+export default Vue.extend({
   name: 'WallpaperUseIndex',
   components: {ImageGenerator},
   data() {
@@ -21,7 +22,7 @@ export default {
   methods: {
 
   }
-}
+});
 </script>
 
 <style scoped>

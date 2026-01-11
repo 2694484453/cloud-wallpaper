@@ -5,7 +5,7 @@
         <t-dropdown-menu>
           <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/')">
             <user-circle-icon/>
-            <t-link href="/user">个人中心</t-link>
+            <t-link href="/user/index">个人中心</t-link>
           </t-dropdown-item>
           <t-dropdown-item class="operations-dropdown-container-item" @click="handleLogout">
             <poweroff-icon/>
@@ -26,13 +26,14 @@
   </div>
 </template>
 <script lang="ts">
+import Vue from 'vue';
 import {
   UserCircleIcon,
   PoweroffIcon,
 } from 'tdesign-icons-vue';
 import {cleanUser} from "@/config/storage";
 
-export default {
+export default Vue.extend({
   name: 'HeaderUser',
   components: {
     UserCircleIcon,
@@ -55,7 +56,7 @@ export default {
       cleanUser();
     },
   }
-}
+})
 </script>
 <style scoped lang="less">
 @import '@/style/variables.less';

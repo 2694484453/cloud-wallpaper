@@ -49,7 +49,6 @@
               <t-input-number
                 v-model="formData.seed"
                 theme="column"
-                class="input"
                 style="width: 90px"
               />
             </t-form-item>
@@ -149,51 +148,14 @@ export default Vue.extend({
       remainTimes: 20
     }
   },
-  watch: {
-    "formData.prompt"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.prompt', newVal);
-      }
-    },
-    "formData.width"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.width', newVal);
-      }
-    },
-    "formData.height"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.height', newVal);
-      }
-    },
-    "formData.cfg"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.cfg', newVal);
-      }
-    },
-    "formData.seed"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.generate.seed', newVal);
-      }
+  mounted() {
+    const saveGenerate = localStorage.getItem('wallpaper.generate');
+    if (saveGenerate) {
+      //this.formData = JSON.parse(saveGenerate);
     }
   },
-  mounted() {
-    this.formData.prompt = localStorage.getItem('wallpaper.generate.prompt') ?? '';
-    const cfg = localStorage.getItem('wallpaper.generate.cfg');
-    this.formData.cfg = cfg ? Number.parseFloat(cfg) : 7.0;
-    const width = localStorage.getItem('wallpaper.generate.width');
-    this.formData.width = width ? Number.parseInt(width) : 512;
-    const height = localStorage.getItem('wallpaper.generate.height') ?? 512;
-    this.formData.height = height ? Number.parseInt(height) : 512;
-    const seed = localStorage.getItem('wallpaper.generate.seed');
-    this.formData.seed = seed ? Number.parseInt(seed) : -1;
-    this.formData.negative_prompt = localStorage.getItem('wallpaper.generate.negative_prompt') ?? '';
-    const steps = localStorage.getItem('wallpaper.generate.steps')
-    this.formData.steps = steps ? Number.parseInt(steps) : 20;
+  watch: {
+
   },
   methods: {
     // 从随机词库导入提示词
@@ -251,52 +213,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.container {
-  font-family: "Microsoft YaHei", sans-serif;
-  max-width: 1200px;
-  background: #f9f9f9;
-}
-
-.input-group {
-  display: flex;
-  align-items: flex-start;
-}
-
-.section {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 .input,
-.select {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  background: #fff;
-}
-
-.select {
-  height: 34px;
-}
-
-.checkbox-row {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-}
-
-.preview {
-  height: 250px;
-  border: 1px dashed #ddd;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f5f5f5;
-  margin-bottom: 10px;
-}
 
 h3 {
   color: #333;

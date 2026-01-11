@@ -78,9 +78,9 @@ switch (envName) {
   case "wallpaper":
     routerList.push(...baseRouters)
     routerList.push(...nasRouters)
+    routerList.push(...wallpaperRouters)
     routerList.push(...noticeRouters)
     routerList.push(...userInfoRouters)
-    routerList.push(...wallpaperRouters)
 }
 
 // 存放固定的路由
