@@ -3,7 +3,7 @@
     <t-head-menu :class="menuCls" :theme="theme" expandType="popup" v-model:value="cateName"
                  @change="handleChange">
       <template #logo>
-        <span v-if="showLogo" class="header-logo-container">已收录{{ total }}张壁纸</span>
+        <span v-if="showLogo" class="header-logo-container">{{appCnName}}</span>
         <div v-else class="header-operate-left">
           <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
             <view-list-icon class="collapsed-icon"/>
@@ -71,7 +71,7 @@ import {
   ChartBarIcon
 } from 'tdesign-icons-vue';
 import WallpaperIcon from '@/assets/icon/wallpaper.svg';
-import {prefix} from '@/config/global';
+import {prefix,appCnName} from '@/config/global';
 import LogoFull from '@/assets/assets-logo-full.svg';
 import Search from './Search.vue';
 import MenuContent from './MenuContent.vue';
@@ -94,7 +94,8 @@ export default Vue.extend({
     WallpaperIcon,
     ThumbUpIcon,
     ImageIcon,
-    ChartBarIcon
+    ChartBarIcon,
+    appCnName
   },
   props: {
     theme: String,
@@ -128,10 +129,6 @@ export default Vue.extend({
     searchData: {
       type: String,
       default: '',
-    },
-    total: {
-      type: Number,
-      default: 0,
     }
   },
   data() {
@@ -142,6 +139,7 @@ export default Vue.extend({
       userName: '',
       name: "",
       cateName: '',
+      appCnName: appCnName
     };
   },
   computed: {

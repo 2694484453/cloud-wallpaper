@@ -1,8 +1,7 @@
 <template>
   <div class="wallpaper-list-container">
     <!-- 页头 -->
-    <WallpaperHeader class="header-fixed" @cateName="changeCate" @name="changeSearchData" :cateList="cateList"
-                     :total="total"/>
+    <WallpaperHeader class="header-fixed" @cateName="changeCate" @name="changeSearchData" :cateList="cateList"/>
     <!-- 内容区域 -->
     <div class="list-content">
       <t-space direction="horizontal">
@@ -29,7 +28,7 @@
         v-model="searchForm.current"
         :total="pagination.total"
         :page-size="searchForm.size"
-        :page-size-options="['12', '24', '48']"
+        :page-size-options="['12', '24','36','48']"
         @current-change="onCurrentChange"
         @page-size-change="onsizeChange"
       />
@@ -44,7 +43,6 @@ import Vue from 'vue';
 import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
 import Footer from "@/layouts/components/Footer.vue";
 
-import {download} from "@/utils/download";
 import ImageCard from "@/pages/wallpaper/list/card.vue";
 
 export default Vue.extend({
@@ -101,7 +99,6 @@ export default Vue.extend({
     this.searchForm.size = savedSize ? Number.parseInt(savedSize) : 24;
     this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName') ?? this.searchForm.cateName;
     this.getList();
-    this.toggle();
   },
   watch: {
     "searchForm.current"(newVal, oldVal) {
@@ -153,6 +150,7 @@ export default Vue.extend({
         }
       }).catch(err => {
       }).finally(() => {
+        this.toggle();
       })
     },
     getList() {
@@ -170,7 +168,10 @@ export default Vue.extend({
       }).catch((e: Error) => {
         console.error(e);
       }).finally(() => {
-        this.dataLoading = false;
+        // 等待图片大部分显示完成
+        setTimeout(() => {
+          this.dataLoading = false;
+        },1500)
       });
     },
     getCate() {
@@ -205,7 +206,7 @@ export default Vue.extend({
     toggle() {
       this.$notify.info({
         title: '提醒',
-        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～',
+        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～，本站已收录'+this.total+'张静态壁纸',
         duration: 5000,
         closeBtn: true,
       });

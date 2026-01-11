@@ -1,6 +1,5 @@
 <template>
   <div class="image-grid-container">
-
     <div class="grid-container">
       <div
         v-for="(item, index) in data"
@@ -8,8 +7,8 @@
         class="grid-item"
       >
         <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'"
-                    >
-          <div class="image-wrapper" style="align-content: center" >
+        >
+          <div class="image-wrapper" style="align-content: center">
             <t-image-viewer
               :key="item.url"
               :images="imageList"
@@ -18,11 +17,14 @@
             >
               <template #trigger="{ open }">
                 <div @click="open(index)">
-                  <t-image
-                    class="grid-image"
-                    :src="dynamic(item)"
-                    :lazy="true"
-                  />
+                  <t-tooltip :content="'文件名称：'+item.name+'，分辨率：'+item.width+'x'+item.height">
+                    <t-image
+                      class="grid-image"
+                      :src="dynamic(item)"
+                      :lazy="true"
+                      overlayTrigger="hover"
+                    />
+                  </t-tooltip>
                 </div>
               </template>
             </t-image-viewer>
@@ -125,6 +127,11 @@ export default Vue.extend({
           return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
         // fuli
         case 'fuli':
+          this.width = 160;
+          this.height = 248;
+          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
+        // fuli
+        case 'other':
           this.width = 160;
           this.height = 248;
           return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
