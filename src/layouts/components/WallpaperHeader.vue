@@ -32,10 +32,10 @@
               AI壁纸(测试版)
             </t-button>
           </t-tooltip>
-          <t-tooltip placement="bottom" content="SD共享计划">
-            <t-button theme="primary" variant="text" tag="a" href="/sponsor">
+          <t-tooltip placement="bottom" content="SD合租计划">
+            <t-button theme="primary" variant="text" tag="a" href="/share">
               <thumb-up-icon/>
-              赞助
+              GPU合租与赞助
             </t-button>
           </t-tooltip>
           <t-tooltip placement="bottom" content="站点统计">

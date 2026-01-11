@@ -18,9 +18,9 @@ export default [
     component: () => import('@/pages/wallpaper/ai/index.vue'),
   },
   {
-    path: '/sponsor',
-    name: 'sponsor',
-    component: () => import('@/pages/wallpaper/sponsor/index.vue'),
+    path: '/share',
+    name: 'share',
+    component: () => import('@/pages/wallpaper/share/index.vue'),
   },
   {
     path: '/download',
