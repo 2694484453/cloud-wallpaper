@@ -61,7 +61,9 @@ import Notice from './Notice.vue';
 import Search from './Search.vue';
 import MenuContent from './MenuContent.vue';
 import HeaderUser from "@/layouts/components/HeaderUser.vue";
+
 export default Vue.extend({
+  name: 'CommonHeader',
   components: {
     HeaderUser,
     MenuContent,

@@ -3,7 +3,7 @@
     <t-head-menu :class="menuCls" :theme="theme" expandType="popup" v-model:value="cateName"
                  @change="handleChange">
       <template #logo>
-        <span v-if="showLogo" class="header-logo-container">{{appCnName}}</span>
+        <span v-if="showLogo" class="header-logo-container">{{ appCnName }}</span>
         <div v-else class="header-operate-left">
           <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
             <view-list-icon class="collapsed-icon"/>
@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import {
   ViewListIcon,
@@ -70,13 +70,13 @@ import {
   ImageIcon,
   ChartBarIcon
 } from 'tdesign-icons-vue';
-import WallpaperIcon from '@/assets/icon/wallpaper.svg';
-import {prefix,appCnName} from '@/config/global';
+
 import LogoFull from '@/assets/assets-logo-full.svg';
-import Search from './Search.vue';
-import MenuContent from './MenuContent.vue';
+import Search from '@/layouts/components/Search.vue';
+import MenuContent from '@/layouts/components/MenuContent.vue';
 import WallpaperNotice from "@/layouts/components/WallpaperNotice.vue";
 import HeaderUser from "@/layouts/components/HeaderUser.vue";
+import {prefix, appCnName} from '@/config/global';
 
 export default Vue.extend({
   name: 'WallpaperHeader',
@@ -91,14 +91,16 @@ export default Vue.extend({
     HelpCircleIcon,
     SettingIcon,
     ChevronDownIcon,
-    WallpaperIcon,
     ThumbUpIcon,
     ImageIcon,
     ChartBarIcon,
     appCnName
   },
   props: {
-    theme: String,
+    theme: {
+      type: String,
+      default: 'setting/mode',
+    },
     layout: {
       type: String,
       default: 'top',

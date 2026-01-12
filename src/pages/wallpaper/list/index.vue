@@ -1,7 +1,17 @@
 <template>
   <div class="wallpaper-list-container">
     <!-- 页头 -->
-    <WallpaperHeader class="header-fixed" @cateName="changeCate" @name="changeSearchData" :cateList="cateList"/>
+    <wallpaper-header
+      :theme="mode"
+      :layout="setting.layout"
+      :isFixed="setting.isHeaderFixed"
+      :show-logo="showHeaderLogo"
+      :isCompact="setting.isSidebarCompact"
+      :maxLevel="setting.splitMenu ? 1 : 3"
+      class="header-fixed"
+      @cateName="changeCate"
+      @name="changeSearchData"
+      :cateList="cateList"/>
     <!-- 内容区域 -->
     <div class="list-content">
       <t-space direction="horizontal">
@@ -41,18 +51,47 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
-import Footer from "@/layouts/components/Footer.vue";
+import { mapGetters } from 'vuex';
 
 import ImageCard from "@/pages/wallpaper/list/card.vue";
+import CommonHeader from "@/layouts/components/Header.vue";
+import {SettingType} from "@/interface";
+
+import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
+import Footer from "@/layouts/components/Footer.vue";
 
 export default Vue.extend({
   name: 'ListBase',
   components: {
+    CommonHeader,
     ImageCard,
     Footer,
     WallpaperHeader,
-
+  },
+  computed: {
+    ...mapGetters({
+      showHeader: 'setting/showHeader',
+      showHeaderLogo: true,
+      mode: 'setting/mode',
+      menuRouters: 'permission/routers',
+    }),
+    setting(): SettingType {
+      return this.$store.state.setting;
+    },
+    headerMenu() {
+      const { layout, splitMenu } = this.$store.state.setting;
+      const { menuRouters } = this;
+      if (layout === 'mix') {
+        if (splitMenu) {
+          return menuRouters.map((menu) => ({
+            ...menu,
+            children: [],
+          }));
+        }
+        return [];
+      }
+      return menuRouters;
+    },
   },
   data: function () {
     return {
@@ -216,6 +255,7 @@ export default Vue.extend({
         closeBtn: true,
       });
     },
+
   },
 });
 </script>
