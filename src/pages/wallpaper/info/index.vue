@@ -15,7 +15,7 @@
         <!-- 信息卡片 -->
         <t-card :bordered="false" class="info-card">
           <template #actions>
-            <t-button theme="primary" size="medium" @click="openCropper">裁剪图片</t-button>
+            <t-button theme="primary" size="medium" @click="initCropper">裁剪图片</t-button>
           </template>
           <template>
             <t-descriptions title="壁纸详情">
@@ -43,28 +43,83 @@
         </t-card>
       </div>
       <!-- 图片裁剪对话框 -->
-      <t-dialog
+      <t-drawer
         :visible.sync="showCropperDialog"
-        :header="false"
-        :footer="false"
+        header="图片裁剪"
+        :size="'100%'"
+        :footer="true"
         :close-btn="true"
         :width="800"
         :close-on-click-overlay="false"
       >
-        <RemoteImageCropper
-          :image-src="wallpaperData.url"
-          :image-title="wallpaperData.name"
-          :width="284"
-          :height="160"
-          @crop-complete="handleCropComplete"
-        />
-      </t-dialog>
+        <div >
+          <div class="image-preview">
+            <t-image
+              ref="preview"
+              style="width: 200px; height: 200px;"
+              :src="wallpaperData.url"
+              :alt="wallpaperData.name"
+              class="preview-image"
+              @load="handleImageLoaded"
+            />
+          </div>
+          <div>
+            <div ref="cropperContainer" class="cropper-area">
+<!--              <t-image ref="image" :src="wallpaperData.url" alt="Original" style="display: none;" />-->
+              <img ref="image" :src="wallpaperData.url" alt="Original" style="display: none;" />
+            </div>
+            <t-button
+              theme="default"
+              size="small"
+              @click="resetCrop"
+            >
+              重置
+            </t-button>
+            <t-button
+              theme="primary"
+              size="small"
+              @click="confirmCrop"
+            >
+              确定裁剪
+            </t-button>
+            <t-button
+              theme="default"
+              size="small"
+              @click="cancelCrop"
+            >
+              取消
+            </t-button>
+          </div>
+        </div>
+        <t-form>
+          <t-form-item label="设备">
+            <t-select>
+              <t-option-group label="移动设备">
+                <t-option value="">iphone</t-option>
+                <t-option value="">iphone-plus</t-option>
+              </t-option-group>
+              <t-option-group label="桌面级设备">
+                <t-option>iphone</t-option>
+                <t-option>iphone</t-option>
+              </t-option-group>
+            </t-select>
+          </t-form-item>
+          <t-form-item label="宽">
+            <t-input-number theme="column" />
+          </t-form-item>
+          <t-form-item label="高">
+            <t-input-number theme="column" />
+          </t-form-item>
+        </t-form>
+      </t-drawer>
     </t-space>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Cropper from 'cropperjs';
+import '@/style/cropper.css';
 import DesktopPreview from '@/components/preview/desktop.vue'
 import PhonePreview from "@/components/preview/phone.vue";
 import VideoPreview from "@/components/preview/video.vue";
@@ -94,12 +149,27 @@ export default Vue.extend({
         resolution: '3840 x 2160 (4K)',
         width: 0,
         height: 0,
+        size: "",
         createBy: '风光摄影师-Alex',
         createTime: '2023-10-25',
       },
       deviceType: '',
       cateName: "",
       showCropperDialog: false,
+      cropperSize: {
+        width: 0,
+        height: 0,
+      },
+      deviceData: [
+        {
+          name: "iphone",
+          width: 0,
+          height: 0,
+        }
+      ],
+      cropper: null,
+      croppedImage: '',
+      showCropper: false
     };
   },
   mounted() {
@@ -111,6 +181,7 @@ export default Vue.extend({
     }
     console.log(this.wallpaperData);
     this.deviceType = this.detectDeviceByResolution(this.wallpaperData.width, this.wallpaperData.height);
+
   },
   methods: {
     // 格式化浏览量/热度显示 (例如：1.2w+)
@@ -123,7 +194,7 @@ export default Vue.extend({
       }
       return number;
     },
-    detectDeviceByResolution(width, height) {
+    detectDeviceByResolution(width: number, height: number) {
       // 取长边和短边
       const longSide = Math.max(width, height);
       const shortSide = Math.min(width, height);
@@ -152,24 +223,48 @@ export default Vue.extend({
         return 'desktop';
       }
     },
-    openCropper() {
-      // 打开裁剪对话框
-      this.showCropperDialog = true;
-    },
-    handleCropComplete(croppedImage) {
-      // 裁剪完成后处理
-      console.log("裁剪完成:", croppedImage);
-
-      // 这里可以添加处理逻辑：
-      // 1. 保存裁剪后的图片
-      // 2. 更新当前图片预览
-      // 3. 上传到服务器
-    },
     handleDownload(item: object) {
       download(item.url, item.name);
       const url = "/download?id=" + item.id + (this.searchForm.cateName === 'dynamic' ? "&cateName=dynamic" : "");
       this.$router.push(url);
-    }
+    },
+    initCropper() {
+      this.showCropperDialog = true
+      this.$nextTick(() => {
+        // 销毁旧实例（如果存在）
+        if (this.cropper) this.cropper.destroy()
+        // 创建新实例
+        this.cropper = new Cropper(this.$refs.image, {
+          aspectRatio: 1,
+          viewMode: 1,
+          preview: this.$refs.preview
+        })
+      })
+    },
+    confirmCrop() {
+      if (!this.cropper) return;
+      // 获取裁剪后的图片
+      const canvas = this.cropper.getCroppedCanvas({
+        width: this.width,
+        height: this.height
+      });
+      // 转换为Base64
+      this.croppedImage = canvas.toDataURL('image/png');
+    },
+    cancelCrop() {
+      this.croppedImage = '';
+      this.showCropper = false;
+      if (this.cropper) {
+        this.cropper.destroy();
+        this.cropper = null;
+      }
+    },
+    resetCrop() {
+      this.croppedImage = '';
+      if (this.cropper) {
+        this.cropper.clear();
+      }
+    },
   },
 });
 </script>

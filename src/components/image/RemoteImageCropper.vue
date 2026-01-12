@@ -8,7 +8,7 @@
       </div>
       <div class="image-preview">
         <t-image
-          id="image"
+          id="preview"
           :src="imageSrc"
           :alt="imageTitle"
           class="preview-image"
@@ -21,36 +21,13 @@
     <div v-else class="cropper-container">
       <div class="cropper-header">
         <div class="cropper-title">裁剪图片 (284×160)</div>
-        <t-button
-          theme="default"
-          size="small"
-          @click="resetCrop"
-          :disabled="!croppedImage"
-        >
-          重置
-        </t-button>
+
       </div>
 
-      <div ref="cropperContainer" class="cropper-area">
-        <img ref="cropperImage" :src="imageSrc" alt="Original" />
-      </div>
+
 
       <div class="cropper-controls">
-        <t-button
-          theme="primary"
-          size="small"
-          @click="confirmCrop"
-          :disabled="!cropper"
-        >
-          确定裁剪
-        </t-button>
-        <t-button
-          theme="default"
-          size="small"
-          @click="cancelCrop"
-        >
-          取消
-        </t-button>
+
       </div>
 
       <!-- 裁剪预览 -->
@@ -69,10 +46,11 @@
 </template>
 
 <script>
+import Vue from "vue";
 import Cropper from 'cropperjs';
-// import 'cropperjs/dist/cropper.css';
+import '@/style/cropper.css';
 
-export default {
+export default Vue.extend({
   name: 'RemoteImageCropper',
   props: {
     // 传入的远程图片URL
@@ -130,7 +108,8 @@ export default {
       };
     },
     initCropper() {
-      this.cropper = new Cropper("#image", {
+      var image = document.getElementById('image');
+      this.cropper = new Cropper(image, {
         aspectRatio: this.width / this.height,
         viewMode: 1,
         preview: '.crop-preview',
@@ -182,7 +161,7 @@ export default {
       this.cropper = null;
     }
   }
-};
+});
 </script>
 
 <style scoped lang="less">
