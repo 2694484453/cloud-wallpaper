@@ -29,6 +29,7 @@
         :total="pagination.total"
         :page-size="searchForm.size"
         :page-size-options="['12', '24','36','48']"
+        show-jumper
         @current-change="onCurrentChange"
         @page-size-change="onsizeChange"
       />
@@ -75,7 +76,8 @@ export default Vue.extend({
       imageList: [],
       cateList: [],
       tagList: [],
-      total: 0
+      total: 0,
+      dynamicTotal: 0
     };
   },
   created() {
@@ -147,6 +149,7 @@ export default Vue.extend({
       this.$request.get("/wallpaper/overView", {}).then(res => {
         if (res.data.code === 200) {
           this.total = res.data.data.total;
+          this.dynamicTotal = res.data.data.dynamicTotal;
         }
       }).catch(err => {
       }).finally(() => {
@@ -171,7 +174,7 @@ export default Vue.extend({
         // 等待图片大部分显示完成
         setTimeout(() => {
           this.dataLoading = false;
-        },1500)
+        },1800)
       });
     },
     getCate() {
