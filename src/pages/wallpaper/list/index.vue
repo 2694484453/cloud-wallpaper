@@ -153,7 +153,9 @@ export default Vue.extend({
         }
       }).catch(err => {
       }).finally(() => {
-        this.toggle();
+        setTimeout(() => {
+          this.toggle();
+        },1000)
       })
     },
     getList() {
@@ -209,7 +211,7 @@ export default Vue.extend({
     toggle() {
       this.$notify.info({
         title: '提醒',
-        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～，本站已收录'+this.total+'张静态壁纸',
+        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～，本站已收录'+this.total+'张静态壁纸，'+this.dynamicTotal+'张动态壁纸',
         duration: 5000,
         closeBtn: true,
       });
