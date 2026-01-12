@@ -6,7 +6,7 @@
       <t-button theme="warning" tag="a" variant="text">今日剩余次数:{{ remainTimes }}</t-button>
     </t-space>
     <!--生成-->
-    <ImageGenerator/>
+    <image-generator/>
   </div>
 </template>
 

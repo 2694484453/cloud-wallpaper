@@ -18,9 +18,9 @@
             :maxlength="200"
           />
         </t-form-item>
-        <t-form-item>
-          <t-button @click="importRandom" theme="primary" size="medium">从随机词库导入</t-button>
-        </t-form-item>
+<!--        <t-form-item>-->
+<!--          <t-button @click="importRandom" theme="primary" size="medium">从随机词库导入</t-button>-->
+<!--        </t-form-item>-->
         <!-- 反向提示词区域 -->
         <t-form-item label="反向提示词" help="">
           <t-textarea
@@ -98,7 +98,6 @@
           <t-space>
             <t-button theme="primary" type="submit" :disabled="dataLoading">提交</t-button>
             <t-button theme="default" variant="base" type="reset">重置</t-button>
-            <t-button theme="default" variant="base" @click="handleClear">清空校验结果</t-button>
           </t-space>
         </t-form-item>
       </t-form>
@@ -168,7 +167,7 @@ export default Vue.extend({
     generateImage() {
       this.dataLoading = true;
       // 示例：模拟生成图像（实际需上传参数到后端，获取图片 URL/Base64）
-      this.generatedImage = 'https://via.placeholder.com/300'; // 占位图
+      this.generatedImage = ''; // 占位图
       this.acgRequest();
     },
     aiYunZImageRequest() {
