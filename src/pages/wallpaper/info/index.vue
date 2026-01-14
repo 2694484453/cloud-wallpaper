@@ -1,117 +1,132 @@
 <template>
-  <div style="padding: 15px">
+  <div style="padding: 10px">
     <t-space direction="horizontal">
       <!-- 壁纸内容主体 -->
       <t-space>
-        <DesktopPreview v-show="deviceType === 'desktop' && cateName !== 'dynamic'" :url="wallpaperData.url"
-                        :width="wallpaperData.width"
-                        :height="wallpaperData.height"/>
-        <PhonePreview v-show="deviceType === 'phone' && cateName !== 'dynamic'" :url="wallpaperData.url"
-                      :width="wallpaperData.width"
-                      :height="wallpaperData.height"/>
-        <VideoPreview v-show="cateName === 'dynamic'" :url="wallpaperData.url"/>
+        <DesktopPreview v-show="deviceType === 'desktop' && cateName !== 'dynamic' && cateName !=='dynamic_phone'" :url="wallpaperData.url"
+                        :width="width"
+                        :height="height"/>
+        <PhonePreview v-show="deviceType === 'phone'" :url="wallpaperData.url"
+                      :width="width"
+                      :height="height"/>
+        <VideoPreview v-show="cateName === 'dynamic' || cateName ==='dynamic_phone'" :url="wallpaperData.url" :width="width"
+                      :height="height"/>
       </t-space>
       <div>
         <!-- 信息卡片 -->
         <t-card :bordered="false" class="info-card">
           <template #actions>
-            <t-button theme="primary" size="medium" @click="initCropper">裁剪图片</t-button>
+            <t-button v-show="cateName === null || cateName === '' || cateName === undefined " theme="primary"
+                      size="medium" @click="initCropper">
+              裁剪图片
+            </t-button>
           </template>
           <template>
             <t-descriptions title="壁纸详情">
-              <t-descriptions-item label="名称">{{ wallpaperData.name }}</t-descriptions-item>
-              <t-descriptions-item label="类型">{{cateName!=='dynamic' ? '静态壁纸':'动态壁纸'}}</t-descriptions-item>
-              <t-descriptions-item label="标签">
-                <t-space v-for="tag in wallpaperData.tags.split(',')">
-                  <t-tag max-width="80" theme="primary" variant="light" style="margin-left: 5px">{{ tag }}</t-tag>
-                </t-space>
-              </t-descriptions-item>
-              <t-descriptions-item label="浏览次数">{{ formatViews(wallpaperData.viewCount) }}</t-descriptions-item>
-              <t-descriptions-item label="下载次数">{{ formatViews(wallpaperData.downloadCount) }}</t-descriptions-item>
-              <t-descriptions-item v-show="cateName!=='dynamic'" label="分辨率">{{
-                  wallpaperData.width
-                }}x{{ wallpaperData.height }}像素
-              </t-descriptions-item>
-              <t-descriptions-item label="文件大小">{{ wallpaperData.size }}</t-descriptions-item>
-              <!--            <t-descriptions-item label="url地址"><a :href="wallpaperData.url">{{ wallpaperData.url }}</a>-->
-              <!--            </t-descriptions-item>-->
-              <t-descriptions-item label="创建时间">{{ wallpaperData.createTime }}</t-descriptions-item>
-              <t-descriptions-item label="备注">{{ wallpaperData.description ? wallpaperData.description : '暂无' }}
-              </t-descriptions-item>
+                <t-descriptions-item label="文件名称">{{ wallpaperData.name }}</t-descriptions-item>
+                <t-descriptions-item label="类型">{{ cateName !== 'dynamic' ? '静态壁纸' : '动态壁纸' }}
+                </t-descriptions-item>
+                <t-descriptions-item label="标签">
+                <span
+                  v-if="wallpaperData.tags !== null && wallpaperData.tags !== '' && wallpaperData.tags !== undefined">
+                  <t-space v-for="tag in wallpaperData.tags.split(',')">
+                    <t-tag max-width="80" theme="primary" variant="light" style="margin-left: 5px">{{ tag }}</t-tag>
+                  </t-space>
+                </span>
+                  <span v-else>
+                  暂无
+                </span>
+                </t-descriptions-item>
+                <t-descriptions-item label="浏览次数">{{ formatViews(wallpaperData.viewCount) }}</t-descriptions-item>
+                <t-descriptions-item label="下载次数">{{
+                    formatViews(wallpaperData.downloadCount)
+                  }}
+                </t-descriptions-item>
+                <t-descriptions-item v-show="cateName === null || cateName === '' || cateName === undefined"
+                                     label="分辨率">{{
+                    wallpaperData.width
+                  }}x{{ wallpaperData.height }}像素
+                </t-descriptions-item>
+                <t-descriptions-item label="文件大小">{{ wallpaperData.size }}</t-descriptions-item>
+                <!--            <t-descriptions-item label="url地址"><a :href="wallpaperData.url">{{ wallpaperData.url }}</a>-->
+                <!--            </t-descriptions-item>-->
+                <t-descriptions-item label="创建时间">{{ wallpaperData.createTime }}</t-descriptions-item>
+                <t-descriptions-item label="备注">{{ wallpaperData.description ? wallpaperData.description : '暂无' }}
+                </t-descriptions-item>
             </t-descriptions>
           </template>
         </t-card>
       </div>
       <!-- 图片裁剪对话框 -->
-      <t-drawer
-        :visible.sync="showCropperDialog"
-        header="图片裁剪"
-        :size="'100%'"
-        :footer="true"
-        :close-btn="true"
-        :width="800"
-        :close-on-click-overlay="false"
-      >
-        <div >
-          <div class="image-preview">
-            <t-image
-              ref="preview"
-              style="width: 200px; height: 200px;"
-              :src="wallpaperData.url"
-              :alt="wallpaperData.name"
-              class="preview-image"
-              @load="handleImageLoaded"
-            />
-          </div>
-          <div>
-            <div ref="cropperContainer" class="cropper-area">
-<!--              <t-image ref="image" :src="wallpaperData.url" alt="Original" style="display: none;" />-->
-              <img ref="image" :src="wallpaperData.url" alt="Original" style="display: none;" />
-            </div>
-            <t-button
-              theme="default"
-              size="small"
-              @click="resetCrop"
-            >
-              重置
-            </t-button>
-            <t-button
-              theme="primary"
-              size="small"
-              @click="confirmCrop"
-            >
-              确定裁剪
-            </t-button>
-            <t-button
-              theme="default"
-              size="small"
-              @click="cancelCrop"
-            >
-              取消
-            </t-button>
-          </div>
-        </div>
-        <t-form>
-          <t-form-item label="设备">
-            <t-select>
-              <t-option-group label="移动设备">
-                <t-option value="">iphone</t-option>
-                <t-option value="">iphone-plus</t-option>
-              </t-option-group>
-              <t-option-group label="桌面级设备">
-                <t-option>iphone</t-option>
-                <t-option>iphone</t-option>
-              </t-option-group>
-            </t-select>
-          </t-form-item>
-          <t-form-item label="宽">
-            <t-input-number theme="column" />
-          </t-form-item>
-          <t-form-item label="高">
-            <t-input-number theme="column" />
-          </t-form-item>
-        </t-form>
-      </t-drawer>
+<!--      <t-drawer-->
+<!--        :visible.sync="showCropperDialog"-->
+<!--        header="图片裁剪"-->
+<!--        :size="'100%'"-->
+<!--        :footer="true"-->
+<!--        :close-btn="true"-->
+<!--        :width="800"-->
+<!--        :close-on-click-overlay="false"-->
+<!--      >-->
+<!--        <div>-->
+<!--          <div class="image-preview">-->
+<!--            <t-image-->
+<!--              ref="preview"-->
+<!--              style="width: 200px; height: 200px;"-->
+<!--              :src="wallpaperData.url"-->
+<!--              :alt="wallpaperData.name"-->
+<!--              class="preview-image"-->
+<!--              @load="handleImageLoaded"-->
+<!--            />-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <div ref="cropperContainer" class="cropper-area">-->
+<!--              &lt;!&ndash;              <t-image ref="image" :src="wallpaperData.url" alt="Original" style="display: none;" />&ndash;&gt;-->
+<!--              <img ref="image" :src="wallpaperData.url" alt="Original" style="display: none;"/>-->
+<!--            </div>-->
+<!--            <t-button-->
+<!--              theme="default"-->
+<!--              size="small"-->
+<!--              @click="resetCrop"-->
+<!--            >-->
+<!--              重置-->
+<!--            </t-button>-->
+<!--            <t-button-->
+<!--              theme="primary"-->
+<!--              size="small"-->
+<!--              @click="confirmCrop"-->
+<!--            >-->
+<!--              确定裁剪-->
+<!--            </t-button>-->
+<!--            <t-button-->
+<!--              theme="default"-->
+<!--              size="small"-->
+<!--              @click="cancelCrop"-->
+<!--            >-->
+<!--              取消-->
+<!--            </t-button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <t-form>-->
+<!--          <t-form-item label="设备">-->
+<!--            <t-select>-->
+<!--              <t-option-group label="移动设备">-->
+<!--                <t-option value="">iphone</t-option>-->
+<!--                <t-option value="">iphone-plus</t-option>-->
+<!--              </t-option-group>-->
+<!--              <t-option-group label="桌面级设备">-->
+<!--                <t-option>iphone</t-option>-->
+<!--                <t-option>iphone</t-option>-->
+<!--              </t-option-group>-->
+<!--            </t-select>-->
+<!--          </t-form-item>-->
+<!--          <t-form-item label="宽">-->
+<!--            <t-input-number theme="column"/>-->
+<!--          </t-form-item>-->
+<!--          <t-form-item label="高">-->
+<!--            <t-input-number theme="column"/>-->
+<!--          </t-form-item>-->
+<!--        </t-form>-->
+<!--      </t-drawer>-->
     </t-space>
   </div>
 </template>
@@ -153,6 +168,8 @@ export default Vue.extend({
         createBy: '风光摄影师-Alex',
         createTime: '2023-10-25',
       },
+      width: 0,
+      height: 0,
       deviceType: '',
       cateName: "",
       showCropperDialog: false,
@@ -174,14 +191,30 @@ export default Vue.extend({
   },
   mounted() {
     // 获取
-    this.cateName = localStorage.getItem('wallpaper.searchForm.cateName');
+    this.cateName = this.$route.query.cateName;
     this.wallpaperData = JSON.parse(localStorage.getItem('wallpaper.detail'));
-    if (this.cateName !== 'dynamic') {
-      this.wallpaperData.resolution = this.wallpaperData.width + "x" + this.wallpaperData.height;
-    }
     console.log(this.wallpaperData);
     this.deviceType = this.detectDeviceByResolution(this.wallpaperData.width, this.wallpaperData.height);
-
+    switch (this.cateName) {
+      case 'dynamic':
+        this.width = 768;
+        this.height = 432;
+        break;
+      case 'dynamic_phone':
+        this.width = 384;
+        this.height = 832;
+        break;
+      default:
+        // 设定一个基准宽度（最大宽度），防止过大
+        const maxWidth = 800;
+        // 计算高度，基于传入的比例
+        // 公式：高度 = (maxWidth / width比例) * height比例
+        const calculatedHeight = (maxWidth / this.wallpaperData.width) * this.wallpaperData.height;
+        this.width = maxWidth;
+        this.height = calculatedHeight;
+        this.wallpaperData.resolution = this.wallpaperData.width + "x" + this.wallpaperData.height;
+        break;
+    }
   },
   methods: {
     // 格式化浏览量/热度显示 (例如：1.2w+)

@@ -104,7 +104,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 
 import CommonHeader from "@/layouts/components/Header.vue";
 import {SettingType} from "@/interface";
@@ -134,8 +134,8 @@ export default Vue.extend({
       return this.$store.state.setting;
     },
     headerMenu() {
-      const { layout, splitMenu } = this.$store.state.setting;
-      const { menuRouters } = this;
+      const {layout, splitMenu} = this.$store.state.setting;
+      const {menuRouters} = this;
       if (layout === 'mix') {
         if (splitMenu) {
           return menuRouters.map((menu) => ({
@@ -250,7 +250,7 @@ export default Vue.extend({
       }).finally(() => {
         setTimeout(() => {
           this.toggle();
-        },1000)
+        }, 1000)
       })
     },
     getList() {
@@ -271,7 +271,7 @@ export default Vue.extend({
         // 等待图片大部分显示完成
         setTimeout(() => {
           this.dataLoading = false;
-        },2200)
+        }, 2200)
       });
     },
     getTags() {
@@ -297,19 +297,19 @@ export default Vue.extend({
     toggle() {
       this.$notify.info({
         title: '提醒',
-        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～，本站已收录'+this.total+'张静态壁纸，'+this.dynamicTotal+'张动态壁纸',
+        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～，本站已收录' + this.total + '张静态壁纸，' + this.dynamicTotal + '张动态壁纸',
         duration: 5000,
         closeBtn: true,
       });
     },
     handleDetail(item: any) {
       localStorage.setItem('wallpaper.detail', JSON.stringify(item));
-      const url = "/info?id=" + item.id + (this.searchForm.cateName === 'dynamic' ? "&cateName=dynamic" : "");
+      const url = "/info?id=" + item.id + "&cateName=" + this.searchForm.cateName;
       window.open(url, '_blank');
     },
     handleDownload(item: any) {
       download(item.url, item.name);
-      const url = "/download?id=" + item.id + (this.searchForm.cateName === 'dynamic' ? "&cateName=dynamic" : "");
+      const url = "/download?id=" + item.id + "&cateName=" + this.searchForm.cateName;
       window.open(url, '_blank');
     },
     dynamic(item: any) {
@@ -319,6 +319,10 @@ export default Vue.extend({
         case 'dynamic':
           this.width = 284;
           this.height = 140;
+          return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,w_' + this.width + ',h_' + this.height;
+        case 'dynamic_phone':
+          this.width = 160;
+          this.height = 284;
           return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,w_' + this.width + ',h_' + this.height;
         // 手机
         case 'iphone':
@@ -404,6 +408,7 @@ export default Vue.extend({
 .hover-pointer:hover {
   cursor: pointer !important; /* 确保覆盖其他样式 */
 }
+
 /* 1. 容器设置 - 每行6个 */
 .image-grid-container {
   max-width: 100%;

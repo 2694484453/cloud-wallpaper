@@ -33,17 +33,9 @@ export default {
   computed: {
     // 计算容器的样式
     wrapperStyle() {
-      // 设定一个基准宽度（最大宽度），防止过大
-      const maxWidth = 800;
-
-      // 计算高度，基于传入的比例
-      // 公式：高度 = (maxWidth / width比例) * height比例
-      const calculatedHeight = (maxWidth / this.width) * this.height;
-
-      // 计算宽高比，用于 padding-top/bottom 技巧，或者直接设置宽高
       return {
-        width: `${maxWidth}px`,
-        height: `${calculatedHeight}px`
+        width: `${this.width}px`,
+        height: `${this.height}px`
       };
     }
   }
@@ -89,7 +81,7 @@ export default {
 .macbook-base {
   /* 底座的宽度跟随屏幕宽度 */
   width: 100%;
-  height: 20px; /* 固定底座高度，或者根据比例计算 */
+  height: 0px; /* 固定底座高度，或者根据比例计算 */
   background: linear-gradient(to bottom, #eee, #ccc);
   border-radius: 0 0 10px 10px;
   border: 12px solid #333;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video width="100%" height="auto" controls muted loop>
+    <video :width="width+'px'" :height="height+'px'" controls muted loop>
       <source :src="url" type="video/mp4">
     </video>
   </div>
@@ -15,11 +15,22 @@ export default Vue.extend({
     url: {
       type: String,
       default: ''
+    },
+    width: {
+      type: Number,
+    },
+    height: {
+      type: Number,
     }
+  },
+  computed: {
+
+  },
+  mounted() {
   },
   data() {
     return {
-      wallpaperData: {}
+      wallpaperData: {},
     }
   }
 })
