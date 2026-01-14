@@ -11,9 +11,13 @@
           <search :layout="layout"/>
         </div>
       </template>
-      <t-space v-for="item in cateList">
-        <t-menu-item :value="item.dictValue">{{ item.dictLabel }}</t-menu-item>
-      </t-space>
+      <t-menu-item value="二次元">二次元pc</t-menu-item>
+      <t-menu-item value="三次元">三次元pc</t-menu-item>
+      <t-menu-item value="iphone">手机壁纸</t-menu-item>
+      <t-menu-item value="dynamic">pc动态壁纸</t-menu-item>
+      <t-menu-item value="dynamic_phone">手机动态壁纸</t-menu-item>
+      <t-menu-item value="widescreen">超宽屏壁纸</t-menu-item>
+      <t-menu-item value="other">其他</t-menu-item>
       <menu-content v-show="layout !== 'side'" class="header-menu" :navData="menu"/>
       <template #operations>
         <div class="operations-container">
@@ -94,7 +98,7 @@ export default Vue.extend({
     ThumbUpIcon,
     ImageIcon,
     ChartBarIcon,
-    appCnName
+    appCnName,
   },
   props: {
     theme: {
@@ -145,9 +149,6 @@ export default Vue.extend({
     };
   },
   computed: {
-    ThumbUpIcon() {
-      return ThumbUpIcon
-    },
     showMenu() {
       return !(this.layout === 'mix' && this.showLogo === 'side');
     },

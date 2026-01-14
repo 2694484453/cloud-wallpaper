@@ -3,7 +3,6 @@
     <!-- 页头 -->
     <wallpaper-header
       :theme="mode"
-      :layout="setting.layout"
       :isFixed="setting.isHeaderFixed"
       :show-logo="showHeaderLogo"
       :isCompact="setting.isSidebarCompact"
@@ -129,7 +128,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.getCate();
+    //this.getCate();
     this.getTags();
     this.getOverView();
     // 确保在 DOM 更新后执行
@@ -215,7 +214,7 @@ export default Vue.extend({
         // 等待图片大部分显示完成
         setTimeout(() => {
           this.dataLoading = false;
-        },1800)
+        },2200)
       });
     },
     getCate() {
