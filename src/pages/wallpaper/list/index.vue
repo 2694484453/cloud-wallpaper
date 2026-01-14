@@ -43,7 +43,6 @@
                       <template #cover>
                         <t-image
                           @click="open(index)"
-                          :style="{width:width+'px',height:height+'px'}"
                           :loading="dataLoading"
                           class="grid-image"
                           :src="dynamic(item)"
