@@ -195,7 +195,7 @@ export default Vue.extend({
     this.searchForm.current = savedCurrent ? Number.parseInt(savedCurrent) : 1;
     this.searchForm.size = savedSize ? Number.parseInt(savedSize) : 24;
     this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName') ?? this.searchForm.cateName;
-    this.getList();
+    //this.getList();
   },
   watch: {
     "searchForm.current"(newVal, oldVal) {

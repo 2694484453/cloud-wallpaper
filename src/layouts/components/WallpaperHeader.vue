@@ -16,6 +16,7 @@
       <t-menu-item value="iphone">手机壁纸</t-menu-item>
       <t-menu-item value="dynamic">pc动态壁纸</t-menu-item>
       <t-menu-item value="dynamic_phone">手机动态壁纸</t-menu-item>
+      <t-menu-item value="ai">ai绘画</t-menu-item>
       <t-menu-item value="widescreen">超宽屏壁纸</t-menu-item>
       <t-menu-item value="other">其他</t-menu-item>
       <menu-content v-show="layout !== 'side'" class="header-menu" :navData="menu"/>
