@@ -75,7 +75,6 @@ import {
   ChartBarIcon
 } from 'tdesign-icons-vue';
 
-import LogoFull from '@/assets/assets-logo-full.svg';
 import Search from '@/layouts/components/Search.vue';
 import MenuContent from '@/layouts/components/MenuContent.vue';
 import WallpaperNotice from "@/layouts/components/WallpaperNotice.vue";
@@ -88,7 +87,6 @@ export default Vue.extend({
     HeaderUser,
     WallpaperNotice,
     MenuContent,
-    LogoFull,
     Search,
     ViewListIcon,
     LogoGithubIcon,
