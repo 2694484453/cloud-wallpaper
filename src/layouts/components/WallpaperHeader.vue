@@ -11,8 +11,8 @@
           <search :layout="layout"/>
         </div>
       </template>
-      <t-menu-item value="二次元">二次元pc</t-menu-item>
-      <t-menu-item value="三次元">三次元pc</t-menu-item>
+      <t-menu-item value="2d">二次元pc</t-menu-item>
+      <t-menu-item value="3d">三次元pc</t-menu-item>
       <t-menu-item value="iphone">手机壁纸</t-menu-item>
       <t-menu-item value="dynamic">pc动态壁纸</t-menu-item>
       <t-menu-item value="dynamic_phone">手机动态壁纸</t-menu-item>
