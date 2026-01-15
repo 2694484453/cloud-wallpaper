@@ -31,13 +31,13 @@
           <t-tooltip placement="bottom" content="系统通知">
             <WallpaperNotice/>
           </t-tooltip>
-          <t-tooltip placement="bottom" content="AI壁纸生成">
+          <t-tooltip placement="bottom" content="AI文生图">
             <t-button theme="primary" variant="text" tag="a" href="/ai">
               <image-icon/>
-              AI壁纸生成
+              AI文生图
             </t-button>
           </t-tooltip>
-          <t-tooltip placement="bottom" content="SD合租计划">
+          <t-tooltip placement="bottom" content="合租计划">
             <t-button theme="primary" variant="text" tag="a" href="/share">
               <thumb-up-icon/>
               GPU合租与赞助
