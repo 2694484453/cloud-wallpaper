@@ -113,11 +113,13 @@
           <t-form-item label="表达式" name="kubeContext">
             <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
           </t-form-item>
-          <t-form-item label="标签" name="chartUrl">
-            <t-textarea v-model="formData.labels" placeholder="请输入备注内容" :maxlength="9999" with="200" :autosize="{minRows:3}"></t-textarea>
+          <t-form-item label="级别" name="chartUrl">
+            <t-select>
+              <t-option v-for="(item,index) in levels" :label="item" :value="item"/>
+            </t-select>
           </t-form-item>
-          <t-form-item label="annotations" name="description">
-            <t-textarea v-model="formData.annotations" placeholder="请输入备注内容" :maxlength="9999" with="200" :autosize="{minRows:3}"></t-textarea>
+          <t-form-item label="summary" name="summary">
+            <t-textarea v-model="formData.summary" placeholder="请输入备注内容" :maxlength="9999" with="200" :autosize="{minRows:3}"></t-textarea>
           </t-form-item>
           <t-form-item label="描述" name="description">
             <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="200" with="200" :autosize="{minRows:3}"></t-textarea>
@@ -132,8 +134,8 @@
           <t-descriptions-item label="表达式">{{formData.expr}}</t-descriptions-item>
           <t-descriptions-item label="持续时间">{{formData.forTime}}</t-descriptions-item>
           <t-descriptions-item label="状态">{{formData.status}}</t-descriptions-item>
-          <t-descriptions-item label="标签">{{formData.labels}}</t-descriptions-item>
-          <t-descriptions-item label="annotations">{{formData.annotations}}</t-descriptions-item>
+          <t-descriptions-item label="summary">{{formData.summary}}</t-descriptions-item>
+          <t-descriptions-item label="级别">{{formData.severityLevel}}</t-descriptions-item>
           <t-descriptions-item label="创建时间">{{formData.createTime}}</t-descriptions-item>
           <t-descriptions-item label="创建者">{{formData.createByUserName}}</t-descriptions-item>
           <t-descriptions-item label="更新时间">{{formData.updateTime}}</t-descriptions-item>
@@ -270,7 +272,8 @@ export default Vue.extend({
         expr: "",
         forTime: "",
         labels: "",
-        annotations: "",
+        summary: "",
+        severityLevel: "",
         status: ""
       },
       // 搜索框
@@ -296,7 +299,8 @@ export default Vue.extend({
         operation: "update",
         visible: false
       },
-      typeList: []
+      typeList: [],
+      levels: []
     };
   },
   computed: {
@@ -314,7 +318,6 @@ export default Vue.extend({
   mounted() {
   },
   created() {
-    this.getTypeList()
     this.page();
   },
   watch:{
@@ -436,6 +439,8 @@ export default Vue.extend({
       this.drawer.visible = true;
       this.drawer.operation = 'add';
       this.drawer.header = '新增';
+      this.getTypeList()
+      this.getLevels();
     },
     handleClickDelete(row: { rowIndex: any, type: any }) {
       this.deleteIdx = row.rowIndex;
@@ -482,7 +487,12 @@ export default Vue.extend({
       this.$request.get("/monitor/typeList").then(res => {
         this.typeList = res.data.data
       }).catch((err) => {
-
+      })
+    },
+    getLevels() {
+      this.$request.get("/prometheus/rule/levels").then(res => {
+        this.levels = res.data.data
+      }).catch((err) => {
       })
     },
     page() {

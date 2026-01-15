@@ -417,8 +417,8 @@ export default Vue.extend({
     handleSetupContract() {
       this.formData = {
         ...Object,
-        scrapeInterval: 10,
-        scrapeTimeout: 15,
+        scrapeInterval: 15,
+        scrapeTimeout: 10,
         schemeType: 'http',
         metricsPath: "/metrics",
         labels: JSON.stringify(JSON)
