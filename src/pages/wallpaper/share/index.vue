@@ -62,6 +62,10 @@
         <h3>您的支持就是我前进的动力！</h3>
       </template>
     </t-card>
+    <t-card title="其他">
+      <h2>阿里云优惠活动</h2>
+      <a href="https://www.aliyun.com/minisite/goods?userCode=bbtle8h8">https://www.aliyun.com/minisite/goods?userCode=bbtle8h8</a>
+    </t-card>
   </div>
 </template>
 
