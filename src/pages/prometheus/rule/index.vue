@@ -116,7 +116,7 @@
             <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
           </t-form-item>
           <t-form-item label="级别" name="chartUrl">
-            <t-select>
+            <t-select v-model="formData.severityLevel">
               <t-option v-for="(item,index) in levels" :label="item" :value="item"/>
             </t-select>
           </t-form-item>
