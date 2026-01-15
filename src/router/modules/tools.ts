@@ -18,23 +18,23 @@ export default [
         component: () => import('@/pages/git/index.vue'),
         meta: {title: '概览'},
       },
-      {
-        path: "https://hubproxy.gpg123.vip",
-        name: 'hubProxy',
-        meta: {title: '加速服务'},
-      },
+      // {
+      //   path: "https://hubproxy.gpg123.vip",
+      //   name: 'hubProxy',
+      //   meta: {title: '加速服务'},
+      // },
       {
         path: 'pages',
         name: 'pages',
         component: () => import('@/pages/tools/card/index.vue'),
-        meta: {title: '小工具列表'},
+        meta: {title: '工具列表'},
       },
-      {
-        path: 'access',
-        name: 'access',
-        component: () => import('@/pages/git/token/index.vue'),
-        meta: {title: '配置列表'},
-      },
+      // {
+      //   path: 'access',
+      //   name: 'access',
+      //   component: () => import('@/pages/git/token/index.vue'),
+      //   meta: {title: '配置列表'},
+      // },
     ],
   },
 ]

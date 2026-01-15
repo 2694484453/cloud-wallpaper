@@ -14,12 +14,12 @@ export default [
         component: () => import('@/pages/cluster/index.vue'),
         meta: {title: '概览'},
       },
-      {
-        path: 'dashboard',
-        name: 'DashboardBase',
-        component: () => import('@/pages/cluster/frame/index.vue'),
-        meta: {title: '监控面板'},
-      },
+      // {
+      //   path: 'dashboard',
+      //   name: 'DashboardBase',
+      //   component: () => import('@/pages/cluster/frame/index.vue'),
+      //   meta: {title: '监控面板'},
+      // },
       // {
       //   path: "add",
       //   name: 'AddBase',
@@ -30,7 +30,7 @@ export default [
         path: "mine",
         name: 'MineBase',
         component: () => import("@/pages/cluster/list/index.vue"),
-        meta: {title: '我的集群'},
+        meta: {title: '集群列表'},
       }
     ],
   },

@@ -41,18 +41,18 @@ export default [
       }
     ],
   },
-  {
-    path: '/grafana',
-    name: 'grafana',
-    component: Layout,
-    meta: {title: 'grafana图表', icon: MirrorIcon},
-    children: [
-      {
-        path: 'dashboard',
-        name: 'DashboardBase',
-        component: () => import('@/pages/grafana/dashboard.vue'),
-        meta: {title: '服务面板'},
-      }
-    ],
-  },
+  // {
+  //   path: '/grafana',
+  //   name: 'grafana',
+  //   component: Layout,
+  //   meta: {title: 'grafana图表', icon: MirrorIcon},
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       name: 'DashboardBase',
+  //       component: () => import('@/pages/grafana/dashboard.vue'),
+  //       meta: {title: '服务面板'},
+  //     }
+  //   ],
+  // },
 ]
