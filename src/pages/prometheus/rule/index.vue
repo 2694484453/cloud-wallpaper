@@ -407,6 +407,7 @@ export default Vue.extend({
         }).finally(() => {
           this.dataLoading = false;
         });
+        break;
       }
     },
     // 对话框信息自定义
@@ -447,34 +448,31 @@ export default Vue.extend({
       this.getLevels();
       this.getGroups();
     },
-    handleClickDelete(row: { rowIndex: any, type: any }) {
-      this.deleteIdx = row.rowIndex;
-      this.deleteType = row.type;
-      this.confirmVisible = true;
-      console.log("this", this.deleteType)
+    handleClickDelete(row: any) {
+      this.confirm.visible = true;
+      this.confirm.header = "删除" + row.alertName;
+      this.confirm.operation = 'delete';
+      this.confirm.body = "此操作会删除" + row.alertName+"，是否继续？";
     },
     onConfirmDelete() {
       // 真实业务请发起请求
-      this.data.splice(this.deleteIdx, 1);
-      this.pagination.total = this.data.length;
-      const selectedIdx = this.selectedRowKeys.indexOf(this.deleteIdx);
-      if (selectedIdx > -1) {
-        this.selectedRowKeys.splice(selectedIdx, 1);
-      }
-      this.confirmVisible = false;
+      this.confirm.visible = false;
       // 请求删除
-      this.$request.delete("/monitor/delete", {
+      this.$request.delete("/prometheus/rule/delete", {
         params: {
-          index: this.deleteIdx,
-          type: this.deleteType
+          id: this.formData.id,
         }
       }).then(res => {
-        this.$message.success(res.data.msg);
+        if (res.data.code === 200) {
+          this.$message.success(res.data.msg);
+          this.confirm.visible = false;
+          this.page();
+        } else {
+          this.$message.success(res.data.msg);
+        }
       }).catch(err => {
 
       })
-
-      this.resetIdx();
     },
     onCancel() {
       this.resetIdx();
