@@ -17,7 +17,7 @@
             <!--            <p v-if="!!selectedRowKeys.length" class="selected-count">已选{{ selectedRowKeys.length }}项</p>-->
           </div>
           <t-col :span="3">
-            <t-input v-model="searchForm.alertName" class="search-input" placeholder="请输入你需要搜索的内容" clearable>
+            <t-input v-model="searchForm.ruleName" class="search-input" placeholder="请输入你需要搜索的内容" clearable>
               <template #suffix-icon>
                 <search-icon size="20px"/>
               </template>
@@ -281,7 +281,7 @@ export default Vue.extend({
       },
       // 搜索框
       searchForm:{
-        alertName: "",
+        ruleName: "",
         groupName: "",
         isAsc: "desc",
         orderByColumn: "createTime",
@@ -415,7 +415,7 @@ export default Vue.extend({
       switch(this.operation) {
         case 'delete':
           this.confirm.visible = true;
-          this.confirm.header = "删除：" + this.formData.alertName;
+          this.confirm.header = "删除：" + this.formData.ruleName;
           this.confirm.body = "确认删除吗？一旦删除数据无法恢复";
           break;
       }
@@ -432,13 +432,13 @@ export default Vue.extend({
       this.formData = row;
       this.drawer.visible = true;
       this.drawer.operation = 'detail';
-      this.drawer.header = row.alertName;
+      this.drawer.header = row.ruleName;
     },
     handleClickEdit(row:any) {
       this.formData = row;
       this.drawer.visible = true;
       this.drawer.operation = 'edit';
-      this.drawer.header = row.alertName;
+      this.drawer.header = row.ruleName;
     },
     handleSetupContract() {
       this.formData = {}
@@ -451,9 +451,9 @@ export default Vue.extend({
     handleClickDelete(row: any) {
       this.formData = row;
       this.confirm.visible = true;
-      this.confirm.header = "删除" + row.alertName;
+      this.confirm.header = "删除" + row.ruleName;
       this.confirm.operation = 'delete';
-      this.confirm.body = "此操作会删除" + row.alertName+"，是否继续？";
+      this.confirm.body = "此操作会删除" + row.ruleName+"，是否继续？";
     },
     onConfirmDelete() {
       // 真实业务请发起请求
