@@ -271,7 +271,7 @@ export default Vue.extend({
       operation: '',
       // 当前数据
       formData: {
-        id: 0,
+        targetId: 0,
         jobName: "",
         exporterType: "",
         metricsPath: "/metrics",
@@ -458,7 +458,7 @@ export default Vue.extend({
           // 请求删除
           this.$request.delete("/prometheus/exporter/delete", {
             params: {
-              id: this.formData.id,
+              id: this.formData.targetId,
             }
           }).then(res => {
             if (res.data.code == 200) {
