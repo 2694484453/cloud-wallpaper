@@ -70,8 +70,9 @@
         <t-form-item label="图片预览">
           <t-space direction="vertical">
             <t-loading v-show="dataLoading"/>
+            <t-image v-show="!dataLoading && generatedImage !== null && generatedImage !== ''" fit="cover" src="https://menyu-miaomiaoharemdogma11.hf.space/gradio_api/file=/tmp/gradio/43667574f7cc4bcf46df245766e3e63a5086c7a6362d6b3c1ea463f0848f69fd/image.png"></t-image>
             <t-empty size="large" style="width: 200px;height: 200px"
-                     v-show="!dataLoading || generatedImage == null || generatedImage ===''"/>
+                     v-show="!dataLoading && generatedImage === null && generatedImage === ''"/>
             <t-button theme="primary" variant="text" size="small" @click="viewInBrowser">
               在浏览器中查看原文件
             </t-button>
@@ -80,16 +81,16 @@
 
         <t-form-item label="提醒">
           <t-space direction="vertical">
-            <p>{{ logMessage }}</p>
+            <ul>
+              <li>
+                您对测试生成的内容负全部责任。
+              </li>
+            </ul>
           </t-space>
         </t-form-item>
         <!-- 日志区域 -->
         <t-form-item label="日志">
-          <ul>
-            <li>
-              您对测试生成的内容负全部责任。
-            </li>
-          </ul>
+          <p>{{ logMessage }}</p>
         </t-form-item>
         <t-form-item style="margin-left: 15px">
           <t-space>
@@ -182,6 +183,8 @@ export default Vue.extend({
         if (res.data.code === 200) {
           this.$message?.success(res.data.msg);
           this.generatedImage = res.data.data.url;
+          this.logMessage = res.data.data.logs;
+          this.remainTimes = res.data.data.remain;
         } else {
           this.$message?.error(res.data.msg);
         }
