@@ -449,6 +449,7 @@ export default Vue.extend({
       this.getGroups();
     },
     handleClickDelete(row: any) {
+      this.formData = row;
       this.confirm.visible = true;
       this.confirm.header = "删除" + row.alertName;
       this.confirm.operation = 'delete';
