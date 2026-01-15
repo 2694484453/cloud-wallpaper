@@ -38,7 +38,7 @@
             </t-button>
           </t-tooltip>
           <t-tooltip placement="bottom" content="AI图生图">
-            <t-button theme="primary" variant="text" tag="a" href="/ai">
+            <t-button theme="primary" variant="text" tag="a" href="/">
               <image-icon/>
               AI图生壁纸(开发中)
             </t-button>
