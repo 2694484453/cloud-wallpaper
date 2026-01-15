@@ -70,9 +70,9 @@
         <t-form-item label="图片预览">
           <t-space direction="vertical">
             <t-loading v-show="dataLoading"/>
-            <t-image v-show="!dataLoading && generatedImage !== null && generatedImage !== ''" fit="cover" src="https://menyu-miaomiaoharemdogma11.hf.space/gradio_api/file=/tmp/gradio/43667574f7cc4bcf46df245766e3e63a5086c7a6362d6b3c1ea463f0848f69fd/image.png"></t-image>
+            <t-image :style="{width: 512+'px',height:512+'px'}" v-show="!dataLoading && generatedImage !== ''" fit="cover" :src="generatedImage"></t-image>
             <t-empty size="large" style="width: 200px;height: 200px"
-                     v-show="!dataLoading && generatedImage === null && generatedImage === ''"/>
+                     v-show="!dataLoading && generatedImage == ''"/>
             <t-button theme="primary" variant="text" size="small" @click="viewInBrowser">
               在浏览器中查看原文件
             </t-button>
