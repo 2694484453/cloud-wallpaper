@@ -61,12 +61,9 @@
             <t-checkbox v-model="formDataConfig.seed">随机种子</t-checkbox>
           </t-space>
         </t-form-item>
-
         <t-form-item label="模型">
           <t-select v-model="formData.model_index">
-            <t-space v-for="(item,index) in models">
-              <t-option :key="index" :value="index">{{ item }}</t-option>
-            </t-space>
+              <t-option v-for="(item,index) in models" :key="index" :value="index" :title="item" :label="item"/>
           </t-select>
         </t-form-item>
         <!-- 图片预览区域 -->
