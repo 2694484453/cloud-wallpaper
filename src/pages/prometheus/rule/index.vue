@@ -97,7 +97,8 @@
       @close="onCancelDrawer"
       :onConfirm="handleDrawerOk"
       @cancel="onCancelDrawer">
-      <t-space v-show="drawer.operation === 'add'|| drawer.operation ==='edit'"  direction="vertical" style="width: 100%">
+      <t-space v-show="drawer.operation === 'add'|| drawer.operation ==='edit'" direction="vertical"
+               style="width: 100%">
         <t-form
           ref="formValidatorStatus"
           :data="formData"
@@ -105,7 +106,8 @@
           @reset="onReset"
         >
           <t-form-item label="规则名称" name="ruleName">
-            <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200" clearable></t-input>
+            <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200"
+                     clearable></t-input>
           </t-form-item>
           <t-form-item label="分组名称" name="groupId">
             <t-select v-model="formData.groupId">
@@ -121,28 +123,30 @@
             </t-select>
           </t-form-item>
           <t-form-item label="summary" name="summary">
-            <t-textarea v-model="formData.summary" placeholder="请输入备注内容" :maxlength="9999" with="200" :autosize="{minRows:3}"></t-textarea>
+            <t-textarea v-model="formData.summary" placeholder="请输入备注内容" :maxlength="9999" with="200"
+                        :autosize="{minRows:3}"></t-textarea>
           </t-form-item>
           <t-form-item label="描述" name="description">
-            <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="200" with="200" :autosize="{minRows:3}"></t-textarea>
+            <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="200" with="200"
+                        :autosize="{minRows:3}"></t-textarea>
           </t-form-item>
         </t-form>
       </t-space>
-      <t-space v-show="drawer.operation === 'detail'" direction="vertical" style="width: 100%" >
+      <t-space v-show="drawer.operation === 'detail'" direction="vertical" style="width: 100%">
         <t-descriptions bordered :layout="'vertical'" :item-layout="'horizontal'" :column="3">
-          <t-descriptions-item label="规则名称" >{{formData.ruleName}}</t-descriptions-item>
-          <t-descriptions-item label="分组名称">{{formData.groupName}}</t-descriptions-item>
-          <t-descriptions-item label="类型">{{formData.type}}</t-descriptions-item>
-          <t-descriptions-item label="表达式">{{formData.expr}}</t-descriptions-item>
-          <t-descriptions-item label="持续时间">{{formData.forTime}}</t-descriptions-item>
-          <t-descriptions-item label="状态">{{formData.status}}</t-descriptions-item>
-          <t-descriptions-item label="summary">{{formData.summary}}</t-descriptions-item>
-          <t-descriptions-item label="级别">{{formData.severityLevel}}</t-descriptions-item>
-          <t-descriptions-item label="创建时间">{{formData.createTime}}</t-descriptions-item>
-          <t-descriptions-item label="创建者">{{formData.createByUserName}}</t-descriptions-item>
-          <t-descriptions-item label="更新时间">{{formData.updateTime}}</t-descriptions-item>
-          <t-descriptions-item label="更新者">{{formData.updateByUserName}}</t-descriptions-item>
-          <t-descriptions-item label="描述">{{formData.description}}</t-descriptions-item>
+          <t-descriptions-item label="规则名称">{{ formData.ruleName }}</t-descriptions-item>
+          <t-descriptions-item label="分组名称">{{ formData.groupName }}</t-descriptions-item>
+          <t-descriptions-item label="类型">{{ formData.type }}</t-descriptions-item>
+          <t-descriptions-item label="表达式">{{ formData.expr }}</t-descriptions-item>
+          <t-descriptions-item label="持续时间">{{ formData.forTime }}</t-descriptions-item>
+          <t-descriptions-item label="状态">{{ formData.status }}</t-descriptions-item>
+          <t-descriptions-item label="summary">{{ formData.summary }}</t-descriptions-item>
+          <t-descriptions-item label="级别">{{ formData.severityLevel }}</t-descriptions-item>
+          <t-descriptions-item label="创建时间">{{ formData.createTime }}</t-descriptions-item>
+          <t-descriptions-item label="创建者">{{ formData.createByUserName }}</t-descriptions-item>
+          <t-descriptions-item label="更新时间">{{ formData.updateTime }}</t-descriptions-item>
+          <t-descriptions-item label="更新者">{{ formData.updateByUserName }}</t-descriptions-item>
+          <t-descriptions-item label="描述">{{ formData.description }}</t-descriptions-item>
         </t-descriptions>
       </t-space>
     </t-drawer>
@@ -280,7 +284,7 @@ export default Vue.extend({
         status: ""
       },
       // 搜索框
-      searchForm:{
+      searchForm: {
         ruleName: "",
         groupName: "",
         isAsc: "desc",
@@ -324,7 +328,7 @@ export default Vue.extend({
   created() {
     this.page();
   },
-  watch:{
+  watch: {
     "searchForm.name"(newVal, oldVal) {
       if (newVal != oldVal) {
         this.page();
@@ -369,15 +373,15 @@ export default Vue.extend({
     onChange(pageInfo) {
       console.log('Page Info: ', pageInfo);
     },
-    sortChange(sort:any) {
+    sortChange(sort: any) {
       // 对于受控属性而言，这里的赋值很重要，不可缺少
-      console.log('sort-change',sort);
+      console.log('sort-change', sort);
       this.searchForm.isAsc = sort.descending ? 'desc' : 'asc';
       this.searchForm.orderByColumn = sort.sortBy
     },
     // 确认抽屉
     handleDrawerOk() {
-      console.log('执行:',this.drawer.operation);
+      console.log('执行:', this.drawer.operation);
       switch (this.drawer.operation) {
         case 'add':
           this.$request.post('/prometheus/rule/add', this.formData).then((res) => {
@@ -385,7 +389,7 @@ export default Vue.extend({
               this.$message.success(res.data.msg);
               this.drawer.visible = false;
               this.page();
-            } else  {
+            } else {
               this.$message.error(res.data.msg);
             }
           }).catch((e: Error) => {
@@ -394,29 +398,44 @@ export default Vue.extend({
             this.dataLoading = false;
           });
           break;
-      case "edit":
-        this.$request.post('/prometheus/rule/edit', this.formData).then((res) => {
-          if (res.data.code === 200) {
-            this.$message.success(res.data.msg);
-            this.page();
-          } else  {
-            this.$message.error(res.data.msg);
-          }
-        }).catch((e: Error) => {
-          console.log(e);
-        }).finally(() => {
-          this.dataLoading = false;
-        });
-        break;
+        case "edit":
+          this.$request.post('/prometheus/rule/edit', this.formData).then((res) => {
+            if (res.data.code === 200) {
+              this.$message.success(res.data.msg);
+              this.page();
+            } else {
+              this.$message.error(res.data.msg);
+            }
+          }).catch((e: Error) => {
+            console.log(e);
+          }).finally(() => {
+            this.dataLoading = false;
+          });
+          break;
       }
     },
     // 对话框信息自定义
     handleConfirmOk() {
-      switch(this.operation) {
+      switch (this.confirm.operation) {
         case 'delete':
-          this.confirm.visible = true;
-          this.confirm.header = "删除：" + this.formData.ruleName;
-          this.confirm.body = "确认删除吗？一旦删除数据无法恢复";
+          // 真实业务请发起请求
+          this.confirm.visible = false;
+          // 请求删除
+          this.$request.delete("/prometheus/rule/delete", {
+            params: {
+              id: this.formData.id,
+            }
+          }).then(res => {
+            if (res.data.code === 200) {
+              this.$message.success(res.data.msg);
+              this.confirm.visible = false;
+              this.page();
+            } else {
+              this.$message.success(res.data.msg);
+            }
+          }).catch(err => {
+
+          })
           break;
       }
     },
@@ -428,13 +447,13 @@ export default Vue.extend({
     getContainer() {
       return document.querySelector('.tdesign-starter-layout');
     },
-    handleClickDetail(row:any) {
+    handleClickDetail(row: any) {
       this.formData = row;
       this.drawer.visible = true;
       this.drawer.operation = 'detail';
       this.drawer.header = row.ruleName;
     },
-    handleClickEdit(row:any) {
+    handleClickEdit(row: any) {
       this.formData = row;
       this.drawer.visible = true;
       this.drawer.operation = 'edit';
@@ -453,27 +472,7 @@ export default Vue.extend({
       this.confirm.visible = true;
       this.confirm.header = "删除" + row.ruleName;
       this.confirm.operation = 'delete';
-      this.confirm.body = "此操作会删除" + row.ruleName+"，是否继续？";
-    },
-    onConfirmDelete() {
-      // 真实业务请发起请求
-      this.confirm.visible = false;
-      // 请求删除
-      this.$request.delete("/prometheus/rule/delete", {
-        params: {
-          id: this.formData.id,
-        }
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.$message.success(res.data.msg);
-          this.confirm.visible = false;
-          this.page();
-        } else {
-          this.$message.success(res.data.msg);
-        }
-      }).catch(err => {
-
-      })
+      this.confirm.body = "此操作会删除" + row.ruleName + "，是否继续？";
     },
     onCancel() {
       this.resetIdx();
@@ -502,8 +501,8 @@ export default Vue.extend({
     page() {
       this.dataLoading = true;
       this.$request.get('/prometheus/rule/page', {
-          params: this.searchForm
-        }).then((res) => {
+        params: this.searchForm
+      }).then((res) => {
         if (res.data.code === 200) {
           this.data = res.data.rows;
           this.pagination = {
