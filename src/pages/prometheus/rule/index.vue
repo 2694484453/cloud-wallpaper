@@ -105,7 +105,7 @@
           @reset="onReset"
         >
           <t-form-item label="规则名称" name="ruleName">
-            <t-input v-model="formData.alertName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200" clearable></t-input>
+            <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200" clearable></t-input>
           </t-form-item>
           <t-form-item label="分组名称" name="groupId">
             <t-select v-model="formData.groupId">
@@ -130,7 +130,7 @@
       </t-space>
       <t-space v-show="drawer.operation === 'detail'" direction="vertical" style="width: 100%" >
         <t-descriptions bordered :layout="'vertical'" :item-layout="'horizontal'" :column="3">
-          <t-descriptions-item label="规则名称" >{{formData.alertName}}</t-descriptions-item>
+          <t-descriptions-item label="规则名称" >{{formData.ruleName}}</t-descriptions-item>
           <t-descriptions-item label="分组名称">{{formData.groupName}}</t-descriptions-item>
           <t-descriptions-item label="类型">{{formData.type}}</t-descriptions-item>
           <t-descriptions-item label="表达式">{{formData.expr}}</t-descriptions-item>
@@ -261,7 +261,7 @@ export default Vue.extend({
       deleteType: -1,
       formData: {
         id: "",
-        alertName: "",
+        ruleName: "",
         groupId: 0,
         groupName: "",
         description: "",
