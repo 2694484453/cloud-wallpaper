@@ -37,6 +37,12 @@
               AI文生图
             </t-button>
           </t-tooltip>
+          <t-tooltip placement="bottom" content="AI图生图">
+            <t-button theme="primary" variant="text" tag="a" href="/ai">
+              <image-icon/>
+              AI图生壁纸(开发中)
+            </t-button>
+          </t-tooltip>
           <t-tooltip placement="bottom" content="合租计划">
             <t-button theme="primary" variant="text" tag="a" href="/share">
               <thumb-up-icon/>
