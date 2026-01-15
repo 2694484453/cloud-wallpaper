@@ -104,11 +104,13 @@
           :label-width="120"
           @reset="onReset"
         >
-          <t-form-item label="规则名称" name="branch">
+          <t-form-item label="规则名称" name="ruleName">
             <t-input v-model="formData.alertName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200" clearable></t-input>
           </t-form-item>
-          <t-form-item label="分组名称" name="localIp">
-            <t-input v-model="formData.groupName" :maxlength="64" with="200" clearable></t-input>
+          <t-form-item label="分组名称" name="groupId">
+            <t-select v-model="formData.groupId">
+              <t-option v-for="(item,index) in groups" :label="item.jobName" :value="item.targetId"/>
+            </t-select>
           </t-form-item>
           <t-form-item label="表达式" name="kubeContext">
             <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
@@ -177,17 +179,17 @@ export default Vue.extend({
           align: 'left',
           width: 150,
           ellipsis: true,
-          colKey: 'alertName',
+          colKey: 'ruleName',
           fixed: 'left',
           sorter: true,
         },
-        {
-          title: '类型',
-          width: 150,
-          ellipsis: true,
-          fixed: 'left',
-          colKey: 'type',
-        },
+        // {
+        //   title: '类型',
+        //   width: 120,
+        //   ellipsis: true,
+        //   fixed: 'left',
+        //   colKey: 'type',
+        // },
         {
           title: '健康状态',
           colKey: 'status',
@@ -201,35 +203,35 @@ export default Vue.extend({
             {col: 'status'}
         },
         {
-          title: 'group名称',
+          title: '分组名称',
           align: 'left',
-          width: 140,
+          width: 120,
           ellipsis: true,
           colKey: 'groupName',
           fixed: 'left',
         },
         {
-          title: '标签',
-          width: 160,
+          title: 'summary',
+          width: 120,
           ellipsis: true,
-          colKey: 'labels',
+          colKey: 'summary',
         },
         {
           title: '描述',
-          width: 160,
+          width: 140,
           ellipsis: true,
           colKey: "description"
         },
         {
           title: '创建时间',
-          width: 160,
+          width: 140,
           ellipsis: true,
           colKey: "createTime",
           sorter: true,
         },
         {
           title: '更新时间',
-          width: 160,
+          width: 140,
           ellipsis: true,
           colKey: "updateTime",
           sorter: true,
@@ -260,6 +262,7 @@ export default Vue.extend({
       formData: {
         id: "",
         alertName: "",
+        groupId: 0,
         groupName: "",
         description: "",
         createTime: "",
@@ -300,7 +303,8 @@ export default Vue.extend({
         visible: false
       },
       typeList: [],
-      levels: []
+      levels: [],
+      groups: [],
     };
   },
   computed: {
@@ -373,12 +377,13 @@ export default Vue.extend({
     },
     // 确认抽屉
     handleDrawerOk() {
-      console.log('执行:',this.operation);
-      switch (this.operation) {
+      console.log('执行:',this.drawer.operation);
+      switch (this.drawer.operation) {
         case 'add':
           this.$request.post('/prometheus/rule/add', this.formData).then((res) => {
             if (res.data.code === 200) {
               this.$message.success(res.data.msg);
+              this.drawer.visible = false;
               this.page();
             } else  {
               this.$message.error(res.data.msg);
@@ -439,8 +444,8 @@ export default Vue.extend({
       this.drawer.visible = true;
       this.drawer.operation = 'add';
       this.drawer.header = '新增';
-      this.getTypeList()
       this.getLevels();
+      this.getGroups();
     },
     handleClickDelete(row: { rowIndex: any, type: any }) {
       this.deleteIdx = row.rowIndex;
@@ -483,15 +488,15 @@ export default Vue.extend({
     onSubmit() {
       this.page();
     },
-    getTypeList() {
-      this.$request.get("/monitor/typeList").then(res => {
-        this.typeList = res.data.data
-      }).catch((err) => {
-      })
-    },
     getLevels() {
       this.$request.get("/prometheus/rule/levels").then(res => {
         this.levels = res.data.data
+      }).catch((err) => {
+      })
+    },
+    getGroups() {
+      this.$request.get("/prometheus/exporter/list").then(res => {
+        this.groups = res.data.data
       }).catch((err) => {
       })
     },
