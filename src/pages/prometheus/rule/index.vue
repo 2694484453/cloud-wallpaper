@@ -105,19 +105,19 @@
           :label-width="120"
           @reset="onReset"
         >
-          <t-form-item label="规则名称" name="ruleName">
+          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称">
             <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200"
                      clearable></t-input>
           </t-form-item>
-          <t-form-item label="分组名称" name="groupId">
+          <t-form-item label="分组名称" name="groupId" required-mark help="您的接入点名称">
             <t-select v-model="formData.groupId">
               <t-option v-for="(item,index) in groups" :label="item.jobName" :value="item.targetId"/>
             </t-select>
           </t-form-item>
-          <t-form-item label="表达式" name="kubeContext">
+          <t-form-item label="表达式" name="expr" required-mark help="输入您的PmQl表达式">
             <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
           </t-form-item>
-          <t-form-item label="级别" name="chartUrl">
+          <t-form-item label="级别" name="level">
             <t-select v-model="formData.severityLevel">
               <t-option v-for="(item,index) in levels" :label="item" :value="item"/>
             </t-select>
@@ -421,11 +421,7 @@ export default Vue.extend({
           // 真实业务请发起请求
           this.confirm.visible = false;
           // 请求删除
-          this.$request.delete("/prometheus/rule/delete", {
-            params: {
-              id: this.formData.id,
-            }
-          }).then(res => {
+          this.$request.delete("/prometheus/rule/delete?id=" + this.formData.id, {}).then(res => {
             if (res.data.code === 200) {
               this.$message.success(res.data.msg);
               this.confirm.visible = false;
