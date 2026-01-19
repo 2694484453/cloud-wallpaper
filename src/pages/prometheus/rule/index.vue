@@ -42,13 +42,14 @@
           :headerAffixedTop="true"
           :headerAffixProps="{ offsetTop: offsetTop, container: getContainer }"
         >
-          <template #status="{row}">
-            <t-tag v-if="row.status === ''" theme="danger" variant="light">异常</t-tag>
-            <t-tag v-if="row.status === 'ok'" theme="success" variant="light">健康</t-tag>
+          <template #ruleState="{row}">
+            <t-tag v-if="row.ruleState === '' || row.ruleState === null " theme="warning">异常</t-tag>
+            <t-tag v-if="row.ruleState === 'firing'" theme="danger" >已触发</t-tag>
+            <t-tag v-if="row.ruleState === 'inactive'" theme="default">未激活</t-tag>
           </template>
-          <template #alertStatus="{row}">
-            <t-tag v-if="row.alertStatus === 'active'" theme="danger">已激活</t-tag>
-            <t-tag v-if="row.alertStatus === 'inactive'" theme="default">未激活</t-tag>
+          <template #status="{row}">
+            <t-tag v-if="row.status === 'ok'" theme="success" variant="light">已上线</t-tag>
+            <t-tag v-if="row.status === '' || row.status === null " theme="warning" variant="light">未知</t-tag>
           </template>
           <template #groupName="{row}">
             <t-tag theme="primary" variant="light">{{ row.groupName }}</t-tag>
@@ -191,26 +192,22 @@ export default Vue.extend({
           fixed: 'left',
           sorter: true,
         },
-        // {
-        //   title: '类型',
-        //   width: 120,
-        //   ellipsis: true,
-        //   fixed: 'left',
-        //   colKey: 'type',
-        // },
+        {
+          title: '类型',
+          width: 120,
+          ellipsis: true,
+          fixed: 'left',
+          colKey: 'exporterType',
+        },
         {
           title: '健康状态',
           colKey: 'status',
           width: 80,
-          cell:
-            {col: 'status'}
         },
         {
           title: '告警状态',
-          colKey: 'alertStatus',
+          colKey: 'ruleState',
           width: 80,
-          cell:
-            {col: 'status'}
         },
         {
           title: '分组名称',
