@@ -1,4 +1,4 @@
-import {PreciseMonitorIcon, MirrorIcon, NotificationIcon} from 'tdesign-icons-vue';
+import {PreciseMonitorIcon} from 'tdesign-icons-vue';
 import Layout from '@/layouts/index.vue';
 
 export default [

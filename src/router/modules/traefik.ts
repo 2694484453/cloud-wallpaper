@@ -14,18 +14,18 @@ export default [
         component: () => import('@/pages/traefik/index.vue'),
         meta: {title: '概览'},
       },
-      {
-        path: 'dashboard',
-        name: 'DashboardBase',
-        component: () => import('@/pages/traefik/dashboard/index.vue'),
-        meta: {title: '服务面板'},
-      },
-      {
-        path: 'monitor',
-        name: 'MonitorBase',
-        component: () => import('@/pages/traefik/frame/index.vue'),
-        meta: {title: '监控面板'},
-      },
+      // {
+      //   path: 'dashboard',
+      //   name: 'DashboardBase',
+      //   component: () => import('@/pages/traefik/dashboard/index.vue'),
+      //   meta: {title: '服务面板'},
+      // },
+      // {
+      //   path: 'monitor',
+      //   name: 'MonitorBase',
+      //   component: () => import('@/pages/traefik/frame/index.vue'),
+      //   meta: {title: '监控面板'},
+      // },
       {
         path: "list",
         name: 'AddBase',
