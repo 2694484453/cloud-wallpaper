@@ -264,7 +264,7 @@ export default Vue.extend({
       deleteIdx: -1,
       deleteType: -1,
       formData: {
-        id: "",
+        ruleId: "",
         ruleName: "",
         groupId: 0,
         groupName: "",
@@ -312,13 +312,6 @@ export default Vue.extend({
     };
   },
   computed: {
-    confirmBody() {
-      if (this.deleteIdx > -1) {
-        const {name} = this.data?.[this.deleteIdx];
-        return `删除后，${name}的所有合同信息将被清空，且无法恢复`;
-      }
-      return '';
-    },
     offsetTop() {
       return this.$store.state.setting.isUseTabsRouter ? 48 : 0;
     },
@@ -421,13 +414,13 @@ export default Vue.extend({
           // 真实业务请发起请求
           this.confirm.visible = false;
           // 请求删除
-          this.$request.delete("/prometheus/rule/delete?id=" + this.formData.id, {}).then(res => {
+          this.$request.delete("/prometheus/rule/delete?id=" + this.formData.ruleId, {}).then(res => {
             if (res.data.code === 200) {
               this.$message.success(res.data.msg);
               this.confirm.visible = false;
               this.page();
             } else {
-              this.$message.success(res.data.msg);
+              this.$message.error(res.data.msg);
             }
           }).catch(err => {
 
@@ -486,12 +479,16 @@ export default Vue.extend({
       this.$request.get("/prometheus/rule/levels").then(res => {
         this.levels = res.data.data
       }).catch((err) => {
+      }).finally(() => {
+
       })
     },
     getGroups() {
       this.$request.get("/prometheus/exporter/list").then(res => {
         this.groups = res.data.data
       }).catch((err) => {
+      }).finally(() => {
+
       })
     },
     page() {
