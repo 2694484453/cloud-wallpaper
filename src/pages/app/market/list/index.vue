@@ -97,18 +97,18 @@
           :label-width="100"
           @reset="onReset"
         >
-          <t-form-item label="集群" name="kubeContext">
+          <t-form-item label="集群" name="kubeContext" required-mark help="您接入的集群">
             <t-select v-model="drawer.dynamicForm.kubeContext" placeholder="请选择" clearable>
               <t-option v-for="(item,index) in clusters" :key="index" :label="item.contextName"
                         :value="item.contextName">{{ item.contextName }}
               </t-option>
             </t-select>
           </t-form-item>
-          <t-form-item label="命名空间" name="nameSpace">
+          <t-form-item label="命名空间" name="nameSpace" help="如果不存在会自动创建" required-mark>
             <t-input v-model="drawer.dynamicForm.nameSpace" placeholder="请输入命名空间" :maxlength="64"
                      with="120"></t-input>
           </t-form-item>
-          <t-form-item label="release名称" name="releaseName">
+          <t-form-item label="release名称" name="releaseName" required-mark help="只允许64个字符以内的数字和小写字母组合">
             <t-input v-model="drawer.dynamicForm.releaseName" placeholder="请输入release名称" :maxlength="64"
                      with="120"></t-input>
           </t-form-item>

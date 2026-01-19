@@ -64,8 +64,8 @@
             <t-tag v-show="row.status === 'resolved'" theme="default" variant="light">已恢复</t-tag>
             <t-tag v-show="row.status === 'firing'" theme="danger" variant="light">触发中</t-tag>
           </template>
-          <template #globalUrl="{row}">
-            <a :href="row.globalUrl" target="_blank">{{ row.globalUrl }}</a>
+          <template #exporterType="{row}">
+            <t-tag theme="primary" variant="light">{{ row.exporterType }}</t-tag>
           </template>
           <template #labels="{row}">
             <div v-for="(v,k) in row.labels">
@@ -141,7 +141,7 @@
           <t-descriptions-item label="状态">{{ formData.status }}</t-descriptions-item>
           <t-descriptions-item label="等级">{{ formData.alertLevel }}</t-descriptions-item>
           <t-descriptions-item label="创建时间">{{ formData.createTime }}</t-descriptions-item>
-          <t-descriptions-item label="归属人">{{ formData.createBy }}</t-descriptions-item>
+          <t-descriptions-item label="归属人">{{ formData.createByUserName }}</t-descriptions-item>
           <t-descriptions-item label="描述">{{ formData.description }}</t-descriptions-item>
         </t-descriptions>
       </t-space>
@@ -192,7 +192,7 @@ export default Vue.extend({
         {
           title: '名称',
           align: 'left',
-          width: 180,
+          width: 140,
           ellipsis: true,
           colKey: 'alertName',
           fixed: 'left',

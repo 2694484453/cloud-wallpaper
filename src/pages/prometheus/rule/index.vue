@@ -7,7 +7,7 @@
         :label-width="80"
         colon
         @reset="onReset"
-        @submit="onSubmit"
+        @submit="page"
         :style="{ marginBottom: '8px' }"
       >
         <t-row justify="space-between">
@@ -50,15 +50,8 @@
             <t-tag v-if="row.alertStatus === 'active'" theme="danger">已激活</t-tag>
             <t-tag v-if="row.alertStatus === 'inactive'" theme="default">未激活</t-tag>
           </template>
-          <template #paymentType="{row}">
-            <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">
-              付款
-              <trend class="dashboard-item-trend" type="up"/>
-            </p>
-            <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT" class="payment-col">
-              收款
-              <trend class="dashboard-item-trend" type="down"/>
-            </p>
+          <template #groupName="{row}">
+            <t-tag theme="primary" variant="light">{{ row.groupName }}</t-tag>
           </template>
           <template #op="slotProps">
             <a class="t-button-link" @click="handleClickDetail(slotProps.row)">详情</a>
@@ -94,30 +87,30 @@
       :sizeDraggable="true"
       :on-size-drag-end="handleSizeDrag"
       :size="drawer.size"
-      @close="onCancelDrawer"
-      :onConfirm="handleDrawerOk"
-      @cancel="onCancelDrawer">
+      @close="onCancelDrawer">
       <t-space v-show="drawer.operation === 'add'|| drawer.operation ==='edit'" direction="vertical"
                style="width: 100%">
         <t-form
-          ref="formValidatorStatus"
+          ref="formRef"
           :data="formData"
+          :rules="rules"
           :label-width="120"
           @reset="onReset"
+          @submit="handleDrawerOk"
         >
           <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称">
             <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200"
                      clearable></t-input>
           </t-form-item>
-          <t-form-item label="分组名称" name="groupId" required-mark help="您的接入点名称">
+          <t-form-item label="分组名称" name="groupId" required-mark help="您使用的接入点名称">
             <t-select v-model="formData.groupId">
               <t-option v-for="(item,index) in groups" :label="item.jobName" :value="item.targetId"/>
             </t-select>
           </t-form-item>
-          <t-form-item label="表达式" name="expr" required-mark help="输入您的PmQl表达式">
+          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验">
             <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
           </t-form-item>
-          <t-form-item label="级别" name="level">
+          <t-form-item label="级别" name="severityLevel">
             <t-select v-model="formData.severityLevel">
               <t-option v-for="(item,index) in levels" :label="item" :value="item"/>
             </t-select>
@@ -149,6 +142,13 @@
           <t-descriptions-item label="描述">{{ formData.description }}</t-descriptions-item>
         </t-descriptions>
       </t-space>
+      <!-- 自定义底部按钮 -->
+      <template #footer>
+        <t-button theme="primary" @click="handleDrawerOk" :loading="drawer.loading">
+          确认
+        </t-button>
+        <t-button theme="default" @click="onCancelDrawer">取消</t-button>
+      </template>
     </t-drawer>
   </div>
 </template>
@@ -197,13 +197,15 @@ export default Vue.extend({
         {
           title: '健康状态',
           colKey: 'status',
-          width: 80, cell:
+          width: 80,
+          cell:
             {col: 'status'}
         },
         {
           title: '告警状态',
           colKey: 'alertStatus',
-          width: 80, cell:
+          width: 80,
+          cell:
             {col: 'status'}
         },
         {
@@ -248,6 +250,39 @@ export default Vue.extend({
           title: '操作',
         },
       ],
+      rules: {
+        ruleName: [
+          { required: true },
+          // { enum: ['sheep', 'name'] },
+          { min: 2 },
+          { max: 50, type: 'warning' },
+        ],
+        groupId: [
+          { required: true },
+        ],
+        expr: [
+          { required: true },
+        ],
+        description: [
+          { validator: (val) => val.length >= 5 },
+          { validator: (val) => val.length < 10, message: '不能超过 20 个字，中文长度等于英文长度' },
+        ],
+        password: [
+          { required: true },
+          { len: 8, message: '请输入 8 位密码' },
+          { pattern: /[A-Z]+/, message: '密码必须包含大写字母' },
+        ],
+      },
+      errorMessage: {
+        date: '${name}不正确',
+        url: '${name}不正确',
+        required: '请输入${name}',
+        max: '${name}字符长度不能超过 ${validate} 个字符，一个中文等于两个字符',
+        min: '${name}字符长度不能少于 ${validate} 个字符，一个中文等于两个字符',
+        len: '${name}字符长度必须是 ${validate}',
+        pattern: '${name}不正确',
+        validator: '${name}有误',
+      },
       rowKey: 'index',
       tableLayout: 'auto',
       verticalAlign: 'top',
@@ -298,6 +333,7 @@ export default Vue.extend({
         visible: false,
         operation: "add",
         size: '40%',
+        loading: false,
       },
       // 对话框
       confirm: {
@@ -374,37 +410,48 @@ export default Vue.extend({
     },
     // 确认抽屉
     handleDrawerOk() {
-      console.log('执行:', this.drawer.operation);
-      switch (this.drawer.operation) {
-        case 'add':
-          this.$request.post('/prometheus/rule/add', this.formData).then((res) => {
-            if (res.data.code === 200) {
-              this.$message.success(res.data.msg);
-              this.drawer.visible = false;
-              this.page();
-            } else {
-              this.$message.error(res.data.msg);
-            }
-          }).catch((e: Error) => {
-            console.log(e);
-          }).finally(() => {
-            this.dataLoading = false;
-          });
-          break;
-        case "edit":
-          this.$request.post('/prometheus/rule/edit', this.formData).then((res) => {
-            if (res.data.code === 200) {
-              this.$message.success(res.data.msg);
-              this.page();
-            } else {
-              this.$message.error(res.data.msg);
-            }
-          }).catch((e: Error) => {
-            console.log(e);
-          }).finally(() => {
-            this.dataLoading = false;
-          });
-          break;
+      // 提交
+      this.$refs.formRef.submit();
+    },
+    onSubmit({ validateResult, firstError }) {
+      console.log('onSubmit form: ', validateResult, firstError);
+      return;
+      if (validateResult === true) {
+        this.$message.success('提交成功');
+        switch (this.drawer.operation) {
+          case 'add':
+            this.$request.post('/prometheus/rule/add', this.formData).then((res) => {
+              if (res.data.code === 200) {
+                this.$message.success(res.data.msg);
+                this.drawer.visible = false;
+                this.page();
+              } else {
+                this.$message.error(res.data.msg);
+              }
+            }).catch((e: Error) => {
+              console.log(e);
+            }).finally(() => {
+              this.dataLoading = false;
+            });
+            break;
+          case "edit":
+            this.$request.post('/prometheus/rule/edit', this.formData).then((res) => {
+              if (res.data.code === 200) {
+                this.$message.success(res.data.msg);
+                this.page();
+              } else {
+                this.$message.error(res.data.msg);
+              }
+            }).catch((e: Error) => {
+              console.log(e);
+            }).finally(() => {
+              this.dataLoading = false;
+            });
+            break;
+        }
+      } else {
+        console.log('Errors: ', validateResult);
+        this.$message.warning(firstError);
       }
     },
     // 对话框信息自定义
@@ -470,9 +517,6 @@ export default Vue.extend({
       this.deleteIdx = -1;
     },
     onReset() {
-      this.page();
-    },
-    onSubmit() {
       this.page();
     },
     getLevels() {
