@@ -93,22 +93,26 @@
         <t-form
           ref="formRef"
           :data="formData"
-          :rules="rules"
           :label-width="120"
           @reset="onReset"
-          @submit="handleDrawerOk"
+          @submit="onSubmit"
         >
-          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称">
+          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称" :rules="[{required:true,message: '规则名称必填'}]">
             <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200"
                      clearable></t-input>
           </t-form-item>
-          <t-form-item label="分组名称" name="groupId" required-mark help="您使用的接入点名称">
+          <t-form-item label="分组名称" name="groupId" required-mark help="您使用的接入点名称" :rules="[{required:true}]">
             <t-select v-model="formData.groupId">
               <t-option v-for="(item,index) in groups" :label="item.jobName" :value="item.targetId"/>
             </t-select>
           </t-form-item>
-          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验">
+          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验" :rules="[{required:true,message: '表达式必填'}]">
             <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
+          </t-form-item>
+          <t-form-item label="持续时间" name="forTime" required-mark :rules="[{required:true}]">
+            <t-input-adornment append="m">
+              <t-input-number v-model="formData.forTime" theme="column" min="1" placeholder="请输入内容" />
+            </t-input-adornment>
           </t-form-item>
           <t-form-item label="级别" name="severityLevel">
             <t-select v-model="formData.severityLevel">
@@ -250,39 +254,6 @@ export default Vue.extend({
           title: '操作',
         },
       ],
-      rules: {
-        ruleName: [
-          { required: true },
-          // { enum: ['sheep', 'name'] },
-          { min: 2 },
-          { max: 50, type: 'warning' },
-        ],
-        groupId: [
-          { required: true },
-        ],
-        expr: [
-          { required: true },
-        ],
-        description: [
-          { validator: (val) => val.length >= 5 },
-          { validator: (val) => val.length < 10, message: '不能超过 20 个字，中文长度等于英文长度' },
-        ],
-        password: [
-          { required: true },
-          { len: 8, message: '请输入 8 位密码' },
-          { pattern: /[A-Z]+/, message: '密码必须包含大写字母' },
-        ],
-      },
-      errorMessage: {
-        date: '${name}不正确',
-        url: '${name}不正确',
-        required: '请输入${name}',
-        max: '${name}字符长度不能超过 ${validate} 个字符，一个中文等于两个字符',
-        min: '${name}字符长度不能少于 ${validate} 个字符，一个中文等于两个字符',
-        len: '${name}字符长度必须是 ${validate}',
-        pattern: '${name}不正确',
-        validator: '${name}有误',
-      },
       rowKey: 'index',
       tableLayout: 'auto',
       verticalAlign: 'top',
@@ -413,9 +384,7 @@ export default Vue.extend({
       // 提交
       this.$refs.formRef.submit();
     },
-    onSubmit({ validateResult, firstError }) {
-      console.log('onSubmit form: ', validateResult, firstError);
-      return;
+    onSubmit({ validateResult}) {
       if (validateResult === true) {
         this.$message.success('提交成功');
         switch (this.drawer.operation) {
@@ -435,7 +404,7 @@ export default Vue.extend({
             });
             break;
           case "edit":
-            this.$request.post('/prometheus/rule/edit', this.formData).then((res) => {
+            this.$request.put('/prometheus/rule/edit', this.formData).then((res) => {
               if (res.data.code === 200) {
                 this.$message.success(res.data.msg);
                 this.page();
@@ -451,7 +420,7 @@ export default Vue.extend({
         }
       } else {
         console.log('Errors: ', validateResult);
-        this.$message.warning(firstError);
+        this.$message.warning(validateResult);
       }
     },
     // 对话框信息自定义
