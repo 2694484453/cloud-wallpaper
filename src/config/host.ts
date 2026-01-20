@@ -32,5 +32,12 @@ export default {
     PATH: "/api",
     CDN: '',
     changeOrigin: true
+  },
+  tools: {
+    NAME: "tools",
+    API: 'http://localhost:9099',
+    PATH: "/api",
+    CDN: '',
+    changeOrigin: true
   }
 };
