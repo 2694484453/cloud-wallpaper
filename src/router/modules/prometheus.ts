@@ -11,19 +11,13 @@ export default [
     children: [
       {
         path: 'overView',
-        name: 'OverViewBase',
+        name: 'overView',
         component: () => import('@/pages/prometheus/index.vue'),
         meta: {title: '概览'},
       },
-      // {
-      //    path: 'dashboard',
-      //    name: 'DashboardBase',
-      //    component: () => import('@/pages/prometheus/frame/index.vue'),
-      //    meta: {title: '控制面板'},
-      // },
       {
-        path: 'exporter',
-        name: 'exporter',
+        path: 'targets',
+        name: 'targets',
         component: () => import('@/pages/prometheus/target/index.vue'),
         meta: {title: '端点接入'},
       },

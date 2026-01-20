@@ -33,6 +33,9 @@
         <t-table
           :columns="columns"
           :data="data"
+          :sort="searchForm.orders"
+          :multipleSort="true"
+          lazyLoad
           @sort-change="sortChange"
           :rowKey="rowKey"
           :verticalAlign="verticalAlign"
@@ -290,10 +293,14 @@ export default Vue.extend({
       searchForm: {
         ruleName: "",
         groupName: "",
-        isAsc: "desc",
-        orderByColumn: "createTime",
         current: 1,
-        size: 10
+        size: 10,
+        orders: [
+          {
+            sortBy: 'createTime',
+            descending: true,
+          }
+        ]
       },
       // 抽屉
       drawer: {
@@ -373,8 +380,8 @@ export default Vue.extend({
     sortChange(sort: any) {
       // 对于受控属性而言，这里的赋值很重要，不可缺少
       console.log('sort-change', sort);
-      this.searchForm.isAsc = sort.descending ? 'desc' : 'asc';
-      this.searchForm.orderByColumn = sort.sortBy
+      this.searchForm.orders = sort;
+      this.page();
     },
     // 确认抽屉
     handleDrawerOk() {

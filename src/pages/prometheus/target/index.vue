@@ -35,6 +35,9 @@
         <t-table
           :columns="columns"
           :data="data"
+          :sort="searchForm.orders"
+          :multipleSort="true"
+          lazyLoad
           @sort-change="sortChange"
           :rowKey="rowKey"
           :verticalAlign="verticalAlign"
@@ -304,8 +307,12 @@ export default Vue.extend({
         exporterType: "",
         current: 1,
         size: 10,
-        isAsc: "desc",
-        orderByColumn: "createTime",
+        orders: [
+          {
+            sortBy: 'createTime',
+            descending: true,
+          }
+        ]
       },
       searchValue: '',
       confirmVisible: false,
@@ -389,8 +396,8 @@ export default Vue.extend({
     sortChange(sort: any) {
       // 对于受控属性而言，这里的赋值很重要，不可缺少
       console.log('sort-change', sort);
-      this.searchForm.isAsc = sort.descending ? 'desc' : 'asc';
-      this.searchForm.orderByColumn = sort.sortBy
+      this.searchForm.orders = sort;
+      this.page();
     },
     // 点击详情
     handleClickDetail(row: any) {
