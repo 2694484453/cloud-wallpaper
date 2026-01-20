@@ -50,7 +50,11 @@
       <div class="table-container">
         <t-table
           :columns="columns"
+          :sort="searchForm.orders"
           :data="data"
+          :multipleSort="true"
+          lazyLoad
+          @sort-change="sortChange"
           :rowKey="rowKey"
           :verticalAlign="verticalAlign"
           :hover="hover"
@@ -196,6 +200,7 @@ export default Vue.extend({
           ellipsis: true,
           colKey: 'alertName',
           fixed: 'left',
+          sorter: true,
         },
         {
           title: '类型',
@@ -203,24 +208,28 @@ export default Vue.extend({
           ellipsis: true,
           fixed: 'left',
           colKey: 'exporterType',
+          sorter: true,
         },
         {
           title: '状态',
           colKey: 'status',
           align: 'center',
-          width: 60
+          width: 60,
+          sorter: true,
         },
         {
           title: '等级',
           colKey: 'alertLevel',
           align: 'center',
-          width: 60
+          width: 60,
+          sorter: true,
         },
         {
           title: '分组',
           width: 120,
           ellipsis: true,
           colKey: 'groupName',
+          sorter: true,
         },
         {
           title: '描述',
@@ -232,7 +241,8 @@ export default Vue.extend({
           title: '触发时间',
           width: 160,
           ellipsis: true,
-          colKey: "createTime"
+          colKey: "createTime",
+          sorter: true,
         },
         {
           align: 'left',
@@ -259,7 +269,13 @@ export default Vue.extend({
         type: "",
         health: "",
         current: 1,
-        size: 10
+        size: 10,
+        orders: [
+          {
+            sortBy: 'createTime',
+            descending: true,
+          }
+        ]
       },
       // 抽屉
       drawer: {
@@ -419,6 +435,12 @@ export default Vue.extend({
       }).catch((err) => {
 
       })
+    },
+    sortChange(sort: any) {
+      // 对于受控属性而言，这里的赋值很重要，不可缺少
+      console.log('sort-change', sort);
+      this.searchForm.orders = sort;
+      this.page();
     },
     page() {
       this.dataLoading = true;

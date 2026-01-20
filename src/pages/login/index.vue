@@ -22,7 +22,8 @@
       <register v-else @register-success="switchType('login')"/>
       <tdesign-setting/>
     </div>
-    <footer class="copyright">Copyright @ 2021-2022 Tencent. All Rights Reserved</footer>
+    <common-footer class="copyright" style="margin-top: 15px"/>
+<!--    <footer class="copyright">Copyright @ 2021-2022 Tencent. All Rights Reserved</footer>-->
   </div>
 </template>
 <script>
@@ -31,10 +32,12 @@ import Register from './components/components-register.vue';
 import LoginHeader from './components/components-header.vue';
 import TdesignSetting from '@/layouts/setting.vue';
 import {appCnName} from "@/config/global";
+import CommonFooter from "@/layouts/components/CommonFooter.vue";
 
 export default {
   name: 'LoginIndex',
   components: {
+    CommonFooter,
     LoginHeader,
     Login,
     Register,

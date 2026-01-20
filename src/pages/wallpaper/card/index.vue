@@ -14,10 +14,13 @@
       <div class="list-card-items">
         <t-row :gutter="[16, 16]">
           <t-col
-            :lg="2"
-            :xs="2"
-            :xl="2"
-            v-for="product in productList"
+            :lg="4"
+            :xs="6"
+            :xl="3"
+            v-for="product in productList.slice(
+              pagination.pageSize * (pagination.current - 1),
+              pagination.pageSize * pagination.current,
+            )"
             :key="product.index"
           >
             <product-card :product="product" @delete-item="handleDeleteItem" @manage-product="handleManageProduct" />
@@ -30,9 +33,8 @@
           :total="pagination.total"
           :pageSizeOptions="[12, 24, 36]"
           :page-size.sync="pagination.pageSize"
-          @current-change="onCurrentChange"
           @page-size-change="onPageSizeChange"
-          @change="onChange"
+          @current-change="onCurrentChange"
         />
       </div>
     </template>
@@ -86,6 +88,7 @@
   </div>
 </template>
 <script lang="ts">
+import Vue from "vue";
 import { prefix } from '@/config/global';
 import { SearchIcon } from 'tdesign-icons-vue';
 import ProductCard from '@/components/product-card/index.vue';
@@ -99,7 +102,7 @@ const INITIAL_DATA = {
   amount: 0,
 };
 
-export default {
+export default Vue.extend({
   name: 'ListCard',
   components: {
     SearchIcon,
@@ -109,7 +112,41 @@ export default {
     return {
       pagination: { current: 1, pageSize: 12, total: 0 },
       prefix,
-      productList: [],
+      productList: [
+        {
+          index: 1,
+          status: 4,
+          no: "BH0038",
+          name: "沧州市办公用品采购项目",
+          paymentType: 1,
+          contractType: 2,
+          updateTime: "2020-05-30 14:05:44",
+          amount: "170,000,000",
+          adminName: "顾娟"
+        },
+        {
+          index: 1,
+          status: 4,
+          no: "BH0038",
+          name: "沧州市办公用品采购项目",
+          paymentType: 1,
+          contractType: 2,
+          updateTime: "2020-05-30 14:05:44",
+          amount: "170,000,000",
+          adminName: "顾娟"
+        },
+        {
+          index: 1,
+          status: 4,
+          no: "BH0038",
+          name: "沧州市办公用品采购项目",
+          paymentType: 1,
+          contractType: 2,
+          updateTime: "2020-05-30 14:05:44",
+          amount: "170,000,000",
+          adminName: "顾娟"
+        }
+      ],
       value: 'first',
       rowKey: 'index',
       tableLayout: 'auto',
@@ -141,22 +178,33 @@ export default {
     },
   },
   mounted() {
-    this.page();
+    this.dataLoading = true;
+    this.$request
+      .get('/api/get-card-list')
+      .then((res) => {
+        if (res.code === 0) {
+          const { list = [] } = res.data;
+          this.productList = list;
+          this.pagination = {
+            ...this.pagination,
+            total: list.length,
+          };
+        }
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      })
+      .finally(() => {
+        this.dataLoading = false;
+      });
   },
   methods: {
-    onPageSizeChange(size, pageInfo) {
-      console.log('Page Size:', this.pageSize, size, pageInfo);
-      // 刷新
-      this.searchForm.pageSize = size
+    onPageSizeChange(size: number): void {
+      this.pagination.pageSize = size;
+      this.pagination.current = 1;
     },
-    onCurrentChange(current, pageInfo) {
-      console.log('Current Page', this.current, current, pageInfo);
-      // 刷新
-      this.searchForm.pageNum = current
-      this.getList()
-    },
-    onChange(pageInfo) {
-      console.log('Page Info: ', pageInfo);
+    onCurrentChange(current: number): void {
+      this.pagination.current = current;
     },
     onSubmit({ result, firstError }): void {
       if (!firstError) {
@@ -189,21 +237,8 @@ export default {
       this.formVisible = true;
       this.formData = { ...product, status: product?.isSetup ? '1' : '0' };
     },
-    page() {
-      this.dataLoading = true;
-      this.$request.get('/tools/page').then((res) => {
-        if (res.data.code === 200) {
-          this.productList = res.data.rows;
-          this.pagination.total= res.data.total;
-        }
-      }).catch((e: Error) => {
-        console.log(e);
-      }).finally(() => {
-        this.dataLoading = false;
-      });
-    }
   },
-};
+});
 </script>
 <style scoped lang="less">
 .list-card-operation {

@@ -1,23 +1,25 @@
 <template>
-<!--  <div :class="prefix + '-footer'">Copyright © 2021-{{ new Date().getFullYear() }} Tencent. All Rights Reserved</div>-->
-  <div :class="prefix + '-footer'">
-    <p>
-      &copy; 2024.2694484453@qq.com 版权所有.
-      <a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备2021037763号-1</a>
-    </p>
+  <div style="line-height: 20px;
+  text-align: center;">
+    {{ banQuan }}
+    <span v-html="beiAn"></span>
   </div>
 </template>
 
 <script>
-import { prefix,appCnName } from '@/config/global';
+import {prefix, appCnName, beiAn, banQuan} from '@/config/global';
 import Vue from 'vue';
 
 export default Vue.extend({
   name: `${prefix}-footer`,
+  methods: {
+  },
   data() {
     return {
       prefix,
-      appCnName:appCnName
+      appCnName: appCnName,
+      banQuan: banQuan,
+      beiAn: beiAn
     };
   },
 });
@@ -28,7 +30,6 @@ export default Vue.extend({
 
 .@{starter-prefix}-footer {
   color: var(--td-text-color-placeholder);
-  line-height: 20px;
-  text-align: center;
+
 }
 </style>

@@ -12,6 +12,8 @@ interface ImportMetaEnv {
   readonly VITE_OTEL_SERVICE_NAME: string;
   readonly VITE_UMAMI_ID: string;
   readonly VITE_UMAMI_HOST: string;
+  readonly VITE_BEI_AN: string;
+  readonly VITE_BAN_QUAN: string;
 }
 
 declare interface ImportMeta {

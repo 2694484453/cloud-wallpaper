@@ -97,7 +97,7 @@
       />
     </div>
     <!-- 页脚 -->
-    <Footer style="margin-top: 10px"/>
+    <common-footer style="margin-top: 15px"/>
   </div>
 </template>
 
@@ -106,9 +106,9 @@ import Vue from 'vue';
 import {mapGetters} from 'vuex';
 
 import CommonHeader from "@/layouts/components/Header.vue";
+import CommonFooter from "@/layouts/components/CommonFooter.vue";
 import {SettingType} from "@/interface";
 import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
-import Footer from "@/layouts/components/Footer.vue";
 import {BrowseIcon, DownloadIcon, InfoCircleIcon} from "tdesign-icons-vue";
 import {download} from "@/utils/download";
 
@@ -116,7 +116,7 @@ export default Vue.extend({
   name: 'ListBase',
   components: {
     CommonHeader,
-    Footer,
+    CommonFooter,
     WallpaperHeader,
     BrowseIcon,
     DownloadIcon,

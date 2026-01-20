@@ -28,7 +28,7 @@ instance.interceptors.request.use(config => {
       //config.headers.token = this.$cookies.VueCookies.get("token")
     }
     // 处理排序参数
-    if (config.method === 'get' && config.params.hasOwnProperty('orders')) {
+    if (config.method === 'get' && config.params != null && config.params.hasOwnProperty('orders')) {
       const url = config.url.split('?')[0];
       config.url = url + buildBracketQueryString(config.params);
       config.params = undefined; // 清空，避免 Axios 再次处理

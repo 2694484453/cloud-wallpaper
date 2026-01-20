@@ -44,9 +44,9 @@ import toolsRouters from "@/router/modules/tools";
 import wallpaperRouters from "@/router/modules/wallpaper";
 import proxy from '@/config/host';
 // 开发模式
-const devRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...prometheusRouters, ...tracingRouters, ...appRouters, ...dockerRouters, ...traefikRouters, ...clusterRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...backupRouters, ...scheduleRouters, ...toolsRouters]
+const devRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...prometheusRouters, ...tracingRouters, ...appRouters, ...dockerRouters, ...traefikRouters, ...clusterRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...backupRouters, ...scheduleRouters]
 // 生产模式
-const prodRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...appRouters, ...prometheusRouters, ...tracingRouters, ...traefikRouters, ...clusterRouters, ...dockerRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters, ...toolsRouters, ...backupRouters]
+const prodRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...appRouters, ...prometheusRouters, ...tracingRouters, ...traefikRouters, ...clusterRouters, ...dockerRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters, ...backupRouters]
 // 基础路由
 export const routerList = []
 routerList.push(  // 登陆
@@ -81,6 +81,11 @@ switch (envName) {
     routerList.push(...wallpaperRouters)
     routerList.push(...noticeRouters)
     routerList.push(...userInfoRouters)
+    break;
+  case "tools":
+    //routerList.push(...baseRouters)
+    routerList.push(...toolsRouters)
+    break;
 }
 
 // 存放固定的路由

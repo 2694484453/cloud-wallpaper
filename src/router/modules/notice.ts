@@ -1,11 +1,11 @@
-import {TimeIcon} from 'tdesign-icons-vue';
+import {MailIcon} from 'tdesign-icons-vue';
 import Layout from '@/layouts/index.vue';
 export default [
   {
     path: '/notice',
     name: 'notice',
     component: Layout,
-    meta: {title: '消息管理', icon: TimeIcon},
+    meta: {title: '消息管理', icon: MailIcon},
     children: [
       {
         path: 'dashboard',
