@@ -40,13 +40,15 @@
           :headerAffixProps="{ offsetTop: offsetTop, container: getContainer }"
         >
           <template #status="{row}">
-            <t-tag v-if="row.status === '1'" theme="success" variant="light">已启用</t-tag>
-            <t-tag v-if="row.status === '0'" theme="warning" variant="light">已禁用</t-tag>
+            <t-tag v-if="row.status === '0'" theme="success" variant="light">已启用</t-tag>
+            <t-tag v-if="row.status === '1'" theme="warning" variant="light">已禁用</t-tag>
             <t-tag v-if="row.status === '' || row.status === null" variant="light" theme="danger">未知</t-tag>
           </template>
           <template #runStatus="{row}">
-            <t-tag v-if="row.runStatus === 'running'" theme="primary" variant="light">运行中</t-tag>
-            <t-tag v-if="row.runStatus === '' || row.runStatus === null"  variant="light">未运行</t-tag>
+            <t-tag v-if="row.runStatus === 'running'" theme="primary" variant="light">
+              <t-loading size="small" text="运行中..."></t-loading>
+            </t-tag>
+            <t-tag v-if="row.runStatus === '' || row.runStatus === null || row.runStatus !== 'running'"  variant="light">未运行</t-tag>
           </template>
           <template #op="slotProps">
             <a class="t-button-link" @click="handleClickDetail(slotProps.row)">详情</a>
@@ -177,7 +179,7 @@ export default Vue.extend({
         {
           title: '名称',
           align: 'left',
-          width: 120,
+          width: 140,
           ellipsis: true,
           colKey: 'jobName',
           fixed: 'left',
@@ -186,7 +188,7 @@ export default Vue.extend({
           title: '状态',
           align: 'center',
           colKey: 'status',
-          width: 80,
+          width: 60,
           cell: {
             col: 'status'
           }
@@ -195,7 +197,7 @@ export default Vue.extend({
           title: '运行状态',
           colKey: 'runStatus',
           align: 'center',
-          width: 120,
+          width: 80,
         },
         {
           title: '类型',
@@ -210,14 +212,14 @@ export default Vue.extend({
         },
         {
           title: '创建时间',
-          width: 150,
+          width: 140,
           align: 'left',
           ellipsis: true,
           colKey: 'createTime',
         },
         {
           title: '最近执行时间',
-          width: 150,
+          width: 140,
           align: 'left',
           ellipsis: true,
           colKey: 'runTime',
@@ -498,7 +500,6 @@ export default Vue.extend({
             console.log(e);
           }).finally(() => {
             this.page();
-            this.dataLoading = false;
           })
           break;
       }

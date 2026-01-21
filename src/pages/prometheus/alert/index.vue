@@ -80,7 +80,7 @@
           </template>
           <template #op="slotProps">
             <a class="t-button-link" @click="handleClickDetail(slotProps.row)">详情</a>
-            <a class="t-button-link" @click="handleClickDelete(slotProps.row)">已读</a>
+            <a class="t-button-link" @click="handleClickRelease(slotProps.row)">已读</a>
           </template>
         </t-table>
       </div>
@@ -308,7 +308,7 @@ export default Vue.extend({
         createTime: "",
         updateTime: "",
         createBy: "",
-        createdByUserName: "",
+        createByUserName: "",
         updateBy: "",
         updateByUserName: "",
         status: "",
@@ -370,22 +370,40 @@ export default Vue.extend({
     handleClickDetail(row: any) {
       this.formData = row;
       this.drawer.operation = 'detail';
+      this.drawer.header = '详情';
       this.drawer.visible = true;
+    },
+    handleClickRelease(row) {
+      this.confirm.visible = true;
+      this.confirm.operation = 'delete';
+      this.confirm.header = '解除';
+      this.confirm.body = '确定要解除此告警信息吗？';
     },
     handleSetupContract() {
       this.$emit('transfer', "form")
     },
-    handleClickDelete(row: { rowIndex: any, type: any }) {
-      this.deleteIdx = row.rowIndex;
-      this.deleteType = row.type;
-      this.confirmVisible = true;
-      console.log("this", this.deleteType)
+    handleClickDelete(row) {
+      this.confirm.visible = true;
+      this.confirm.operation = 'delete';
     },
     onConfirmDelete() {
       switch (this.confirm.operation) {
         case 'delete':
           // 请求删除
-          this.$request.delete("/prometheus/delete?id=" + this.formData.id, {}).then(res => {
+          this.$request.delete("/prometheus/alert/delete?id=" + this.formData.id, {}).then(res => {
+            if (res.data.code == 200) {
+              this.$message.success(res.data.msg);
+              this.confirm.visible = false;
+              this.page();
+            } else {
+              this.$message.error(res.data.msg);
+            }
+          }).catch(err => {
+          })
+          break;
+        case 'release':
+          // 解除
+          this.$request.put("/prometheus/alert/edit?id=" + this.formData.id, {}).then(res => {
             if (res.data.code == 200) {
               this.$message.success(res.data.msg);
               this.confirm.visible = false;
