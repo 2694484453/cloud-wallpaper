@@ -31,6 +31,10 @@
         <t-table
           :columns="columns"
           :data="data"
+          :multiple-sort="true"
+          lazyLoad
+          @sort-change="sortChange"
+          :sort="searchForm.orders"
           :rowKey="rowKey"
           :verticalAlign="verticalAlign"
           :hover="hover"
@@ -183,6 +187,7 @@ export default Vue.extend({
           ellipsis: true,
           colKey: 'jobName',
           fixed: 'left',
+          sorter: true,
         },
         {
           title: '状态',
@@ -197,7 +202,8 @@ export default Vue.extend({
           title: '运行状态',
           colKey: 'runStatus',
           align: 'center',
-          width: 80,
+          width: 100,
+          sorter: true,
         },
         {
           title: '类型',
@@ -216,6 +222,7 @@ export default Vue.extend({
           align: 'left',
           ellipsis: true,
           colKey: 'createTime',
+          sorter: true,
         },
         {
           title: '最近执行时间',
@@ -223,6 +230,7 @@ export default Vue.extend({
           align: 'left',
           ellipsis: true,
           colKey: 'runTime',
+          sorter: true,
         },
         {
           title: '最近执行结果',
@@ -263,6 +271,12 @@ export default Vue.extend({
         type: '',
         pageNum: 1,
         pageSize: 10,
+        orders: [
+          {
+            sortBy: 'createTime',
+            descending: true,
+          }
+        ]
       },
       drawer: {
         title: '新增',
@@ -519,6 +533,12 @@ export default Vue.extend({
     },
     // 搜索提交
     onSubmit(data) {
+      this.page();
+    },
+    sortChange(sort: any) {
+      // 对于受控属性而言，这里的赋值很重要，不可缺少
+      console.log('sort-change', sort);
+      this.searchForm.orders = sort;
       this.page();
     },
   },
