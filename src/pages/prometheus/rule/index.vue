@@ -101,7 +101,7 @@
           @reset="onReset"
           @submit="onSubmit"
         >
-          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称" :rules="[{required:true,message: '规则名称必填'}]">
+          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称" :rules="[{required: true,message: '规则名称必填'}]">
             <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200"
                      clearable></t-input>
           </t-form-item>
@@ -110,8 +110,8 @@
               <t-option v-for="(item,index) in groups" :label="item.jobName" :value="item.targetId"/>
             </t-select>
           </t-form-item>
-          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验" :rules="[{required:true,message: '表达式必填'}]">
-            <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
+          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验" :rules="[{required: true,message: '表达式必填'}]">
+            <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}" onBlur="checkPromQL"></t-textarea>
           </t-form-item>
           <t-form-item label="持续时间" name="forTime" required-mark :rules="[{required:true}]">
             <t-input-adornment append="m">
@@ -161,6 +161,7 @@
   </div>
 </template>
 <script lang="ts">
+
 import Vue from 'vue';
 import {SearchIcon} from 'tdesign-icons-vue';
 import Trend from '@/components/trend/index.vue';
@@ -283,7 +284,7 @@ export default Vue.extend({
         updateByUserName: "",
         type: "",
         expr: "",
-        forTime: "",
+        forTime: 1,
         labels: "",
         summary: "",
         severityLevel: "",
@@ -424,7 +425,7 @@ export default Vue.extend({
         }
       } else {
         console.log('Errors: ', validateResult);
-        this.$message.warning(validateResult);
+        this.$message.warning("请检查表单");
       }
     },
     // 对话框信息自定义
@@ -525,6 +526,11 @@ export default Vue.extend({
       }).finally(() => {
         this.dataLoading = false;
       });
+    },
+    checkPromQL() {
+      this.$request.get("/prometheus/rule/checkPromQL", {}).then(res => {
+
+      })
     }
   },
 });
