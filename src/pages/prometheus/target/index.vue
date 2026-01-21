@@ -58,7 +58,9 @@
           </template>
           <template #status="{row}">
             <t-tag v-if="row.status === 'down'" theme="danger" variant="light">异常</t-tag>
-            <t-tag v-if="row.status === '' || row.status === null || row.status === 'unknown'" theme="warning" variant="light">未知</t-tag>
+            <t-tag v-if="row.status === '' || row.status === null || row.status === 'unknown'" theme="warning"
+                   variant="light">未知
+            </t-tag>
             <t-tag v-if="row.status === 'up'" theme="success" variant="light">正常</t-tag>
           </template>
           <template #op="slotProps">
@@ -108,10 +110,10 @@
           :label-width="100"
           @reset="onReset"
         >
-          <t-form-item label="端点名称" name="jobName">
+          <t-form-item label="端点名称" name="jobName" required-mark>
             <t-input v-model="formData.jobName" placeholder="请输入名称" :maxlength="64" with="120"></t-input>
           </t-form-item>
-          <t-form-item label="exporter类型" name="exporterType">
+          <t-form-item label="exporter类型" name="exporterType" required-mark>
             <t-select v-model="formData.exporterType" class="demo-select-base" clearable filterable
                       placeholder="请选择类型">
               <t-option v-for="(item, index) in typeList" :value="item" :label="item" :key="index">
@@ -119,25 +121,25 @@
               </t-option>
             </t-select>
           </t-form-item>
-          <t-form-item label="地址" name="url">
+          <t-form-item label="地址" name="url" required-mark>
             <t-input v-model="formData.targets" placeholder="请输入地址" :maxlength="64" with="120"></t-input>
           </t-form-item>
-          <t-form-item label="metrics路径" name="metricsPath">
+          <t-form-item label="metrics路径" name="metricsPath" required-mark>
             <t-input v-model="formData.metricsPath" placeholder="请输入路径" :maxlength="64" with="120"></t-input>
           </t-form-item>
-          <t-form-item label="地址类型" name="schemaType">
+          <t-form-item label="地址类型" name="schemaType" required-mark>
             <t-select v-model="formData.schemeType">
               <t-option label="http" value="http">http</t-option>
               <t-option label="https" value="https">https</t-option>
             </t-select>
           </t-form-item>
-          <t-form-item label="抓取间隔(s)">
+          <t-form-item label="抓取间隔(s)" required-mark>
             <t-input v-model="formData.scrapeInterval" type="number" :maxlength="5"></t-input>
           </t-form-item>
-          <t-form-item label="抓取超时(s)">
+          <t-form-item label="抓取超时(s)" required-mark>
             <t-input v-model="formData.scrapeTimeout" type="number" :maxlength="5"></t-input>
           </t-form-item>
-          <t-form-item label="labels" name="labels">
+          <t-form-item label="labels" name="labels" help='json字符串格式，例如：{"cluster":"tcs.gpg123.vip"}'>
             <t-textarea v-model="formData.labels" placeholder="请输入Json格式" :autosize="{minRows:3}"></t-textarea>
           </t-form-item>
           <t-form-item label="描述" name="description">
@@ -164,12 +166,17 @@
           </t-descriptions-item>
           <t-descriptions-item label="地址"><a :href="formData.globalUrl">{{ formData.globalUrl }}</a>
           </t-descriptions-item>
+          <t-descriptions-item label="labels">
+            {{ JSON.stringify(formData.labels) }}
+          </t-descriptions-item>
           <t-descriptions-item label="描述">{{ formData.description }}</t-descriptions-item>
           <t-descriptions-item label="创建时间">{{ formData.createTime }}</t-descriptions-item>
           <t-descriptions-item label="创建人">{{ formData.createByUserName }}</t-descriptions-item>
           <t-descriptions-item label="更新时间">{{ formData.updateTime }}</t-descriptions-item>
           <t-descriptions-item label="更新人">{{ formData.updateByUserName }}</t-descriptions-item>
-          <t-descriptions-item v-show="formData.status === 'down'|| formData.status === 'unknown'" label="异常原因">{{formData.errorReason}}</t-descriptions-item>
+          <t-descriptions-item v-show="formData.status === 'down'|| formData.status === 'unknown'" label="异常原因">
+            {{ formData.errorReason }}
+          </t-descriptions-item>
         </t-descriptions>
       </t-space>
     </t-drawer>
@@ -179,7 +186,7 @@
 import Vue from 'vue';
 import {SearchIcon} from 'tdesign-icons-vue';
 import Trend from '@/components/trend/index.vue';
-import {prefix} from '@/config/global';
+import {datasource, grafanaDomain, prefix} from '@/config/global';
 
 import {CONTRACT_STATUS, CONTRACT_STATUS_OPTIONS, CONTRACT_TYPES, CONTRACT_PAYMENT_TYPES} from '@/constants';
 
@@ -277,12 +284,12 @@ export default Vue.extend({
         targetId: 0,
         jobName: "",
         exporterType: "",
-        metricsPath: "/metrics",
+        metricsPath: "",
         targets: "",
-        labels: {},
+        labels: "",
         schemeType: "http",
-        scrapeInterval: 15,
-        scrapeTimeout: 10,
+        scrapeInterval: 0,
+        scrapeTimeout: 0,
         description: "",
         createTime: "",
         updateTime: "",
@@ -410,7 +417,7 @@ export default Vue.extend({
     handleClickEdit(row: any) {
       this.formData = {
         ...row,
-        labels: JSON.stringify(row.labels)
+        labels: row.labels === null ? "" : JSON.stringify(row.labels)
       };
       this.drawer.visible = true;
       this.drawer.header = row.jobName;
@@ -418,7 +425,27 @@ export default Vue.extend({
       this.types();
     },
     handleClickGrafana(row: any) {
-
+      const type = row.exporterType;
+      let url = '';
+      switch (type) {
+        case 'node-exporter':
+          url = grafanaDomain + '/d/rYdddlPWk/node-exporter-full?orgId=1&var-datasource=' + datasource + '&var-job=' + row.jobName + '&refresh=5s&var-node=' + row.jobName;
+          break;
+        case 'kube-state-metrics-exporter':
+          url = grafanaDomain + '/d/garysdevil-kube-state-metrics-v2/kube-state-metrics-v2?orgId=1&var-datasource=' + datasource + '&var-job=' + row.jobName + '&var-cluster=' + row.jobName;
+          break;
+        case 'caddy-exporter':
+          url = grafanaDomain + '/d/fed94ifiv8h6oc/caddy?orgId=1&var-datasource=' + datasource + '&var-job=' + row.jobName + '&var-cluster=' + row.jobName;
+          break;
+        case 'spring-boot-exporter':
+          url = grafanaDomain + '/d/spring_boot_21/spring-boot-2-1-system-monitor?orgId=1&var-datasource=' + datasource + '&var-job=' + row.jobName + '&var-cluster=' + row.jobName;
+          break;
+        default:
+          this.$message.info("暂未支持此类型：" + type);
+          return;
+      }
+      // 跳转
+      window.open(url, '_blank');
     },
     // 新增
     handleSetupContract() {
@@ -511,6 +538,7 @@ export default Vue.extend({
           })
           break;
         case 'edit':
+          this.formData.labels = this.formData.labels === '' ? {} : JSON.parse(this.formData.labels);
           this.$request.put("/prometheus/exporter/edit", this.formData).then(res => {
             if (res.data.code == 200) {
               this.$message.success(res.data.msg);
