@@ -1,11 +1,11 @@
 import VueRouter from 'vue-router';
-import baseRouters from './modules/base';
-// userinfo
-import userInfoRouters from "@/router/modules/userinfo";
+import baseRouters from '@/router/modules/base';
+// dashboard
+import dashboardRouters from '@/router/modules/dashboard';
 // 其他
-import othersRouters from './modules/others';
+import othersRouters from '@/router/modules/others';
 // 域名
-import domainRouters from './modules/domain';
+import domainRouters from '@/router/modules/domain';
 // 监控
 import prometheusRouters from "@/router/modules/prometheus";
 // 应用
@@ -48,42 +48,52 @@ const devRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...pro
 // 生产模式
 const prodRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...appRouters, ...prometheusRouters, ...tracingRouters, ...traefikRouters, ...clusterRouters, ...dockerRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters]
 // 基础路由
-export const routerList = []
-routerList.push(  // 登陆
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/pages/login/index.vue'),
-  },
-  {
-    path: '*',
-    redirect: '/dashboard/base',
-  },)
+export const routerList = [];
 const env = import.meta.env.MODE || 'development';
 const envName = proxy[env].NAME
 // 存放动态路由
 switch (envName) {
   case "development":
+    routerList.push(
+      {
+        path: '*',
+        redirect: '/home',
+      },
+      {
+        path: "/home",
+        name: "home",
+        component: () => import('@/pages/home/index.vue'),
+      })
     routerList.push(...baseRouters)
+    routerList.push(...dashboardRouters)
     routerList.push(...devRouterList)
     routerList.push(...noticeRouters)
-    routerList.push(...userInfoRouters)
     break;
   case "prod":
+    routerList.push(
+      {
+        path: '*',
+        redirect: '/',
+      },
+      {
+        path: "/",
+        name: "home",
+        component: () => import('@/pages/home/index.vue'),
+      })
     routerList.push(...baseRouters)
+    routerList.push(...dashboardRouters)
     routerList.push(...prodRouterList)
     routerList.push(...noticeRouters)
-    routerList.push(...userInfoRouters)
     break;
   case "wallpaper":
     routerList.push(...baseRouters)
     routerList.push(...nasRouters)
     routerList.push(...wallpaperRouters)
     routerList.push(...noticeRouters)
-    routerList.push(...userInfoRouters)
     break;
   case "tools":
-    //routerList.push(...baseRouters)
+    routerList.push(...baseRouters)
+    routerList.push(...dashboardRouters)
     routerList.push(...toolsRouters)
     break;
 }

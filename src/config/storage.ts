@@ -10,6 +10,10 @@ export const getUserInfo = () => {
   return JSON.parse(localStorage.getItem('userinfo'));
 }
 
+export const getUserName = () => {
+  return JSON.parse(localStorage.getItem('username'));
+}
+
 export const storageAccount = (username:string, password:string) => {
   localStorage.setItem('userAccount', JSON.stringify({
     'username': username,

@@ -2,10 +2,10 @@ import {ServerIcon} from 'tdesign-icons-vue';
 import Layout from '@/layouts/index.vue';
 export default [
   {
-    path: '/frp',
-    name: 'frp',
+    path: '/nas',
+    name: 'nas',
     component: Layout,
-    meta: {title: 'frp服务管理', icon: ServerIcon},
+    meta: {title: 'Nas服务管理', icon: ServerIcon},
     children: [
       {
         path: 'overview',
@@ -17,7 +17,7 @@ export default [
         path: "frpc",
         name: 'frpcListBase',
         component: () => import("@/pages/nas/frp/list/index.vue"),
-        meta: {title: 'Frpc管理'},
+        meta: {title: 'Frpc服务'},
       },
       // {
       //   path: "use",

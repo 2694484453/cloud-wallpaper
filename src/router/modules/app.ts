@@ -7,7 +7,7 @@ export default [
     name: 'app',
     component: Layout,
     //redirect: '/repo/base',
-    meta: {title: '应用中心', icon: AppIcon},
+    meta: {title: 'Helm应用中心', icon: AppIcon},
     children: [
       {
         path: 'overView',

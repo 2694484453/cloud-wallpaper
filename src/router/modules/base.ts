@@ -3,27 +3,23 @@ import Layout from '@/layouts/index.vue';
 
 export default [
   {
-    path: '/dashboard',
+    path: '/login',
+    name: 'login',
+    component: () => import('@/pages/login/index.vue'),
+  },
+  {
+    path: '/user',
+    name: 'user',
     component: Layout,
-    redirect: '/dashboard/base',
-    name: 'dashboard',
-    meta: {
-      title: '仪表盘',
-      icon: DashboardIcon,
-    },
+    redirect: '/user/index',
+    meta: { title: '个人页', icon: 'user-circle' },
     children: [
       {
-        path: 'base',
-        name: 'DashboardBase',
-        component: () => import('@/pages/dashboard/base/index.vue'),
-        meta: { title: '概览仪表盘' },
+        path: 'index',
+        name: 'UserIndex',
+        component: () => import('@/pages/user/index.vue'),
+        meta: { title: '个人中心' },
       },
-      // {
-      //   path: 'detail',
-      //   name: 'DashboardDetail',
-      //   component: () => import('@/pages/dashboard/detail/index.vue'),
-      //   meta: { title: '统计报表' },
-      // },
     ],
   },
 ];
