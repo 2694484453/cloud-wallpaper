@@ -4,44 +4,62 @@
     <div class="box">
       <t-head-menu defaultValue="home" expandType="popup">
         <template #logo>
-          <div class="logo">Cloud<span>Plus</span></div>
+          <div class="logo">Cloud<span style="color: #6ec3c3">Server</span><span>Plus</span></div>
         </template>
         <t-menu-item value="home">首页</t-menu-item>
         <t-submenu value="project">
           <template #title>
             <span>产品</span>
           </template>
-          <t-menu-item value="1-2">Prometheus监控&告警</t-menu-item>
-          <t-menu-item value="1-3">Kubernetes&Helm应用托管</t-menu-item>
-          <t-menu-item value="1-4">Devops流水线服务</t-menu-item>
-          <t-menu-item value="nas">Nas应用托管</t-menu-item>
-          <t-menu-item value="scheduling">Scheduling调度中心</t-menu-item>
-          <t-menu-item value="ssl">免费域名证书</t-menu-item>
+          <span v-for="(item,index) in banners">
+                <t-menu-item :value="index" :href="item.url" target="_blank">{{ item.title }}</t-menu-item>
+          </span>
         </t-submenu>
-        <t-menu-item value="solution">解决方案</t-menu-item>
-        <t-submenu value="2" title="资源">
-          <t-menu-item value="2-1">子菜单2-1</t-menu-item>
-          <t-menu-item value="2-2">子菜单2-2</t-menu-item>
-          <t-menu-item value="2-3">子菜单2-3</t-menu-item>
-        </t-submenu>
+        <t-menu-item value="solution">
+          <t-submenu value="solution-sub">
+            <template #title>
+              <span>解决方案</span>
+            </template>
+            <span v-for="(item,index) in solutions">
+                <t-menu-item :value="index" :href="item.url" target="_blank">{{ item.title }}</t-menu-item>
+            </span>
+            <!--          <t-anchor container="#anchor-container"  @click="handleClick">-->
+            <!--            <t-anchor-item :href="'#product'+index" :title="item.title" style="width: 200px"></t-anchor-item>-->
+            <!--          </t-anchor>-->
+          </t-submenu>
+        </t-menu-item>
+        <t-menu-item value="resources">
+          <t-submenu value="resources-sub">
+            <template #title>
+              <span>资源</span>
+            </template>
+            <span v-for="(item,index) in resources">
+               <t-menu-item :value="index">{{ item.title }}</t-menu-item>
+            </span>
+          </t-submenu>
+        </t-menu-item>
         <t-menu-item value="about">关于</t-menu-item>
         <template #operations>
-          <t-button variant="text" shape="square">
-            <search-icon slot="icon" shape="square"/>
-          </t-button>
-          <t-button variant="text" shape="square">
-            <mail-icon slot="icon"/>
-          </t-button>
-          <t-button v-show="username === null || username === ''" theme="primary" href="/login">
-            <user-icon slot="icon"/>
-            登录
-          </t-button>
-          <t-tooltip v-show="username !== null && username !== ''" placement="bottom" content="用户信息">
-            <HeaderUser/>
-          </t-tooltip>
-          <t-button variant="text" shape="square">
-            <ellipsis-icon slot="icon"/>
-          </t-button>
+          <div class="operations-container">
+            <t-button variant="text" shape="square">
+              <search-icon slot="icon" shape="square"/>
+            </t-button>
+            <t-tooltip content="系统通知">
+              <t-button variant="text" shape="square">
+                <mail-icon/>
+              </t-button>
+            </t-tooltip>
+            <t-button v-show="username === null || username === ''" theme="primary" href="/login">
+              <user-icon slot="icon"/>
+              登录
+            </t-button>
+            <t-tooltip v-show="username !== null && username !== ''" placement="bottom" content="用户信息">
+              <HeaderUser/>
+            </t-tooltip>
+            <t-button variant="text" shape="square">
+              <ellipsis-icon slot="icon"/>
+            </t-button>
+          </div>
         </template>
       </t-head-menu>
     </div>
@@ -75,10 +93,11 @@
       </t-swiper>
     </div>
     <main class="main">
+      <h1>产品</h1>
       <!--内容-->
-      <t-row>
-        <t-col :span="4" v-for="(item,index) in banners.slice(0,3)">
-          <div>
+      <t-row style="margin-top: 10px">
+        <t-col :span="4" v-for="(item,index) in banners.slice(0,3)" style="padding: 5px">
+          <div :id="'product'+index">
             <t-card theme="poster2"
                     :bordered="true"
                     :hover-shadow="true"
@@ -100,12 +119,14 @@
         </t-col>
       </t-row>
       <t-row>
-        <t-col :span="4" v-for="(item,index) in banners.slice(3,6)">
+        <t-col :span="4" v-for="(item,index) in banners.slice(3,6)" style="padding: 5px">
           <div>
             <t-card theme="poster2"
+                    :bordered="true"
+                    :hover-shadow="true"
                     :title="item.title"
                     :style="{ width: '420px' }">
-              <t-image :src="item.icon" style="width: 52px;height: 52px"/>
+              <t-image :src="item.icon" style="width: 52px;height: 52px;float: left"/>
               {{ item.desc }}
               <template #actions>
                 <t-dropdown :options="options" :min-column-width="112" @click="clickHandler">
@@ -119,47 +140,85 @@
         </t-col>
       </t-row>
     </main>
-
+    <main class="main">
+      <h1>解决方案</h1>
+      <t-row style="margin-top: 10px">
+        <t-col :span="4" v-for="(item,index) in solutions.slice(0,3)" style="padding: 5px">
+          <div :id="'product'+index">
+            <t-card theme="poster2"
+                    :bordered="true"
+                    :hover-shadow="true"
+                    :title="item.title"
+                    :style="{ width: '420px' }">
+              <!--              <t-image :src="item.icon" style="width: 52px;height: 52px;float: left"/>-->
+              <p>
+                {{ item.desc }}
+              </p>
+              <template #actions>
+                <t-dropdown :options="options" :min-column-width="112" @click="clickHandler">
+                  <t-button variant="text" shape="square">
+                    <more-icon/>
+                  </t-button>
+                </t-dropdown>
+              </template>
+            </t-card>
+          </div>
+        </t-col>
+      </t-row>
+      <t-row style="margin-top: 10px">
+        <t-col :span="4" v-for="(item,index) in solutions.slice(3,6)" style="padding: 5px">
+          <div :id="'product'+index">
+            <t-card theme="poster2"
+                    :bordered="true"
+                    :hover-shadow="true"
+                    :title="item.title"
+                    :style="{ width: '420px' }">
+              <!--              <t-image :src="item.icon" style="width: 52px;height: 52px;float: left"/>-->
+              <p>
+                {{ item.desc }}
+              </p>
+              <template #actions>
+                <t-dropdown :options="options" :min-column-width="112" @click="clickHandler">
+                  <t-button variant="text" shape="square">
+                    <more-icon/>
+                  </t-button>
+                </t-dropdown>
+              </template>
+            </t-card>
+          </div>
+        </t-col>
+      </t-row>
+    </main>
     <!-- 页脚 -->
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h4>CloudPlus</h4>
-            <p>领先的云服务平台，提供安全、稳定、高效的云计算服务。</p>
+            <h4>CloudServerPlus</h4>
+            <p>免费的云服务平台，提供安全、稳定、高效、共享的云计算服务。</p>
           </div>
           <div class="footer-section">
             <h4>产品</h4>
-            <ul>
-              <li><a href="#">Prometheus监控&告警</a></li>
-              <li><a href="#">Kubernetes&Helm应用托管</a></li>
-              <li><a href="#">Devops流水线服务</a></li>
-              <li><a href="#">Nas应用托管</a></li>
-              <li><a href="#">Scheduling调度中心</a></li>
-              <li><a href="#">免费域名证书</a></li>
-              <!--              <li><a href="#">Nas应用托管</a></li>-->
+            <ul v-for="(item,index) in banners">
+              <li><a :href="item.url">{{ item.title }}</a></li>
             </ul>
           </div>
           <div class="footer-section">
             <h4>资源</h4>
-            <ul>
-              <li><a href="#">文档中心</a></li>
-              <li><a href="#">API 参考</a></li>
-              <li><a href="#">博客</a></li>
-              <li><a href="#">社区</a></li>
+            <ul v-for="(item,index) in resources">
+              <li><a :href="item.url">{{ item.title }}</a></li>
             </ul>
           </div>
           <div class="footer-section">
             <h4>其他</h4>
-            <ul>
-              <li><a href="https://wallpaper.gpg123.vip">壁纸中心</a></li>
-              <li><a href="https://hubproxy.gpg123.vip">镜像加速</a></li>
+            <ul v-for="(item,index) in others">
+              <li><a :href="item.url">{{ item.title }}</a></li>
             </ul>
           </div>
           <div class="footer-section">
             <h4>联系我们</h4>
             <p>邮箱：2694484453@qq.com</p>
-            <p>电话：400-123-4567</p>
+            <p>电话：18439406854</p>
           </div>
         </div>
         <div class="footer-bottom">
@@ -172,7 +231,7 @@
 
 <script>
 import Vue from "vue";
-import {} from "tdesign-icons-vue";
+import {MailIcon} from "tdesign-icons-vue";
 import HeaderUser from "@/layouts/components/HeaderUser.vue";
 import CommonFooter from "@/layouts/components/CommonFooter.vue";
 import {getUserName} from "@/config/storage";
@@ -188,6 +247,7 @@ export default Vue.extend({
   components: {
     CommonFooter,
     HeaderUser,
+    MailIcon,
     prometheusLogo
   },
   mounted() {
@@ -197,7 +257,7 @@ export default Vue.extend({
     return {
       banners: [
         {
-          title: 'Prometheus监控&告警+Grafana可视化平台',
+          title: 'Prometheus监控&告警&可视化',
           desc: '分布式监控&告警平台，可通过web页面快速配置，满足企业级业务需求',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/1.png',
           url: 'https://gpg123.vip/prometheus/targets',
@@ -219,14 +279,14 @@ export default Vue.extend({
         },
         {
           title: 'Nas应用托管',
-          desc: '支持Nas常用工具，如：FRP内网穿透服务端等',
+          desc: '支持Nas常用工具，如：FRP内网穿透服务、等',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/4.png',
           url: 'https://gpg123.vip/nas/frpc',
           icon: nasLogo
         },
         {
           title: 'Scheduling调度中心',
-          desc: '支持定时任务设置，',
+          desc: '支持定时任务设置、webHook调用、定时Http请求、远程定时Ssh服务等',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/5.png',
           url: 'https://gpg123.vip/scheduling/list',
           icon: schedulingLogo,
@@ -236,11 +296,77 @@ export default Vue.extend({
           desc: '集成SSL证书模块，一站式管理证书发放、签约、续签等',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/6.png',
           url: 'https://gpg123.vip/domain/base',
-          icon:  domainLogo,
+          icon: domainLogo,
+        }
+      ],
+      solutions: [
+        {
+          title: 'prometheus-rule',
+          desc: '分布式文件系统多端写入',
+        },
+        {
+          title: 'helm-client+kubeconfig',
+          desc: '实现chart应用分发、安装、卸载、管理等',
+        },
+        {
+          title: 'kubernetes-job/cron-job',
+          desc: '默认/自定义镜像完成CI、CD、devops流程',
+        },
+        {
+          title: 'Nas开放式服务',
+          desc: '稳定内网穿透服务/镜像加速',
+        },
+        {
+          title: 'scheduling-job',
+          desc: '分布式任务系统',
+        },
+        {
+          title: '调用 Let\'s Encrypt 申请和管理 SSL/TLS 证书',
+          desc: 'acme4j-client支持 ACME v2（Let\'s Encrypt 当前协议）',
+        }
+      ],
+      resources: [
+        {
+          title: '文档中心',
+          desc: '<UNK>',
+          url: 'https://docs.gpg123.vip',
+        },
+        {
+          title: 'Api中心',
+          desc: '<UNK>',
+          url: 'https://docs.gpg123.vip',
+        },
+        {
+          title: '软件中心',
+          desc: '<UNK>',
+          url: 'https://docs.gpg123.vip',
+        },
+      ],
+      others: [
+        {
+          title: '壁纸中心',
+          desc: '<UNK>',
+          url: 'https://wallpaper.gpg123.vip',
+        },
+        {
+          title: '镜像加速',
+          desc: '<UNK>',
+          url: 'https://hubproxy.gpg123.vip',
+        },
+        {
+          title: 'webhook-test',
+          desc: '<UNK>',
+          url: 'https://webhook.gpg123.vip',
         }
       ],
       username: ''
     };
+  },
+  methods: {
+    handleClick({e, href, title}) {
+      e.preventDefault();
+      console.log('click', href, title);
+    },
   }
 });
 </script>
