@@ -189,6 +189,7 @@ import Trend from '@/components/trend/index.vue';
 import {datasource, grafanaDomain, prefix} from '@/config/global';
 
 import {CONTRACT_STATUS, CONTRACT_STATUS_OPTIONS, CONTRACT_TYPES, CONTRACT_PAYMENT_TYPES} from '@/constants';
+import {exporterTypes} from "@/api/prometheus";
 
 export default Vue.extend({
   name: 'ListBase',
@@ -587,7 +588,7 @@ export default Vue.extend({
     },
     // 查询类型
     types() {
-      this.$request.get("/prometheus/exporter/types", {}).then((res) => {
+      exporterTypes().then(res => {
         if (res.data.code === 200) {
           this.typeList = res.data.data;
         }

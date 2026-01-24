@@ -44,9 +44,9 @@ import toolsRouters from "@/router/modules/tools";
 import wallpaperRouters from "@/router/modules/wallpaper";
 import proxy from '@/config/host';
 // 开发模式
-const devRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...prometheusRouters, ...tracingRouters, ...appRouters, ...dockerRouters, ...traefikRouters, ...clusterRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters]
+const devRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...prometheusRouters, ...tracingRouters, ...appRouters, ...traefikRouters, ...clusterRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters]
 // 生产模式
-const prodRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...appRouters, ...prometheusRouters, ...tracingRouters, ...traefikRouters, ...clusterRouters, ...dockerRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters]
+const prodRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...appRouters, ...prometheusRouters, ...tracingRouters, ...traefikRouters, ...clusterRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters]
 // 基础路由
 export const routerList = [];
 const env = import.meta.env.MODE || 'development';
