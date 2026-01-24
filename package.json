@@ -10,6 +10,7 @@
     "dev:nas": "vite --open --mode nas",
     "dev:wallpaper": "vite --open --mode wallpaper",
     "dev:tools": "vite --open --mode tools",
+    "prod": "vite --open --mode prod",
     "build:test": "vite build --mode test",
     "build": "vite build --mode release",
     "build:dev": "vite build --mode development",

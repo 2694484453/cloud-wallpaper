@@ -166,7 +166,7 @@ export default Vue.extend({
             }
             this.$message.success("登录成功")
             setTimeout(() => {
-              this.$router.push("/").catch(err => {
+              this.$router.push("/dashboard").catch(err => {
               });
             }, 2000)
           } else {
