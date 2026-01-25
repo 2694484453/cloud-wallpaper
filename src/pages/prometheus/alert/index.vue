@@ -66,6 +66,7 @@
           <template #status="{row}">
             <t-tag v-show="row.status === '' || row.status === null " theme="warning" variant="light">未知</t-tag>
             <t-tag v-show="row.status === 'resolved'" theme="default" variant="light">已恢复</t-tag>
+            <t-tag v-show="row.status === 'release'" theme="success" variant="light">已解除</t-tag>
             <t-tag v-show="row.status === 'firing'" theme="danger" variant="light">触发中</t-tag>
           </template>
           <template #exporterType="{row}">
@@ -97,7 +98,7 @@
       :header="confirm.header"
       :body="confirm.body"
       :visible.sync="confirm.visible"
-      @confirm=""
+      @confirm="confirmOk"
       :onCancel="onCancel">
     </t-dialog>
     <!--抽屉-->
@@ -374,6 +375,7 @@ export default Vue.extend({
       this.drawer.visible = true;
     },
     handleClickRelease(row) {
+      this.formData = row;
       this.confirm.visible = true;
       this.confirm.operation = 'release';
       this.confirm.header = '解除';
@@ -386,7 +388,7 @@ export default Vue.extend({
       this.confirm.visible = true;
       this.confirm.operation = 'delete';
     },
-    onConfirmDelete() {
+    confirmOk() {
       switch (this.confirm.operation) {
         case 'delete':
           // 请求删除

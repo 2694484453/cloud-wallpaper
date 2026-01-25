@@ -2,7 +2,7 @@
   <div>
     <t-card :title="title" class="dashboard-detail-card" :bordered="false">
       <t-row :gutter="[16, 16]">
-        <t-col v-for="(item, index) in data" :key="index" :xs="6" :xl="3">
+        <t-col v-for="(item, index) in data" :key="index" :xs="4" :xl="2">
           <t-card :class="['dashboard-list-card']" :description="item.title">
             <div class="dashboard-list-card__number">{{ item.count }}</div>
             <div class="dashboard-list-card__text">
