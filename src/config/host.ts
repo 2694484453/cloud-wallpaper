@@ -1,16 +1,16 @@
 export default {
-  development: {
+  web_dev: {
     // 开发环境接口请求
-    NAME: "development",
+    NAME: "web_dev",
     API: 'http://localhost:9099',
     PATH: "/api", //"/dev-api/",
     // 开发环境 cdn 路径
     CDN: '',
     changeOrigin: true
   },
-  prod: {
+  web: {
     // 生产环境接口请求
-    NAME: "prod",
+    NAME: "web_prod",
     API: 'https://cloud-server.gpg123.vip',
     PATH: "/api", //"/prod-api/",
     // 开发环境 cdn 路径
@@ -33,8 +33,22 @@ export default {
     CDN: '',
     changeOrigin: true
   },
-  tools: {
-    NAME: "tools",
+  wallpaper_dev: {
+    NAME: "wallpaper_dev",
+    API: 'http://localhost:9099',
+    PATH: "/api",
+    CDN: '',
+    changeOrigin: true
+  },
+  tools_prod: {
+    NAME: "tools_prod",
+    API: 'https://cloud-server.gpg123.vip',
+    PATH: "/api",
+    CDN: '',
+    changeOrigin: true
+  },
+  tools_dev: {
+    NAME: "tools_dev",
     API: 'http://localhost:9099',
     PATH: "/api",
     CDN: '',

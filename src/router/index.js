@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router';
-import baseRouters from '@/router/modules/base';
+import commonRouters from '@/router/modules/common';
 // dashboard
 import dashboardRouters from '@/router/modules/dashboard';
 // 其他
@@ -43,17 +43,14 @@ import toolsRouters from "@/router/modules/tools";
 // 壁纸
 import wallpaperRouters from "@/router/modules/wallpaper";
 import proxy from '@/config/host';
-// 开发模式
-const devRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...prometheusRouters, ...tracingRouters, ...appRouters, ...traefikRouters, ...clusterRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters]
-// 生产模式
-const prodRouterList = [...domainRouters, ...gitRouters, ...devopsRouters, ...appRouters, ...prometheusRouters, ...tracingRouters, ...traefikRouters, ...clusterRouters, ...caddyRouters, ...corednsRouters, ...nasRouters, ...AiRouters, ...scheduleRouters]
+import Common from "@/router/modules/common";
 // 基础路由
 export const routerList = [];
 const env = import.meta.env.MODE || 'development';
 const envName = proxy[env].NAME
 // 存放动态路由
 switch (envName) {
-  case "development":
+  case "web":
     routerList.push(
       {
         path: '*',
@@ -64,37 +61,33 @@ switch (envName) {
         name: "home",
         component: () => import('@/pages/home/index.vue'),
       })
-    routerList.push(...baseRouters)
     routerList.push(...dashboardRouters)
-    routerList.push(...devRouterList)
+    routerList.push(...domainRouters)
+    routerList.push( ...gitRouters)
+    routerList.push(...devopsRouters)
+    routerList.push(...prometheusRouters)
+    routerList.push( ...tracingRouters)
+    routerList.push(...appRouters)
+    routerList.push(...traefikRouters)
+    routerList.push(...clusterRouters)
+    routerList.push(...caddyRouters)
+    routerList.push(...corednsRouters)
+    routerList.push(...nasRouters)
+    routerList.push(...AiRouters)
+    routerList.push(...scheduleRouters)
     routerList.push(...noticeRouters)
-    break;
-  case "prod":
-    routerList.push(
-      {
-        path: '*',
-        redirect: '/',
-      },
-      {
-        path: "/",
-        name: "home",
-        component: () => import('@/pages/home/index.vue'),
-      })
-    routerList.push(...baseRouters)
-    routerList.push(...dashboardRouters)
-    routerList.push(...prodRouterList)
-    routerList.push(...noticeRouters)
+    routerList.push(...commonRouters)
     break;
   case "wallpaper":
-    routerList.push(...baseRouters)
     routerList.push(...nasRouters)
     routerList.push(...wallpaperRouters)
     routerList.push(...noticeRouters)
+    routerList.push(...commonRouters)
     break;
   case "tools":
-    routerList.push(...baseRouters)
     routerList.push(...dashboardRouters)
     routerList.push(...toolsRouters)
+    routerList.push(...commonRouters)
     break;
 }
 

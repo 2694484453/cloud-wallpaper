@@ -6,7 +6,7 @@ import {getUserInfo} from "@/config/storage";
 import {buildBracketQueryString} from "@/config/global";
 
 const env = import.meta.env.MODE || 'development';
-const API_HOST = env === 'mock' ? '/' : proxy[env].API; // 如果是mock模式 就不配置host 会走本地Mock拦截
+const API_HOST = env === '' ? '/' : proxy[env].API; // 如果是mock模式 就不配置host 会走本地Mock拦截
 const instance = axios.create({
   baseURL: API_HOST+ proxy[env].PATH,
   timeout: 40000,
