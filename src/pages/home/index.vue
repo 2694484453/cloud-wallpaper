@@ -69,6 +69,9 @@
         :autoplay="true"
         :duration="6000"
         :interval="4000"
+        :loop="true"
+        :stop-on-hover="true"
+        :trigger="'click'"
         :navigation="{ type: 'dots',size: 'large' }"
         style="height: 420px; border-radius: 8px; overflow: hidden;margin-top: 20px"
       >

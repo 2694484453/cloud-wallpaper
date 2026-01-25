@@ -43,11 +43,32 @@
     </t-card>
     <t-card size="medium"
             style="margin-top: 15px"
-            title="端点类型及参数查询"
+            title="端点类型及参数及可视化"
     >
-      <t-select label="端点类型：" v-model="selectType" placeholder="请选择">
-        <t-option v-for="(item,index) in typeList" :value="item.exporterName" :label="item.exporterName" :key="index"></t-option>
-      </t-select>
+      <t-swiper :navigation="{ type: 'fraction' }"
+                :autoplay="true"
+                :current="0"
+                :interval="6000"
+                :stop-on-hover="true"
+                :trigger="'click'"
+                :loop="true">
+        <t-swiper-item v-for="(item,index) in swiper">
+          <t-row>
+            <t-col :span="2">
+              <t-descriptions :column="1" layout="vertical" :size="'small'">
+                  <t-descriptions-item label="类型名称">{{ item.name }}</t-descriptions-item>
+                  <t-descriptions-item label="label参数">{{item.label}}</t-descriptions-item>
+                  <t-descriptions-item label="描述">
+                    {{ item.description }}
+                  </t-descriptions-item>
+              </t-descriptions>
+            </t-col>
+            <t-col :span="10">
+              <t-image style="width: 100%;height: 65vh;align-self: center;float: right" :src="item.image"></t-image>
+            </t-col>
+          </t-row>
+        </t-swiper-item>
+      </t-swiper>
       <t-descriptions v-show="selectType !== null">
         <t-descriptions-item>
 
@@ -66,6 +87,9 @@ import ProductCard from '@/components/product-card/index.vue';
 import TopCard from "@/components/top-card/TopCard.vue";
 import NoticeCard from "@/components/notice-card/NoticeCard.vue";
 import {exporterTypes, exporterTypesItems} from "@/api/prometheus";
+import nodeExporterImage from '@/assets/prometheus/node-exporter.png';
+import kubeImage from "@/assets/prometheus/kube-state-metrics-exporter.png";
+import springBootImage from "@/assets/prometheus/spring-boot-exporter.png";
 
 export default {
   name: 'DashboardDetail',
@@ -75,6 +99,26 @@ export default {
       overViewData: [],
       sysNoticeData: [],
       typeList: [],
+      swiper: [
+        {
+          name: 'node-exporter',
+          label: '<UNK>',
+          image: nodeExporterImage,
+          description: '用于linux主机/服务器监控',
+        },
+        {
+          name: 'kube-state-metrics-exporter',
+          label: '<UNK>',
+          image: kubeImage,
+          description: '<UNK>',
+        },
+        {
+          name: 'spring-boot-exporter',
+          label: '<UNK>',
+          image: springBootImage,
+          description: '<UNK>',
+        }
+      ],
       selectType: "node-exporter",
       current: 0,
     };
