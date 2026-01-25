@@ -375,7 +375,7 @@ export default Vue.extend({
     },
     handleClickRelease(row) {
       this.confirm.visible = true;
-      this.confirm.operation = 'delete';
+      this.confirm.operation = 'release';
       this.confirm.header = '解除';
       this.confirm.body = '确定要解除此告警信息吗？';
     },
