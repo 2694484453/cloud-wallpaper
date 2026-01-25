@@ -10,7 +10,7 @@ export default {
   },
   web: {
     // 生产环境接口请求
-    NAME: "web_prod",
+    NAME: "web",
     API: 'https://cloud-server.gpg123.vip',
     PATH: "/api", //"/prod-api/",
     // 开发环境 cdn 路径
