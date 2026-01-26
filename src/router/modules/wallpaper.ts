@@ -1,21 +1,84 @@
 import Layout from "@/layouts/index.vue";
-import {ImageIcon} from "tdesign-icons-vue";
+import {
+  ImageIcon,
+  VideoIcon,
+  MobileIcon,
+  DesktopIcon,
+  SettingIcon,
+  FileIconIcon,
+  ServerIcon,
+  FileWordIcon,
+  CloudIcon,
+  FileIcon
+} from "tdesign-icons-vue";
 
 export default [
   {
-    path: '/',
-    name: 'wallpaper',
-    component: () => import('@/pages/wallpaper/list/index.vue'),
+    path: "/",
+    redirect: "/static",
+  },
+  {
+    path: '/static',
+    name: 'static',
+    meta: {title: '静态壁纸', icon: ImageIcon},
+    component: Layout,
+    children: [
+      {
+        path: '2d',
+        name: '2d',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '二次元', icon: ImageIcon},
+      },
+      {
+        path: '3d',
+        name: '3d',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '三次元', icon: ImageIcon},
+      },
+      {
+        path: 'iphone',
+        name: 'iphone',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '手机壁纸', icon: MobileIcon},
+      },
+      {
+        path: 'ai',
+        name: 'ai',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: 'Ai画廊', icon: ImageIcon},
+      },
+      {
+        path: 'other',
+        name: 'other',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '其他', icon: ImageIcon},
+      }
+    ]
+  },
+  {
+    path: '/dynamicW',
+    name: 'dynamicW',
+    meta: {title: '动态壁纸', icon: VideoIcon},
+    component: Layout,
+    children: [
+      {
+        path: 'dynamic_phone',
+        name: 'dynamic_phone',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '手机动态壁纸', icon: MobileIcon},
+      },
+      {
+        path: 'dynamic',
+        name: 'dynamic',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: 'Pc动态壁纸', icon: DesktopIcon},
+      }
+    ]
   },
   {
     path: '/info',
     name: 'info',
     component: () => import('@/pages/wallpaper/info/index.vue'),
-  },
-  {
-    path: '/ai',
-    name: 'ai',
-    component: () => import('@/pages/wallpaper/ai/index.vue'),
   },
   {
     path: '/share',
@@ -30,7 +93,7 @@ export default [
     path: '/stableDiffusion',
     name: 'stableDiffusion',
     component: Layout,
-    meta: {title: 'Ai壁纸管理', icon: ImageIcon},
+    meta: {title: 'Ai壁纸生成', icon: ServerIcon},
     children: [
       // {
       //   path: 'overview',
@@ -42,14 +105,28 @@ export default [
         path: "minePrompt",
         name: 'minePrompt',
         component: () => import("@/pages/wallpaper/prompt/index.vue"),
-        meta: {title: '我的词条'},
+        meta: {title: '我的词条',  icon: FileWordIcon},
       },
       {
         path: "use",
         name: 'UseBase',
-        component: () => import("@/pages/wallpaper/use/index.vue"),
-        meta: {title: '模型调用'},
+        component: () => import("@/pages/wallpaper/ai/index.vue"),
+        meta: {title: '模型调用', icon: CloudIcon},
       }
     ],
   },
+  {
+    path: '/models',
+    name: 'models',
+    component: Layout,
+    meta: {title: '模型管理', icon: FileIconIcon},
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        component: () => import("@/pages/wallpaper/models/index.vue"),
+        meta: {title: '模型列表', icon: FileIcon},
+      }
+    ]
+  }
 ]

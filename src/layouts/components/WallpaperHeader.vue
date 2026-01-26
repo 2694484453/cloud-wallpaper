@@ -1,7 +1,6 @@
 <template>
   <div :class="layoutCls">
-    <t-head-menu :class="menuCls" :theme="theme" expandType="popup" v-model:value="cateName"
-                 @change="handleChange">
+    <t-head-menu :class="menuCls" :theme="theme" expandType="popup" v-model:value="cateName" @change="handleChange">
       <template #logo>
         <span v-if="showLogo" class="header-logo-container">{{ appCnName }}</span>
         <div v-else class="header-operate-left">
@@ -11,14 +10,67 @@
           <search :layout="layout"/>
         </div>
       </template>
-      <t-menu-item value="2d">二次元pc</t-menu-item>
-      <t-menu-item value="3d">三次元pc</t-menu-item>
-      <t-menu-item value="iphone">手机壁纸</t-menu-item>
-      <t-menu-item value="dynamic">pc动态壁纸</t-menu-item>
-      <t-menu-item value="dynamic_phone">手机动态壁纸</t-menu-item>
-      <t-menu-item value="ai">ai绘画</t-menu-item>
-      <t-menu-item value="widescreen">超宽屏壁纸</t-menu-item>
-      <t-menu-item value="other">其他</t-menu-item>
+      <t-menu-item>
+        <t-submenu>
+          <template #title style="font-size: 24px;color: #3399ff">
+            <span style="color: red">Hot!</span>AI在线工具
+          </template>
+          <t-menu-item>
+            <t-button theme="default" variant="text" tag="a" href="/ai">
+              <span style="color: red">Hot!</span>&nbsp;文生图
+            </t-button>
+          </t-menu-item>
+          <t-menu-item>
+            <t-button theme="default" variant="text" tag="a" href="/">
+              <span style="color: red">Hot!</span>&nbsp;图生图(开发中)
+            </t-button>
+          </t-menu-item>
+          <t-menu-item>
+            <t-button theme="default" variant="text" tag="a" href="/">
+              <span style="color: red">Hot!</span>&nbsp;图生视频(开发中)
+            </t-button>
+          </t-menu-item>
+        </t-submenu>
+      </t-menu-item>
+      <t-menu-item>
+        <t-submenu>
+          <template #title>
+            资源下载
+          </template>
+          <t-menu-item href="/download" target="_blank">
+            离线模型包下载
+          </t-menu-item>
+          <t-menu-item href="http://hongkong.gpg123.vip:5000" target="_blank">
+            HuggingFace加速
+          </t-menu-item>
+        </t-submenu>
+      </t-menu-item>
+      <t-menu-item>
+        <t-submenu>
+          <template #title>
+            关于
+          </template>
+          <t-menu-item>
+            <t-button theme="default" variant="text" tag="a" href="/share">
+              GPU合租与赞助
+            </t-button>
+          </t-menu-item>
+          <t-menu-item>
+            <t-button theme="default" variant="text" tag="a"
+                      href="https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip">
+              站点统计
+            </t-button>
+          </t-menu-item>
+        </t-submenu>
+      </t-menu-item>
+<!--      <t-menu-item value="2d">二次元pc</t-menu-item>-->
+<!--      <t-menu-item value="3d">三次元pc</t-menu-item>-->
+<!--      <t-menu-item value="iphone">手机壁纸</t-menu-item>-->
+<!--      <t-menu-item value="dynamic">pc动态壁纸</t-menu-item>-->
+<!--      <t-menu-item value="dynamic_phone">手机动态壁纸</t-menu-item>-->
+<!--      <t-menu-item value="ai">ai绘画</t-menu-item>-->
+<!--      <t-menu-item value="widescreen">超宽屏壁纸</t-menu-item>-->
+<!--      <t-menu-item value="other">其他</t-menu-item>-->
       <menu-content v-show="layout !== 'side'" class="header-menu" :navData="menu"/>
       <template #operations>
         <div class="operations-container">
@@ -30,30 +82,6 @@
           <!-- 全局通知 -->
           <t-tooltip placement="bottom" content="系统通知">
             <WallpaperNotice/>
-          </t-tooltip>
-          <t-tooltip placement="bottom" content="AI文生图">
-            <t-button theme="primary" variant="text" tag="a" href="/ai">
-              <image-icon/>
-              AI文生图
-            </t-button>
-          </t-tooltip>
-          <t-tooltip placement="bottom" content="AI图生图">
-            <t-button theme="primary" variant="text" tag="a" href="/">
-              <image-icon/>
-              AI图生壁纸(开发中)
-            </t-button>
-          </t-tooltip>
-          <t-tooltip placement="bottom" content="合租计划">
-            <t-button theme="primary" variant="text" tag="a" href="/share">
-              <thumb-up-icon/>
-              GPU合租与赞助
-            </t-button>
-          </t-tooltip>
-          <t-tooltip placement="bottom" content="站点统计">
-            <t-button theme="primary" variant="text" tag="a" href="https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip">
-              <chart-bar-icon/>
-              站点统计
-            </t-button>
           </t-tooltip>
           <t-tooltip placement="bottom" content="用户信息">
             <HeaderUser/>

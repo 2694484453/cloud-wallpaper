@@ -261,7 +261,7 @@ export default Vue.extend({
       banners: [
         {
           title: 'Prometheus监控&告警&可视化',
-          desc: '分布式监控&告警平台，可通过web页面快速配置，满足企业级业务需求',
+          desc: '不想购买额外服务器？不想搭建服务？还不想因复杂操作和浪费精力管理而头疼吗？分布式监控&告警平台可通过web页面2步即可快速配置，如：添加/导入/导出端点；添加/导入/导出告警规则；在线查看和编辑可视化数据大盘，查看告警消息、持久化数据等',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/1.png',
           url: 'https://gpg123.vip/prometheus/targets',
           icon: prometheusLogo,

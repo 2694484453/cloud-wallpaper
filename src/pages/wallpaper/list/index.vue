@@ -1,31 +1,7 @@
 <template>
   <div class="wallpaper-list-container">
-    <!-- 页头 -->
-    <wallpaper-header
-      :theme="mode"
-      :isFixed="setting.isHeaderFixed"
-      :show-logo="showHeaderLogo"
-      :isCompact="setting.isSidebarCompact"
-      :maxLevel="setting.splitMenu ? 1 : 3"
-      class="header-fixed"
-      @cateName="changeCate"
-      @name="changeSearchData"
-      :cateList="cateList"/>
     <!-- 内容区域 -->
     <div class="list-content">
-      <t-space direction="horizontal">
-        <t-space direction="horizontal">
-            <span v-for="(item, index) in tagList" :key="index">
-            <t-tag
-              @click="searchForm.name = item.keywordName"
-              :color="item.keywordColor"
-              :style="{ color: 'white' }"
-              class="hover-pointer"
-            >{{ item.keywordName }}
-            </t-tag>
-          </span>
-        </t-space>
-      </t-space>
       <div class="image-grid-container">
         <div class="grid-container">
           <t-image-viewer
@@ -96,8 +72,6 @@
         @page-size-change="onsizeChange"
       />
     </div>
-    <!-- 页脚 -->
-    <common-footer style="margin-top: 15px"/>
   </div>
 </template>
 
@@ -188,6 +162,8 @@ export default Vue.extend({
     this.getTags();
     this.getOverView();
     // 确保在 DOM 更新后执行
+    const path = window.location.pathname;
+    this.searchForm.cateName = path.split('/').pop();
     const savedCurrent = localStorage.getItem("wallpaper.searchForm.current");
     const savedSize = localStorage.getItem("wallpaper.searchForm.size");
     // 假设你有一个方法来处理分页点击
@@ -229,6 +205,14 @@ export default Vue.extend({
         this.searchForm.name = null;
         // 刷新数据
         this.getList();
+      }
+    },
+    // 监听 $route 对象
+    '$route'(to, from) {
+      console.log("xx",to,from);
+      // 判断是否是目标参数变化
+      if (to.name !== from.name) {
+        this.searchForm.cateName = to.name;
       }
     }
   },
@@ -296,7 +280,7 @@ export default Vue.extend({
     toggle() {
       this.$notify.info({
         title: '提醒',
-        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～，本站已收录' + this.total + '张静态壁纸，' + this.dynamicTotal + '张动态壁纸',
+        content: '为确保加载速度，封面采用缩略图形式，点击图片封面查看大图呦～，本站已收录' + this.total + '张静态壁纸，' + this.dynamicTotal + '张动态壁纸，新增模型下载',
         duration: 5000,
         closeBtn: true,
       });
@@ -366,8 +350,6 @@ export default Vue.extend({
   left: 0;
   right: 0;
   z-index: 999; /* 确保在最上层 */
-  height: 44px; /* 导航栏高度 */
-  line-height: 44px;
   background-color: #008489; /* 主题色 */
   color: #fff;
   text-align: center;
@@ -379,12 +361,10 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 15px;
   box-sizing: border-box;
 }
 
 .list-content {
-  margin-top: 50px; /* 留出Header空间 */
   flex: 1;
   overflow: hidden;
 }
@@ -399,7 +379,7 @@ export default Vue.extend({
 
 /* 分页等其他样式保持不变 */
 .pagination-wrap {
-  margin-top: 10px;
+  margin-top: 25px;
   text-align: left;
 }
 
@@ -411,14 +391,13 @@ export default Vue.extend({
 /* 1. 容器设置 - 每行6个 */
 .image-grid-container {
   max-width: 100%;
-  padding: 0 15px;
+  padding: 0 12px;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-gap: 15px;
-  margin-top: 10px;
+  grid-gap: 10px;
 }
 
 /* 2. 每个图片项 */

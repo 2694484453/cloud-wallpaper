@@ -17,7 +17,7 @@
         </t-step-item>
         <t-step-item title="步骤2(可选)">
           <template #content>
-            <t-link href="#">查看可视化数据</t-link>
+            <t-link href="#" @click="loginGrafana">查看可视化数据</t-link>
           </template>
           <template #extra v-if="current === 1">
             <t-button size="small" variant="base" @click.stop="current++">下一步</t-button>
@@ -87,9 +87,10 @@ import ProductCard from '@/components/product-card/index.vue';
 import TopCard from "@/components/top-card/TopCard.vue";
 import NoticeCard from "@/components/notice-card/NoticeCard.vue";
 import {exporterTypes, exporterTypesItems} from "@/api/prometheus";
-import nodeExporterImage from '@/assets/prometheus/node-exporter.png';
+import nodeExporterImage from "@/assets/prometheus/node-exporter.png";
 import kubeImage from "@/assets/prometheus/kube-state-metrics-exporter.png";
 import springBootImage from "@/assets/prometheus/spring-boot-exporter.png";
+import {grafanaDomain} from "@/config/global";
 
 export default {
   name: 'DashboardDetail',
@@ -173,6 +174,10 @@ export default {
       }).finally(() => {
 
       })
+    },
+    loginGrafana() {
+      let url = grafanaDomain;
+       window.open(url, '_blank');
     }
   },
 };
