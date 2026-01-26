@@ -210,10 +210,7 @@ export default Vue.extend({
     // 监听 $route 对象
     '$route'(to, from) {
       console.log("xx",to,from);
-      // 判断是否是目标参数变化
-      if (to.name !== from.name) {
-        this.searchForm.cateName = to.name;
-      }
+      this.searchForm.cateName = to.name;
     }
   },
   methods: {

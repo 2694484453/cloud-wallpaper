@@ -3,7 +3,7 @@
     <t-head-menu :class="menuCls" :theme="theme" expandType="popup" :value="active">
       <template #logo>
         <span v-if="showLogo" class="header-logo-container" @click="handleNav('/dashboard/base')">
-          <logo-full class="t-logo" />
+<!--          <logo-full class="t-logo" />-->
         </span>
         <div v-else class="header-operate-left">
           <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
@@ -54,7 +54,7 @@ import {
   SettingIcon,
   ChevronDownIcon,
 } from 'tdesign-icons-vue';
-import { prefix } from '@/config/global';
+import {appCnName, prefix} from '@/config/global';
 import LogoFull from '@/assets/assets-logo-full.svg';
 
 import Notice from './Notice.vue';
@@ -77,6 +77,7 @@ export default Vue.extend({
     PoweroffIcon,
     SettingIcon,
     ChevronDownIcon,
+    appCnName: appCnName,
   },
   props: {
     theme: String,
@@ -142,6 +143,9 @@ export default Vue.extend({
   mounted() {
   },
   methods: {
+    appCnName() {
+      return appCnName
+    },
     toggleSettingPanel() {
       this.$store.commit('setting/toggleSettingPanel', true);
     },
