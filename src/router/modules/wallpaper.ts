@@ -9,7 +9,8 @@ import {
   ServerIcon,
   FileWordIcon,
   CloudIcon,
-  FileIcon
+  FileIcon,
+  DownloadIcon
 } from "tdesign-icons-vue";
 
 export default [
@@ -93,7 +94,7 @@ export default [
     path: '/stableDiffusion',
     name: 'stableDiffusion',
     component: Layout,
-    meta: {title: 'Ai壁纸生成', icon: ServerIcon},
+    meta: {title: '壁纸生成', icon: ServerIcon},
     children: [
       // {
       //   path: 'overview',
@@ -126,6 +127,11 @@ export default [
         name: 'list',
         component: () => import("@/pages/wallpaper/models/index.vue"),
         meta: {title: '模型列表', icon: FileIcon},
+      },
+      {
+        path: 'http://hongkong.gpg123.vip:5000',
+        name: 'proxy',
+        meta: {title: '代理加速', icon: DownloadIcon},
       }
     ]
   }

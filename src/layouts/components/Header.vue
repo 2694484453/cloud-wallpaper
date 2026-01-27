@@ -156,11 +156,11 @@ export default Vue.extend({
       this.$router.push(url);
     },
     navToGitHub() {
-      window.open('https://github.com/2694484453/cloud-web');
+      window.open('https://github.com/2694484453');
     },
     // 帮助文档
     navToHelper() {
-      window.open('https://gitbook.gpg123.vip');
+      window.open('https://docs.gpg123.vip');
     },
   },
 });

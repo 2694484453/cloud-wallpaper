@@ -10,6 +10,11 @@
         :data="formData"
         :style="{ marginBottom: '8px' }"
       >
+        <t-form-item label="选择提示词">
+          <t-select v-for="(item,index) in words">
+            <t-option :label="item.promptName" :value="item"></t-option>
+          </t-select>
+        </t-form-item>
         <t-form-item label="提示词" required-mark help="">
           <t-textarea
             v-model="formData.prompt"
@@ -158,6 +163,7 @@ export default Vue.extend({
         model_index: 0,
         seed: -1
       },
+      words: [],
       formDataConfig: {
         prompt: true,
         negative_prompt: true,
@@ -178,6 +184,14 @@ export default Vue.extend({
 
   },
   methods: {
+    //
+    getWords() {
+      this.$request.get('/wallpaper/userPrompt/list',{}).then(res => {
+        if (res.data.code === 200) {
+          this.words = res.data.data;
+        }
+      })
+    },
     // 从随机词库导入提示词
     importRandom() {
       // 示例：模拟导入逻辑（可替换为实际接口调用）

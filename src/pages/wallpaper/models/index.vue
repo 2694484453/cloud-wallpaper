@@ -1,19 +1,34 @@
 <template>
   <div>
     <t-card class="list-card-container" :bordered="false">
+      <t-form
+        ref="form"
+        :data="formData"
+        :label-width="80"
+        colon
+        @reset="onReset"
+        @submit="page"
+        :style="{ marginBottom: '8px' }"
+      >
       <t-row justify="space-between">
         <div class="left-operation-container">
 <!--          <t-button @click="handleSetupContract"> 新建合同 </t-button>-->
 <!--          <t-button variant="base" theme="default" :disabled="!selectedRowKeys.length"> 导出合同 </t-button>-->
 <!--          <p v-if="!!selectedRowKeys.length" class="selected-count">已选{{ selectedRowKeys.length }}项</p>-->
         </div>
-        <t-input v-model="searchValue" class="search-input" placeholder="请输入你需要搜索的内容" clearable>
-          <template #suffix-icon>
-            <search-icon size="20px" />
-          </template>
-        </t-input>
+        <t-col :span="3">
+          <t-input v-model="searchForm.modelName" class="search-input" placeholder="请输入你需要搜索的内容" clearable>
+            <template #suffix-icon>
+              <search-icon size="20px"/>
+            </template>
+          </t-input>
+        </t-col>
+        <t-col :span="2" class="operation-container">
+          <t-button theme="primary" type="submit" :style="{ marginLeft: '8px' }"> 查询</t-button>
+          <t-button type="reset" variant="base" theme="default"> 重置</t-button>
+        </t-col>
       </t-row>
-
+      </t-form>
       <div class="table-container">
         <t-table
           :columns="columns"
@@ -37,6 +52,9 @@
             <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light">履行中</t-tag>
             <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light">已完成</t-tag>
           </template>
+          <template #url="{row}">
+            <a :href="row.url" target="_blank">{{row.url}}</a>
+          </template>
           <template #contractType="{ row }">
             <p v-if="row.contractType === CONTRACT_TYPES.MAIN">审核失败</p>
             <p v-if="row.contractType === CONTRACT_TYPES.SUB">待审核</p>
@@ -54,7 +72,7 @@
           </template>
           <template #op="slotProps">
             <a class="t-button-link" @click="handleClickDetail(slotProps.row)">详情</a>
-            <a class="t-button-link" @click="handleClickDownload(slotProps.row)">急速下载</a>
+            <a class="t-button-link" @click="handleClickDownload(slotProps.row)">加速下载</a>
 <!--            <a class="t-button-link" @click="handleClickDelete(slotProps)">删除</a>-->
           </template>
         </t-table>
@@ -107,7 +125,7 @@ export default Vue.extend({
         },
         {
           title: '版本',
-          colKey: 'status',
+          colKey: 'modelVersion',
           width: 120,
           cell: { col: 'status' }
         },
@@ -154,6 +172,11 @@ export default Vue.extend({
         total: 0,
         defaultCurrent: 1,
       },
+      searchForm: {
+        modelName: '',
+        current: 1,
+        size: 10
+      },
       searchValue: '',
       confirmVisible: false,
       deleteIdx: -1,
@@ -191,7 +214,9 @@ export default Vue.extend({
       this.$router.push('/detail/base');
     },
     handleClickDownload(row: any) {
-      this.$router.push('/detail/base');
+      //
+      const url = 'https://hubproxy.gpg123.vip/'+row.downloadUrl
+      window.open(url, '_blank');
     },
     handleSetupContract() {
       this.$router.push('/form/base');
@@ -215,12 +240,17 @@ export default Vue.extend({
     onCancel() {
       this.resetIdx();
     },
+    onReset() {
+      this.page();
+    },
     resetIdx() {
       this.deleteIdx = -1;
     },
     page() {
       this.dataLoading = true;
-      this.$request.get('/wallpaper/models/page').then((res) => {
+      this.$request.get('/wallpaper/models/page',{
+        params: this.searchForm
+      }).then((res) => {
         if (res.data.code === 200) {
           this.data = res.data.rows;
           this.pagination.total = res.data.total;
