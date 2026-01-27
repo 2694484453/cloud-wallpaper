@@ -16,7 +16,7 @@ import {
 export default [
   {
     path: "/",
-    redirect: "/static",
+    redirect: "/static/2d",
   },
   {
     path: '/static',
