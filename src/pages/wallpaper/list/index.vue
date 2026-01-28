@@ -10,48 +10,46 @@
             :images="imageList"
             :default-index="index"
             :title="item.name">
-            <template #trigger="{ open }" class="image-wrapper" style="align-content: center">
-              <div>
-                <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'">
-                  <t-tooltip :content="'文件名称：'+item.name+'，分辨率：'+item.width+'x'+item.height">
-                    <t-card bordered
-                            hover-shadow>
-                      <template #cover>
-                        <t-image
-                          @click="open(index)"
-                          :loading="dataLoading"
-                          class="grid-image"
-                          :src="dynamic(item)"
-                          :lazy="true"
-                          overlayTrigger="hover"
-                        />
-                      </template>
-                      <template #footer>
-                        <t-space :size="24" direction="horizontal" style="font-size: 14px">
-                          <t-tooltip content="浏览次数">
-                            <browse-icon class="icon"/>
-                            <span>{{ item.viewCount }}</span>
-                          </t-tooltip>
-                          <t-tooltip content="下载次数">
-                            <download-icon class="icon"/>
-                            <span>{{ item.downloadCount }}</span>
-                          </t-tooltip>
-                          <t-tooltip content="查看">
-                            <info-circle-icon/>
-                            <t-button size="small" theme="primary" variant="text" @click="handleDetail(item)">详情
-                            </t-button>
-                          </t-tooltip>
-                          <t-tooltip content="下载">
-                            <download-icon class="icon"/>
-                            <t-button size="small" theme="primary" variant="text" @click="handleDownload(item)">下载
-                            </t-button>
-                          </t-tooltip>
-                        </t-space>
-                      </template>
-                    </t-card>
-                  </t-tooltip>
-                </t-skeleton>
-              </div>
+            <template #trigger="{ open }">
+              <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'">
+                <t-tooltip :content="'文件名称：'+item.name+'，分辨率：'+item.width+'x'+item.height">
+                  <t-card bordered
+                          class="image-wrapper"
+                          hover-shadow>
+                    <template #cover>
+                      <t-image
+                        @click="open(index);handleView(item)"
+                        :loading="dataLoading"
+                        :src="dynamic(item)"
+                        :lazy="true"
+                        class="grid-image"
+                      />
+                    </template>
+                    <template #footer>
+                      <t-space :size="24" direction="horizontal" style="font-size: 12px">
+                        <t-tooltip content="浏览次数">
+                          <browse-icon class="icon"/>
+                          <span>{{ item.viewCount }}</span>
+                        </t-tooltip>
+                        <t-tooltip content="下载次数">
+                          <download-icon class="icon"/>
+                          <span>{{ item.downloadCount }}</span>
+                        </t-tooltip>
+                        <t-tooltip content="查看">
+                          <info-circle-icon/>
+                          <t-button size="small" theme="primary" variant="text" @click="handleDetail(item)">详情
+                          </t-button>
+                        </t-tooltip>
+                        <t-tooltip content="下载">
+                          <download-icon class="icon"/>
+                          <t-button size="small" theme="primary" variant="text" @click="handleDownload(item)">下载
+                          </t-button>
+                        </t-tooltip>
+                      </t-space>
+                    </template>
+                  </t-card>
+                </t-tooltip>
+              </t-skeleton>
             </template>
           </t-image-viewer>
         </div>
@@ -130,7 +128,12 @@ export default Vue.extend({
         cateName: "二次元",
         current: 1,
         size: 24,
-        orders: []
+        orders: [
+          {
+            sortBy: 'createTime',
+            descending: true,
+          }
+        ]
       },
       pagination: {
         total: 0,
@@ -209,17 +212,11 @@ export default Vue.extend({
     },
     // 监听 $route 对象
     '$route'(to, from) {
-      console.log("xx",to,from);
+      console.log("xx", to, from);
       this.searchForm.cateName = to.name;
     }
   },
   methods: {
-    changeCate(val: string) {
-      this.searchForm.cateName = val;
-    },
-    changeSearchData(val: string) {
-      this.searchForm.name = val;
-    },
     getOverView() {
       this.$request.get("/wallpaper/overView", {}).then(res => {
         if (res.data.code === 200) {
@@ -288,9 +285,28 @@ export default Vue.extend({
       window.open(url, '_blank');
     },
     handleDownload(item: any) {
-      download(item.url, item.name);
-      const url = "/download?id=" + item.id + "&cateName=" + this.searchForm.cateName;
-      window.open(url, '_blank');
+      download(item.url, item.name).finally(
+        this.$request.get('/wallpaper/operate', {
+          params: {
+            cateName: this.searchForm.cateName,
+            type: 'download',
+            id: item.id
+          }
+        }).then((res) => {
+
+        })
+      );
+    },
+    handleView(item: any) {
+      this.$request.get('/wallpaper/operate', {
+        params: {
+          cateName: this.searchForm.cateName,
+          type: 'view',
+          id: item.id
+        }
+      }).then((res) => {
+
+      })
     },
     dynamic(item: any) {
       // 计算显示宽高
@@ -419,6 +435,8 @@ export default Vue.extend({
 }
 
 .grid-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
   border-radius: 8px;
