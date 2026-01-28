@@ -14,15 +14,14 @@
               <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'">
                 <t-tooltip :content="'文件名称：'+item.name+'，分辨率：'+item.width+'x'+item.height">
                   <t-card bordered
-                          class="image-wrapper"
                           hover-shadow>
-                    <template #cover>
+                    <template #cover >
                       <t-image
                         @click="open(index);handleView(item)"
                         :loading="dataLoading"
                         :src="dynamic(item)"
                         :lazy="true"
-                        class="grid-image"
+                        class="cover-image"
                       />
                     </template>
                     <template #footer>
@@ -458,6 +457,38 @@ export default Vue.extend({
   font-size: 14px;
   margin-right: 4px;
   color: #9ea6a6;
+}
+
+/* 1. 固定卡片总高度 */
+.fixed-height-card {
+  height: 200px; /* 设置你需要的高度 */
+  /* 关键：覆盖 TDesign 默认的布局，防止内容撑开 */
+  display: block;
+  overflow: hidden; /* 核心：隐藏溢出的图片 */
+}
+
+/* 2. 强制封面容器（cover slot）占满卡片高度 */
+/* TDesign Card 的 cover 插槽通常被包裹在 .t-card__cover 内 */
+.fixed-height-card :deep(.t-card__cover) {
+  width: 100%;
+  height: 100%;
+  /* 确保内部图片不撑破容器 */
+  overflow: hidden;
+  position: relative;
+}
+
+/* 3. 图片样式：铺满容器并裁剪 */
+.cover-image {
+  width: 100%;
+  height: 100%;
+  /* 让 img 标签本身铺满父容器 */
+  :deep(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 裁剪图片以填满区域 */
+    /* 点击卡片时的默认手势 */
+    cursor: pointer;
+  }
 }
 
 /* 5. 响应式调整 - 当屏幕较小时自动调整列数 */
