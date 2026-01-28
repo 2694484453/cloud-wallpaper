@@ -10,10 +10,11 @@
     >
       <template #logo>
         <span v-if="showLogo" :class="`${prefix}-side-nav-logo-wrapper`" @click="() => handleNav('/dashboard/base')">
-          <component :is="getLogo" :class="`${prefix}-side-nav-logo-${collapsed ? 't' : 'tdesign'}-logo`" />
+<!--          <component :is="getLogo" :class="`${prefix}-side-nav-logo-${collapsed ? 't' : 'tdesign'}-logo`" />-->
+            <span style="font-size: 20px" v-show="!collapsed">{{ appCnName() }}</span>
         </span>
       </template>
-      <menu-content :navData="menu" />
+      <menu-content :navData="menu"/>
       <template #operations>
         <span class="version-container"> {{ !collapsed ? `Cloud Server ${pgk.version}` : pgk.version }} </span>
       </template>
@@ -24,8 +25,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { prefix } from '@/config/global';
-import { ClassName } from '@/interface';
+import {appCnName, prefix} from '@/config/global';
+import {ClassName} from '@/interface';
 import Logo from '@/assets/assets-t-logo.svg';
 import LogoFull from '@/assets/assets-logo-full.svg';
 
@@ -135,6 +136,9 @@ export default Vue.extend({
     };
   },
   methods: {
+    appCnName() {
+      return appCnName
+    },
     changeCollapsed(): void {
       this.$store.commit('setting/toggleSidebarCompact');
     },

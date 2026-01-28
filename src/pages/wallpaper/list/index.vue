@@ -69,6 +69,73 @@
         @page-size-change="onsizeChange"
       />
     </div>
+    <t-drawer
+      :visible.sync="drawer.visible"
+      :header="drawer.header"
+      :on-overlay-click="() => (drawer.visible = false)"
+      placement="right"
+      destroyOnClose
+      :show-overlay="true"
+      :sizeDraggable="true"
+      :on-size-drag-end="handleSizeDrag"
+      :size="drawer.size"
+      @cancel="drawer.visible = false"
+      @close="drawer.visible = false">
+      <t-space v-show="drawer.operation === 'add'|| drawer.operation ==='edit'" direction="vertical"
+               style="width: 100%">
+        <t-form
+          ref="formRef"
+          :data="formData"
+          :label-width="120"
+          @reset="onReset"
+          @submit="onSubmit"
+        >
+          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称" :rules="[{required: true,message: '规则名称必填'}]">
+            <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200"
+                     clearable></t-input>
+          </t-form-item>
+          <t-form-item label="分组名称" name="groupId" required-mark help="您使用的接入点名称" :rules="[{required:true}]">
+            <t-select v-model="formData.groupId">
+              <t-option v-for="(item,index) in groups" :label="item.jobName" :value="item.targetId"/>
+            </t-select>
+          </t-form-item>
+          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验" :rules="[{required: true,message: '表达式必填'}]">
+            <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}" onBlur="checkPromQL"></t-textarea>
+          </t-form-item>
+          <t-form-item label="持续时间" name="forTime" required-mark :rules="[{required:true}]">
+            <t-input-adornment append="m">
+              <t-input-number v-model="formData.forTime" theme="column" min="1" placeholder="请输入内容" />
+            </t-input-adornment>
+          </t-form-item>
+          <t-form-item label="级别" name="severityLevel">
+            <t-select v-model="formData.severityLevel">
+              <t-option v-for="(item,index) in levels" :label="item" :value="item"/>
+            </t-select>
+          </t-form-item>
+          <t-form-item label="summary" name="summary">
+            <t-textarea v-model="formData.summary" placeholder="请输入备注内容" :maxlength="9999" with="200"
+                        :autosize="{minRows:3}"></t-textarea>
+          </t-form-item>
+          <t-form-item label="描述" name="description">
+            <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="200" with="200"
+                        :autosize="{minRows:3}"></t-textarea>
+          </t-form-item>
+        </t-form>
+      </t-space>
+      <t-space v-show="drawer.operation === 'detail'" direction="vertical" style="width: 100%">
+        <t-descriptions bordered :layout="'vertical'" :item-layout="'horizontal'" :column="3">
+          <t-descriptions-item label="名称">{{ formData.name }}</t-descriptions-item>
+          <t-descriptions-item label="类型">{{ searchForm.cateName }}</t-descriptions-item>
+          <t-descriptions-item label="标签">{{ formData.tags }}</t-descriptions-item>
+          <t-descriptions-item label="大小">{{ formData.size }}</t-descriptions-item>
+          <t-descriptions-item label="创建时间">{{ formData.createTime }}</t-descriptions-item>
+          <t-descriptions-item label="创建者">{{ formData.createByUserName }}</t-descriptions-item>
+          <t-descriptions-item label="更新时间">{{ formData.updateTime }}</t-descriptions-item>
+          <t-descriptions-item label="更新者">{{ formData.updateByUserName }}</t-descriptions-item>
+          <t-descriptions-item label="描述">{{ formData.description }}</t-descriptions-item>
+        </t-descriptions>
+      </t-space>
+    </t-drawer>
   </div>
 </template>
 
@@ -134,6 +201,14 @@ export default Vue.extend({
           }
         ]
       },
+      // 抽屉
+      drawer: {
+        header: "",
+        visible: false,
+        operation: "add",
+        size: '40%',
+        loading: false,
+      },
       pagination: {
         total: 0,
       },
@@ -141,6 +216,20 @@ export default Vue.extend({
         visible: false,
         index: 0,
         url: ""
+      },
+      formData: {
+        id: "",
+        name: "",
+        description: "",
+        createTime: "",
+        updateTime: "",
+        createdBy: "",
+        updateBy: "",
+        createByUserName: "",
+        updateByUserName: "",
+        labels: "",
+        tags: "",
+        size: ''
       },
       imageList: [],
       cateList: [],
@@ -279,9 +368,10 @@ export default Vue.extend({
       });
     },
     handleDetail(item: any) {
-      localStorage.setItem('wallpaper.detail', JSON.stringify(item));
-      const url = "/info?id=" + item.id + "&cateName=" + this.searchForm.cateName;
-      window.open(url, '_blank');
+      this.drawer.visible = true;
+      this.drawer.header = item.name;
+      this.drawer.operation = 'detail';
+      this.formData = item;
     },
     handleDownload(item: any) {
       download(item.url, item.name).finally(
@@ -295,6 +385,10 @@ export default Vue.extend({
 
         })
       );
+    },
+    // drawer大小
+    handleSizeDrag({size}) {
+      console.log('size drag size: ', size);
     },
     handleView(item: any) {
       this.$request.get('/wallpaper/operate', {
