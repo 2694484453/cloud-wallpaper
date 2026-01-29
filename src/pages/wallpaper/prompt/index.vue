@@ -97,7 +97,8 @@
       @close="onCancelDrawer"
       :onConfirm="handleDrawerOk"
       @cancel="onCancelDrawer">
-      <t-space v-show="drawer.operation === 'add'|| drawer.operation ==='edit'"  direction="vertical" style="width: 100%">
+      <t-space v-show="drawer.operation === 'add'|| drawer.operation ==='edit'" direction="vertical"
+               style="width: 100%">
         <t-form
           ref="formValidatorStatus"
           :data="formData"
@@ -105,29 +106,38 @@
           @reset="onReset"
         >
           <t-form-item label="词条名称" name="branch">
-            <t-input v-model="formData.promptName" placeholder="请输入词条名称" :maxlength="64" with="200" clearable></t-input>
+            <t-input v-model="formData.promptName" placeholder="请输入词条名称" :maxlength="64" with="200"
+                     clearable></t-input>
           </t-form-item>
           <t-form-item label="正词条">
             <t-textarea v-model="formData.prompt" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
           </t-form-item>
           <t-form-item label="负词条" name="chartUrl">
-            <t-textarea v-model="formData.negative_prompt" placeholder="请输入备注内容" :maxlength="9999" with="200" :autosize="{minRows:3}"></t-textarea>
+            <t-textarea v-model="formData.negativePrompt" placeholder="请输入备注内容" :maxlength="9999" with="200"
+                        :autosize="{minRows:3}"></t-textarea>
+          </t-form-item>
+          <t-form-item label="宽">
+            <t-input-number :theme="'column'" v-model="formData.width"></t-input-number>
+          </t-form-item>
+          <t-form-item label="高">
+            <t-input-number :theme="'column'" v-model="formData.height"></t-input-number>
           </t-form-item>
           <t-form-item label="描述" name="description">
-            <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="200" with="200" :autosize="{minRows:3}"></t-textarea>
+            <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="200" with="200"
+                        :autosize="{minRows:3}"></t-textarea>
           </t-form-item>
         </t-form>
       </t-space>
-      <t-space v-show="drawer.operation === 'detail'" direction="vertical" style="width: 100%" >
+      <t-space v-show="drawer.operation === 'detail'" direction="vertical" style="width: 100%">
         <t-descriptions bordered :layout="'vertical'" :item-layout="'horizontal'" :column="3">
-          <t-descriptions-item label="词条名称" >{{formData.promptName}}</t-descriptions-item>
-          <t-descriptions-item label="正词条">{{formData.prompt}}</t-descriptions-item>
-          <t-descriptions-item label="负词条">{{formData.negative_prompt}}</t-descriptions-item>
-          <t-descriptions-item label="创建时间">{{formData.createTime}}</t-descriptions-item>
-          <t-descriptions-item label="创建者">{{formData.createByUserName}}</t-descriptions-item>
-          <t-descriptions-item label="更新时间">{{formData.updateTime}}</t-descriptions-item>
-          <t-descriptions-item label="更新者">{{formData.updateByUserName}}</t-descriptions-item>
-          <t-descriptions-item label="描述">{{formData.description}}</t-descriptions-item>
+          <t-descriptions-item label="词条名称">{{ formData.promptName }}</t-descriptions-item>
+          <t-descriptions-item label="正词条">{{ formData.prompt }}</t-descriptions-item>
+          <t-descriptions-item label="负词条">{{ formData.negativePrompt }}</t-descriptions-item>
+          <t-descriptions-item label="创建时间">{{ formData.createTime }}</t-descriptions-item>
+          <t-descriptions-item label="创建者">{{ formData.createByUserName }}</t-descriptions-item>
+          <t-descriptions-item label="更新时间">{{ formData.updateTime }}</t-descriptions-item>
+          <t-descriptions-item label="更新者">{{ formData.updateByUserName }}</t-descriptions-item>
+          <t-descriptions-item label="描述">{{ formData.description }}</t-descriptions-item>
         </t-descriptions>
       </t-space>
     </t-drawer>
@@ -159,10 +169,11 @@ export default Vue.extend({
       selectedRowKeys: [1, 2],
       value: 'first',
       columns: [
+        { colKey: 'row-select', type: 'multiple', width: 32, fixed: 'left' },
         {
           title: '词条名称',
           align: 'left',
-          width: 150,
+          width: 120,
           ellipsis: true,
           colKey: 'promptName',
           fixed: 'left',
@@ -170,15 +181,16 @@ export default Vue.extend({
         },
         {
           title: '正词条',
-          width: 150,
+          width: 180,
           ellipsis: true,
           fixed: 'left',
           colKey: 'prompt',
         },
         {
           title: '负词条',
-          width: 150,
-          colKey: 'negative_prompt',
+          width: 180,
+          ellipsis: true,
+          colKey: 'negativePrompt',
           fixed: 'left',
         },
         {
@@ -228,7 +240,9 @@ export default Vue.extend({
         id: 0,
         promptName: "",
         prompt: "",
-        negative_prompt: "",
+        negativePrompt: "",
+        width: 512,
+        height: 512,
         createTime: "",
         updateTime: "",
         createdBy: "",
@@ -238,7 +252,7 @@ export default Vue.extend({
         description: "",
       },
       // 搜索框
-      searchForm:{
+      searchForm: {
         alertName: "",
         groupName: "",
         isAsc: "desc",
@@ -281,7 +295,7 @@ export default Vue.extend({
     this.getTypeList()
     this.page();
   },
-  watch:{
+  watch: {
     "searchForm.name"(newVal, oldVal) {
       if (newVal != oldVal) {
         this.page();
@@ -326,48 +340,48 @@ export default Vue.extend({
     onChange(pageInfo) {
       console.log('Page Info: ', pageInfo);
     },
-    sortChange(sort:any) {
+    sortChange(sort: any) {
       // 对于受控属性而言，这里的赋值很重要，不可缺少
-      console.log('sort-change',sort);
+      console.log('sort-change', sort);
       this.searchForm.isAsc = sort.descending ? 'desc' : 'asc';
       this.searchForm.orderByColumn = sort.sortBy
     },
     // 确认抽屉
     handleDrawerOk() {
-      console.log('执行:',this.operation);
-      switch (this.operation) {
+      console.log('执行:', this.drawer.operation);
+      switch (this.drawer.operation) {
         case 'add':
-          this.$request.post('/prometheus/rule/add', this.formData).then((res) => {
+          this.$request.post('/wallpaper/userPrompt/add', this.formData).then((res) => {
             if (res.data.code === 200) {
               this.$message.success(res.data.msg);
-              this.page();
-            } else  {
+              this.drawer.visible = false;
+            } else {
               this.$message.error(res.data.msg);
             }
           }).catch((e: Error) => {
             console.log(e);
           }).finally(() => {
-            this.dataLoading = false;
+            this.page();
           });
           break;
         case "edit":
-          this.$request.post('/prometheus/rule/edit', this.formData).then((res) => {
+          this.$request.put('/wallpaper/userPrompt/edit', this.formData).then((res) => {
             if (res.data.code === 200) {
               this.$message.success(res.data.msg);
-              this.page();
-            } else  {
+              this.drawer.visible = false;
+            } else {
               this.$message.error(res.data.msg);
             }
           }).catch((e: Error) => {
             console.log(e);
           }).finally(() => {
-            this.dataLoading = false;
+            this.page();
           });
       }
     },
     // 对话框信息自定义
     handleConfirmOk() {
-      switch(this.operation) {
+      switch (this.operation) {
         case 'delete':
           this.confirm.visible = true;
           this.confirm.header = "删除：" + this.formData.alertName;
@@ -383,17 +397,17 @@ export default Vue.extend({
     getContainer() {
       return document.querySelector('.tdesign-starter-layout');
     },
-    handleClickDetail(row:any) {
+    handleClickDetail(row: any) {
       this.formData = row;
       this.drawer.visible = true;
       this.drawer.operation = 'detail';
-      this.drawer.header = row.alertName;
+      this.drawer.header = row.name;
     },
-    handleClickEdit(row:any) {
+    handleClickEdit(row: any) {
       this.formData = row;
       this.drawer.visible = true;
       this.drawer.operation = 'edit';
-      this.drawer.header = row.alertName;
+      this.drawer.header = row.name;
     },
     handleSetupContract() {
       this.formData = {}

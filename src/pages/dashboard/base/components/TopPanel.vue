@@ -1,16 +1,5 @@
 <template>
-  <t-card>
-    <t-space align="baseline" direction="vertical">
-      <t-select
-        v-model="selected"
-        @change="clickHandler"
-        placeholder="请选择范围"
-        clearable>
-        <t-option v-for="(item,index) in timeRange" :key="index" :label="item.name" :value="item.start">
-          {{ item.name }}
-        </t-option>
-      </t-select>
-    </t-space>
+  <t-card title="数据概览">
     <t-row :gutter="[16, 16]">
       <t-col :xs="3" :xl="2" v-for="(item, index) in data" :key="item.title">
         <t-card

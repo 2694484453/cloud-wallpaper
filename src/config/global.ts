@@ -40,6 +40,7 @@ export const prometheusDomain = import.meta.env.VITE_PROMETHEUS_DOMAIN ?? '';
 export const datasource = import.meta.env.VITE_DATASOURCE ?? '';
 export const umamiId = import.meta.env.VITE_UMAMI_ID ?? '';
 export const umamiHost = import.meta.env.VITE_UMAMI_HOST ?? '';
+export const appName = import.meta.env.VITE_APP_NAME ?? '';
 export const appCnName = import.meta.env.VITE_APP_CN_NAME ?? '';
 export const banQuan = import.meta.env.VITE_BAN_QUAN ?? '';
 export const beiAn = import.meta.env.VITE_BEI_AN ?? '';

@@ -11,7 +11,7 @@
         :style="{ marginBottom: '8px' }"
       >
         <t-form-item label="选择提示词">
-          <t-select v-for="(item,index) in words">
+          <t-select v-for="(item,index) in words" clearable @change="changeWords(item)">
             <t-option :label="item.promptName" :value="item"></t-option>
           </t-select>
         </t-form-item>
@@ -179,6 +179,7 @@ export default Vue.extend({
     if (saveGenerate) {
       //this.formData = JSON.parse(saveGenerate);
     }
+    this.getWords();
   },
   watch: {
 
@@ -191,6 +192,12 @@ export default Vue.extend({
           this.words = res.data.data;
         }
       })
+    },
+    //
+    changeWords(words: any) {
+      console.log("change:",words);
+      this.formData.prompt = words.prompt;
+      this.formData.negative_prompt = words.negativePrompt;
     },
     // 从随机词库导入提示词
     importRandom() {

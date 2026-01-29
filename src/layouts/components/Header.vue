@@ -18,7 +18,66 @@
           <!-- 搜索框 -->
           <search v-if="layout !== 'side'" :layout="layout" />
           <!-- 全局通知 -->
-          <notice />
+          <t-tooltip placement="bottom" content="系统通知">
+            <notice />
+          </t-tooltip>
+        </div>
+        <div class="operations-container" v-show="appName() === 'wallpaper'">
+          <t-menu-item>
+            <t-submenu>
+              <template #title style="font-size: 24px;color: #3399ff">
+                <span style="color: red">Hot!</span>AI在线工具
+              </template>
+              <t-menu-item>
+                <t-button theme="default" variant="text" tag="a" href="/stableDiffusion/use">
+                  <span style="color: red">Hot!</span>&nbsp;文生图
+                </t-button>
+              </t-menu-item>
+              <t-menu-item>
+                <t-button theme="default" variant="text" tag="a" href="/">
+                  <span style="color: red">Hot!</span>&nbsp;图生图(开发中)
+                </t-button>
+              </t-menu-item>
+              <t-menu-item>
+                <t-button theme="default" variant="text" tag="a" href="/">
+                  <span style="color: red">Hot!</span>&nbsp;图生视频(开发中)
+                </t-button>
+              </t-menu-item>
+            </t-submenu>
+          </t-menu-item>
+          <t-menu-item>
+            <t-submenu>
+              <template #title>
+                资源下载
+              </template>
+              <t-menu-item href="https://pan.quark.cn/s/b4081a86e842" target="_blank">
+                离线模型包下载
+              </t-menu-item>
+              <t-menu-item href="http://hongkong.gpg123.vip:5000" target="_blank">
+                HuggingFace加速
+              </t-menu-item>
+            </t-submenu>
+          </t-menu-item>
+          <t-menu-item>
+            <t-submenu>
+              <template #title>
+                关于
+              </template>
+              <t-menu-item>
+                <t-button theme="default" variant="text" tag="a" href="/share">
+                  GPU合租与赞助
+                </t-button>
+              </t-menu-item>
+              <t-menu-item>
+                <t-button theme="default" variant="text" tag="a"
+                          href="https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip">
+                  站点统计
+                </t-button>
+              </t-menu-item>
+            </t-submenu>
+          </t-menu-item>
+        </div>
+        <div class="operations-container" v-show="appName() !== 'wallpaper'">
           <t-tooltip placement="bottom" content="代码仓库">
             <t-button theme="default" shape="square" variant="text" @click="navToGitHub">
               <logo-github-icon />
@@ -29,6 +88,8 @@
               <help-circle-icon />
             </t-button>
           </t-tooltip>
+        </div>
+        <div class="operations-container">
           <t-dropdown :min-column-width="125" trigger="click">
             <HeaderUser/>
           </t-dropdown>
@@ -54,7 +115,7 @@ import {
   SettingIcon,
   ChevronDownIcon,
 } from 'tdesign-icons-vue';
-import {appCnName, prefix} from '@/config/global';
+import {appCnName, appName, prefix} from '@/config/global';
 import LogoFull from '@/assets/assets-logo-full.svg';
 
 import Notice from './Notice.vue';
@@ -143,6 +204,9 @@ export default Vue.extend({
   mounted() {
   },
   methods: {
+    appName() {
+      return appName
+    },
     appCnName() {
       return appCnName
     },

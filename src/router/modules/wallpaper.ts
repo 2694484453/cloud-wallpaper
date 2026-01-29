@@ -4,19 +4,40 @@ import {
   VideoIcon,
   MobileIcon,
   DesktopIcon,
-  SettingIcon,
-  FileIconIcon,
   ServerIcon,
   FileWordIcon,
   CloudIcon,
-  FileIcon,
-  DownloadIcon
+  DashboardIcon
 } from "tdesign-icons-vue";
 
 export default [
   {
     path: "/",
     redirect: "/static/2d",
+  },
+  {
+    path: '/dashboard',
+    component: Layout,
+    redirect: '/dashboard/base',
+    name: 'dashboard',
+    meta: {
+      title: '仪表盘',
+      icon: DashboardIcon,
+    },
+    children: [
+      {
+        path: 'base',
+        name: 'DashboardBase',
+        component: () => import('@/pages/wallpaper/index.vue'),
+        meta: { title: '概览仪表盘' },
+      },
+      // {
+      //   path: 'detail',
+      //   name: 'DashboardDetail',
+      //   component: () => import('@/pages/dashboard/detail/index.vue'),
+      //   meta: { title: '统计报表' },
+      // },
+    ],
   },
   {
     path: '/static',
@@ -116,23 +137,23 @@ export default [
       }
     ],
   },
-  {
-    path: '/models',
-    name: 'models',
-    component: Layout,
-    meta: {title: '模型管理', icon: FileIconIcon},
-    children: [
-      {
-        path: 'list',
-        name: 'list',
-        component: () => import("@/pages/wallpaper/models/index.vue"),
-        meta: {title: '模型列表', icon: FileIcon},
-      },
-      {
-        path: 'http://hongkong.gpg123.vip:5000',
-        name: 'proxy',
-        meta: {title: '代理加速', icon: DownloadIcon},
-      }
-    ]
-  }
+  // {
+  //   path: '/models',
+  //   name: 'models',
+  //   component: Layout,
+  //   meta: {title: '模型管理', icon: FileIconIcon},
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: 'list',
+  //       component: () => import("@/pages/wallpaper/models/index.vue"),
+  //       meta: {title: '模型列表', icon: FileIcon},
+  //     },
+  //     {
+  //       path: 'http://hongkong.gpg123.vip:5000',
+  //       name: 'proxy',
+  //       meta: {title: '代理加速', icon: DownloadIcon},
+  //     }
+  //   ]
+  // }
 ]

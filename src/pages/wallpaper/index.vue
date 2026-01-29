@@ -1,21 +1,6 @@
 <template>
   <div class="dashboard-detail">
-    <t-card title="概览" class="dashboard-detail-card" :bordered="false">
-      <t-row :gutter="[16, 16]">
-        <t-col v-for="(item, index) in overViewData" :key="index" :xs="6" :xl="3">
-          <t-card :class="['dashboard-list-card']" :description="item.title">
-            <div class="dashboard-list-card__number">{{ item.count }}</div>
-            <div class="dashboard-list-card__text">
-              <!--              <div class="dashboard-list-card__text-left">-->
-              <!--                环比-->
-              <!--                <trend class="icon" :type="item.upTrend ? 'up' : 'down'" :describe="item.upTrend || item.downTrend" />-->
-              <!--              </div>-->
-              <!--              <chevron-right-icon />-->
-            </div>
-          </t-card>
-        </t-col>
-      </t-row>
-    </t-card>
+    <top-card :data="overViewData"/>
     <t-card :class="{ 'dashboard-detail-card': true }"  class="row-margin" :bordered="false" title="系统公告" >
       <t-timeline mode="same" :reverse="reverse" theme="default">
         <t-space v-for="(item) in sysNoticeData">
@@ -41,12 +26,13 @@ import {changeChartsTheme} from '@/utils/color';
 
 import {PANE_LIST_DATA, PRODUCT_LIST} from '@/service/service-detail';
 import {getFolderLineDataSet, getScatterDataSet} from './index';
+import TopCard from "@/components/top-card/TopCard.vue";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, ScatterChart, CanvasRenderer]);
 
 export default {
   name: 'DashboardDetail',
-  components: {Trend, ProductCard, ChevronRightIcon},
+  components: {TopCard, Trend, ProductCard, ChevronRightIcon},
   data() {
     return {
       PANE_LIST_DATA,

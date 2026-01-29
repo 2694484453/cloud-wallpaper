@@ -6,11 +6,8 @@
           <t-card :class="['dashboard-list-card']" :description="item.title">
             <div class="dashboard-list-card__number">{{ item.count }}</div>
             <div class="dashboard-list-card__text">
-              <div class="dashboard-list-card__text-left">
-                环比
-                <trend class="icon" :type="item.upTrend ? 'up' : 'down'" :describe="item.upTrend || item.downTrend"/>
-              </div>
-              <chevron-right-icon/>
+              <t-statistic v-show="item.hasOwnProperty('up')" title="本周" :value="item.up" :unit="item.unit" trend="increase" color="green" />
+              <t-statistic v-show="item.hasOwnProperty('down')" title="本周" :value="item.down" :unit="item.unit"  trend="decrease" color="red"/>
             </div>
           </t-card>
         </t-col>
@@ -24,10 +21,12 @@ import * as echarts from "echarts/core";
 import {GridComponent, LegendComponent, TooltipComponent} from "echarts/components";
 import {LineChart, ScatterChart} from "echarts/charts";
 import {CanvasRenderer} from "echarts/renderers";
+import Trend from "@/components/trend/index.vue";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, ScatterChart, CanvasRenderer]);
 export default {
   name: 'TopCard',
+  components: {Trend},
   props: ['data'],
   data() {
     return {
