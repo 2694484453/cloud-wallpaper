@@ -1,5 +1,52 @@
 <template>
-  <div class="wallpaper-list-container">
+  <div>
+    <t-form
+      ref="form"
+      :data="searchForm"
+      :label-width="180"
+      style="width: 100%"
+      colon
+      @reset="onReset"
+      @submit="onSubmit"
+      :scroll-to-first-error="'smooth'"
+      :style="{ marginBottom: '8px' }"
+    >
+      <t-row justify="space-between">
+        <div class="left-operation-container">
+          <!--            <t-button @click="handleSetupContract">添加端点</t-button>-->
+          <!--            <t-button variant="base" theme="default" :disabled="!selectedRowKeys.length"> 导出配置</t-button>-->
+          <!--            <p v-if="!!selectedRowKeys.length" class="selected-count">已选{{ selectedRowKeys.length }}项</p>-->
+        </div>
+        <t-col :span="4">
+          <t-input v-model="searchForm.name" class="search-input" placeholder="请输入你需要搜索的内容" clearable>
+            <template #suffix-icon>
+              <search-icon size="20px"/>
+            </template>
+          </t-input>
+        </t-col>
+        <t-col :span="3">
+          <t-form-item label="排序" name="type">
+            <t-select
+              v-model="searchForm.orders"
+              :style="{ width: '200px' }"
+              placeholder="请选择排序类型"
+              class="demo-select-base"
+              clearable
+            >
+              <t-option :key="0" :value="[{ sortBy: 'createTime',descending: true,}]" :label="'创建时间'"></t-option>
+              <t-option :key="1" :value="[{ sortBy: 'updateTime',descending: true,}]" :label="'更新时间'"></t-option>
+              <t-option :key="2" :value="[{ sortBy: 'name',descending: true,}]" :label="'文件名称'"></t-option>
+            </t-select>
+          </t-form-item>
+        </t-col>
+        <t-col :span="3" class="operation-container">
+          <t-space>
+            <t-button theme="primary" type="submit" :style="{ marginLeft: '8px' }"> 查询</t-button>
+            <t-button type="reset" variant="base" theme="default"> 重置</t-button>
+          </t-space>
+        </t-col>
+      </t-row>
+    </t-form>
     <!-- 内容区域 -->
     <div class="list-content">
       <div class="image-grid-container">
@@ -15,7 +62,7 @@
                 <t-tooltip :content="'文件名称：'+item.name+'，分辨率：'+item.width+'x'+item.height">
                   <t-card bordered
                           hover-shadow>
-                    <template #cover >
+                    <template #cover>
                       <t-image
                         @click="open(index);handleView(item)"
                         :loading="dataLoading"
@@ -90,21 +137,25 @@
           @reset="onReset"
           @submit="onSubmit"
         >
-          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称" :rules="[{required: true,message: '规则名称必填'}]">
+          <t-form-item label="规则名称" name="ruleName" required-mark help="为您的规则定义个名称"
+                       :rules="[{required: true,message: '规则名称必填'}]">
             <t-input v-model="formData.ruleName" placeholder="请输入英文字母和数字的组合名称" :maxlength="64" with="200"
                      clearable></t-input>
           </t-form-item>
-          <t-form-item label="分组名称" name="groupId" required-mark help="您使用的接入点名称" :rules="[{required:true}]">
+          <t-form-item label="分组名称" name="groupId" required-mark help="您使用的接入点名称"
+                       :rules="[{required:true}]">
             <t-select v-model="formData.groupId">
               <t-option v-for="(item,index) in groups" :label="item.jobName" :value="item.targetId"/>
             </t-select>
           </t-form-item>
-          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验" :rules="[{required: true,message: '表达式必填'}]">
-            <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}" onBlur="checkPromQL"></t-textarea>
+          <t-form-item label="表达式" name="expr" required-mark help="输入您的PromQl表达式，失去焦点自动校验"
+                       :rules="[{required: true,message: '表达式必填'}]">
+            <t-textarea v-model="formData.expr" placeholder="请输入表达式" :autosize="{minRows:5}"
+                        onBlur="checkPromQL"></t-textarea>
           </t-form-item>
           <t-form-item label="持续时间" name="forTime" required-mark :rules="[{required:true}]">
             <t-input-adornment append="m">
-              <t-input-number v-model="formData.forTime" theme="column" min="1" placeholder="请输入内容" />
+              <t-input-number v-model="formData.forTime" theme="column" min="1" placeholder="请输入内容"/>
             </t-input-adornment>
           </t-form-item>
           <t-form-item label="级别" name="severityLevel">
@@ -149,6 +200,8 @@ import {SettingType} from "@/interface";
 import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
 import {BrowseIcon, DownloadIcon, InfoCircleIcon} from "tdesign-icons-vue";
 import {download} from "@/utils/download";
+import {getRandomArray} from "@/utils/charts";
+import {getRandomValues} from "node:crypto";
 
 export default Vue.extend({
   name: 'ListBase',
@@ -444,6 +497,12 @@ export default Vue.extend({
           this.height = 160;
           return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
       }
+    },
+    onSubmit() {
+      this.getList();
+    },
+    onReset() {
+      this.searchForm.name = ''
     }
   },
 });
@@ -576,6 +635,7 @@ export default Vue.extend({
   width: 100%;
   height: 100%;
   /* 让 img 标签本身铺满父容器 */
+
   :deep(img) {
     width: 100%;
     height: 100%;

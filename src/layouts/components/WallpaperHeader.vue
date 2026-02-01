@@ -40,7 +40,7 @@
           <t-menu-item href="/download" target="_blank">
             离线模型包下载
           </t-menu-item>
-          <t-menu-item href="http://hongkong.gpg123.vip:5000" target="_blank">
+          <t-menu-item href="https://hubproxy.gpg123.vip" target="_blank">
             HuggingFace加速
           </t-menu-item>
         </t-submenu>
@@ -56,8 +56,7 @@
             </t-button>
           </t-menu-item>
           <t-menu-item>
-            <t-button theme="default" variant="text" tag="a"
-                      href="https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip">
+            <t-button theme="default" variant="text" tag="a" href="https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip">
               站点统计
             </t-button>
           </t-menu-item>
