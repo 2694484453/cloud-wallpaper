@@ -50,6 +50,9 @@
               <template #title>
                 资源下载
               </template>
+              <t-menu-item href="https://pan.quark.cn/s/2c832199b09b" target="_blank">
+                Stable Diffusion整合包
+              </t-menu-item>
               <t-menu-item href="https://pan.quark.cn/s/b4081a86e842" target="_blank">
                 离线模型包下载
               </t-menu-item>

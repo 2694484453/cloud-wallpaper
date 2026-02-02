@@ -3,7 +3,7 @@ export default {
   isSidebarCompact: false,
   showBreadcrumb: false,
   mode: import.meta.env.VITE_APP_THEME_MODE || 'light',
-  layout: import.meta.env.VITE_APP_THEME_LAYOUT || 'side',
+  layout: import.meta.env.VITE_APP_THEME_LAYOUT ?? 'side',
   splitMenu: false,
   isFooterAside: false,
   isSidebarFixed: true,
