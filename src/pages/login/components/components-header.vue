@@ -1,6 +1,7 @@
 <template>
   <header class="login-header">
-    <logo-full-icon class="logo" />
+<!--    <logo-full-icon class="logo" />-->
+    <span class="logo" style="font-size: 20px"></span>
     <div class="operations-container">
       <t-button theme="default" shape="square" variant="text" @click="navToGitHub">
         <logo-github-icon class="icon" />
