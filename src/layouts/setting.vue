@@ -16,8 +16,10 @@
             <div v-for="(item, index) in MODE_OPTIONS" :key="index" class="setting-layout-drawer">
               <div>
                 <t-radio-button :key="index" :value="item.type"
-                  ><component :is="getModeIcon(item.type)"
-                /></t-radio-button>
+                >
+                  <component :is="getModeIcon(item.type)"
+                  />
+                </t-radio-button>
                 <p :style="{ textAlign: 'center', marginTop: '8px' }">{{ item.text }}</p>
               </div>
             </div>
@@ -26,7 +28,7 @@
           <t-radio-group v-model="formData.brandTheme">
             <div v-for="(item, index) in DEFAULT_COLOR_OPTIONS" :key="index" class="setting-layout-drawer">
               <t-radio-button :key="index" :value="item" class="setting-layout-color-group">
-                <color-container :value="item" />
+                <color-container :value="item"/>
               </t-radio-button>
             </div>
             <div class="setting-layout-drawer">
@@ -45,9 +47,10 @@
                     :color-modes="['monochrome']"
                     format="HEX"
                     :swatch-colors="[]"
-                /></template>
+                  />
+                </template>
                 <t-radio-button :value="dynamicColor" :class="['setting-layout-color-group', 'dynamic-color-btn']">
-                  <color-container :value="dynamicColor" />
+                  <color-container :value="dynamicColor"/>
                 </t-radio-button>
               </t-popup>
             </div>
@@ -56,7 +59,9 @@
 
           <t-radio-group v-model="formData.layout">
             <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
-              <t-radio-button :key="index" :value="item"><thumbnail :src="getThumbnailUrl(item)" /></t-radio-button>
+              <t-radio-button :key="index" :value="item">
+                <thumbnail :src="getThumbnailUrl(item)"/>
+              </t-radio-button>
             </div>
           </t-radio-group>
 
@@ -94,20 +99,20 @@
         </t-form>
         <div class="setting-info">
           <p>请复制后手动修改配置文件: /src/config/style.ts</p>
-          <t-button theme="primary" variant="text" @click="handleCopy"> 复制配置项 </t-button>
+          <t-button theme="primary" variant="text" @click="handleCopy"> 复制配置项</t-button>
         </div>
       </div>
     </t-drawer>
   </div>
 </template>
 <script lang="ts">
-import { mapGetters } from 'vuex';
-import { Color } from 'tvision-color';
-import { PopupVisibleChangeContext } from 'tdesign-vue';
+import {mapGetters} from 'vuex';
+import {Color} from 'tvision-color';
+import {PopupVisibleChangeContext} from 'tdesign-vue';
 
 import STYLE_CONFIG from '@/config/style';
-import { insertThemeStylesheet, generateColorMap } from '@/utils/color';
-import { DEFAULT_COLOR_OPTIONS } from '@/config/color';
+import {insertThemeStylesheet, generateColorMap} from '@/utils/color';
+import {DEFAULT_COLOR_OPTIONS} from '@/config/color';
 
 import Thumbnail from '@/components/thumbnail/index.vue';
 import ColorContainer from '@/components/color/index.vue';
@@ -115,18 +120,19 @@ import ColorContainer from '@/components/color/index.vue';
 import SettingDarkIcon from '@/assets/assets-setting-dark.svg';
 import SettingLightIcon from '@/assets/assets-setting-light.svg';
 import SettingAutoIcon from '@/assets/assets-setting-auto.svg';
+import {getJsonItem, getStringItem, setItem} from "@/config/storage";
 
 const LAYOUT_OPTION = ['side', 'top', 'mix'];
 
 const MODE_OPTIONS = [
-  { type: 'light', text: '明亮' },
-  { type: 'dark', text: '暗黑' },
-  { type: 'auto', text: '跟随系统' },
+  {type: 'light', text: '明亮'},
+  {type: 'dark', text: '暗黑'},
+  {type: 'auto', text: '跟随系统'},
 ];
 
 export default {
   name: 'DefaultLayoutSetting',
-  components: { Thumbnail, ColorContainer },
+  components: {Thumbnail, ColorContainer},
   data() {
     return {
       colors: {
@@ -136,7 +142,7 @@ export default {
       LAYOUT_OPTION,
       DEFAULT_COLOR_OPTIONS,
       visible: false,
-      formData: { ...STYLE_CONFIG },
+      formData: {...STYLE_CONFIG},
       isColoPickerDisplay: false,
     };
   },
@@ -147,6 +153,7 @@ export default {
         return this.$store.state.setting.showSettingPanel;
       },
       set(newVal) {
+        console.log(newVal);
         this.$store.commit('setting/toggleSettingPanel', newVal);
       },
     },
@@ -166,8 +173,10 @@ export default {
       handler(newVal) {
         if (!newVal.brandTheme) return;
         // 没有在formData中 需要从store中同步过来
-        const { isSidebarCompact } = this.$store.state.setting;
-        this.$store.dispatch('setting/changeTheme', { ...newVal, isSidebarCompact });
+        const {isSidebarCompact} = this.$store.state.setting;
+        this.$store.dispatch('setting/changeTheme', {...newVal, isSidebarCompact});
+        // 持久化
+        setItem("setting/changeTheme", {...newVal, isSidebarCompact});
       },
       deep: true,
     },
@@ -176,6 +185,11 @@ export default {
     document.querySelector('.dynamic-color-btn')?.addEventListener('click', () => {
       this.isColoPickerDisplay = true;
     });
+    // 从存储中获取配置
+    const theme = getJsonItem('setting/changeTheme');
+    if (theme) {
+      this.formData = theme;
+    }
   },
   methods: {
     onPopupVisibleChange(visible: boolean, context: PopupVisibleChangeContext) {
@@ -187,7 +201,7 @@ export default {
       };
       this.$message.success('已恢复初始设置');
     },
-    onSubmit({ result, firstError, e }): void {
+    onSubmit({result, firstError, e}): void {
       e.preventDefault();
       if (result === true) {
         this.visible = false;
@@ -221,20 +235,20 @@ export default {
       });
     },
     changeColor(hex: string) {
-      const { setting } = this.$store.state;
+      const {setting} = this.$store.state;
 
-      const { colors: newPalette, primary: brandColorIndex } = Color.getColorGradations({
+      const {colors: newPalette, primary: brandColorIndex} = Color.getColorGradations({
         colors: [hex],
         step: 10,
         remainInput: false, // 是否保留输入 不保留会矫正不合适的主题色
       })[0];
 
-      const { mode } = this.$store.state.setting;
+      const {mode} = this.$store.state.setting;
       const colorMap = generateColorMap(hex, newPalette, mode, brandColorIndex);
       this.formData.brandTheme = hex;
 
-      this.$store.commit('setting/addColor', { [hex]: colorMap });
-      this.$store.dispatch('setting/changeTheme', { ...setting, brandTheme: hex });
+      this.$store.commit('setting/addColor', {[hex]: colorMap});
+      this.$store.dispatch('setting/changeTheme', {...setting, brandTheme: hex});
 
       insertThemeStylesheet(hex, colorMap, mode);
     },
@@ -398,6 +412,7 @@ export default {
     }
   }
 }
+
 .setting-drawer-container .t-radio-group.t-radio-group__outline.t-size-m .t-radio-button {
   height: auto;
 }

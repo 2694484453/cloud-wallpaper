@@ -14,6 +14,9 @@ interface ImportMetaEnv {
   readonly VITE_UMAMI_HOST: string;
   readonly VITE_BEI_AN: string;
   readonly VITE_BAN_QUAN: string;
+  // 主题
+  readonly VITE_APP_THEME_LAYOUT: string;
+  readonly VITE_APP_THEME_MODE: string;
 }
 
 declare interface ImportMeta {

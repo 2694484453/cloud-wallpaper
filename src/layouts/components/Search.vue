@@ -63,7 +63,6 @@ export default Vue.extend({
     };
   },
   watch: {
-
   },
   methods: {
     changeSearchFocus(value: boolean) {
@@ -72,6 +71,7 @@ export default Vue.extend({
     onEnter(val) {
       console.log("回车",val);
       this.$emit('searchData', this.searchData);
+      this.$router.push({ path: '/static/2d', query: { name: val } });
     }
   },
 });

@@ -1,52 +1,5 @@
 <template>
   <div>
-    <t-form
-      ref="form"
-      :data="searchForm"
-      :label-width="180"
-      style="width: 100%"
-      colon
-      @reset="onReset"
-      @submit="onSubmit"
-      :scroll-to-first-error="'smooth'"
-      :style="{ marginBottom: '8px' }"
-    >
-      <t-row justify="space-between">
-        <div class="left-operation-container">
-          <!--            <t-button @click="handleSetupContract">添加端点</t-button>-->
-          <!--            <t-button variant="base" theme="default" :disabled="!selectedRowKeys.length"> 导出配置</t-button>-->
-          <!--            <p v-if="!!selectedRowKeys.length" class="selected-count">已选{{ selectedRowKeys.length }}项</p>-->
-        </div>
-        <t-col :span="4">
-          <t-input v-model="searchForm.name" class="search-input" placeholder="请输入你需要搜索的内容" clearable>
-            <template #suffix-icon>
-              <search-icon size="20px"/>
-            </template>
-          </t-input>
-        </t-col>
-        <t-col :span="3">
-          <t-form-item label="排序" name="type">
-            <t-select
-              v-model="searchForm.orders"
-              :style="{ width: '200px' }"
-              placeholder="请选择排序类型"
-              class="demo-select-base"
-              clearable
-            >
-              <t-option :key="0" :value="[{ sortBy: 'createTime',descending: true,}]" :label="'创建时间'"></t-option>
-              <t-option :key="1" :value="[{ sortBy: 'updateTime',descending: true,}]" :label="'更新时间'"></t-option>
-              <t-option :key="2" :value="[{ sortBy: 'name',descending: true,}]" :label="'文件名称'"></t-option>
-            </t-select>
-          </t-form-item>
-        </t-col>
-        <t-col :span="3" class="operation-container">
-          <t-space>
-            <t-button theme="primary" type="submit" :style="{ marginLeft: '8px' }"> 查询</t-button>
-            <t-button type="reset" variant="base" theme="default"> 重置</t-button>
-          </t-space>
-        </t-col>
-      </t-row>
-    </t-form>
     <!-- 内容区域 -->
     <div class="list-content">
       <div class="image-grid-container">
@@ -192,16 +145,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {mapGetters} from 'vuex';
 
 import CommonHeader from "@/layouts/components/Header.vue";
 import CommonFooter from "@/layouts/components/CommonFooter.vue";
-import {SettingType} from "@/interface";
 import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
 import {BrowseIcon, DownloadIcon, InfoCircleIcon} from "tdesign-icons-vue";
 import {download} from "@/utils/download";
-import {getRandomArray} from "@/utils/charts";
-import {getRandomValues} from "node:crypto";
 
 export default Vue.extend({
   name: 'ListBase',
@@ -212,31 +161,6 @@ export default Vue.extend({
     BrowseIcon,
     DownloadIcon,
     InfoCircleIcon
-  },
-  computed: {
-    ...mapGetters({
-      showHeader: 'setting/showHeader',
-      showHeaderLogo: true,
-      mode: 'setting/mode',
-      menuRouters: 'permission/routers',
-    }),
-    setting(): SettingType {
-      return this.$store.state.setting;
-    },
-    headerMenu() {
-      const {layout, splitMenu} = this.$store.state.setting;
-      const {menuRouters} = this;
-      if (layout === 'mix') {
-        if (splitMenu) {
-          return menuRouters.map((menu) => ({
-            ...menu,
-            children: [],
-          }));
-        }
-        return [];
-      }
-      return menuRouters;
-    },
   },
   data: function () {
     return {
@@ -314,7 +238,9 @@ export default Vue.extend({
     this.searchForm.current = savedCurrent ? Number.parseInt(savedCurrent) : 1;
     this.searchForm.size = savedSize ? Number.parseInt(savedSize) : 24;
     this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName') ?? this.searchForm.cateName;
-    //this.getList();
+    this.getList();
+  },
+  beforeDestroy() {
   },
   watch: {
     "searchForm.current"(newVal, oldVal) {
@@ -333,29 +259,13 @@ export default Vue.extend({
         this.getList();
       }
     },
-    "searchForm.name"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 刷新数据
-        localStorage.setItem('wallpaper.searchForm.name', newVal);
-        this.getList();
-      }
-    },
-    "searchForm.cateName"(newVal, oldVal) {
-      if (oldVal !== newVal) {
-        // 存储
-        localStorage.setItem('wallpaper.searchForm.cateName', newVal);
-        // 变更分类，num设置为1
-        this.searchForm.current = 1;
-        this.searchForm.name = null;
-        // 刷新数据
-        this.getList();
-      }
-    },
     // 监听 $route 对象
     '$route'(to, from) {
       console.log("xx", to, from);
       this.searchForm.cateName = to.name;
-    }
+      this.searchForm.name = to.query.name;
+      this.getList();
+    },
   },
   methods: {
     getOverView() {
