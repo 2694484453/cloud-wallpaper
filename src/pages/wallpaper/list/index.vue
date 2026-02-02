@@ -168,7 +168,7 @@ export default Vue.extend({
       data: [],
       searchForm: {
         name: '',
-        cateName: "二次元",
+        cateName: "2d",
         current: 1,
         size: 24,
         orders: [
@@ -237,7 +237,7 @@ export default Vue.extend({
     // 假设你有一个方法来处理分页点击
     this.searchForm.current = savedCurrent ? Number.parseInt(savedCurrent) : 1;
     this.searchForm.size = savedSize ? Number.parseInt(savedSize) : 24;
-    this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName') ?? this.searchForm.cateName;
+    this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName') || '2d';
     this.getList();
   },
   beforeDestroy() {
