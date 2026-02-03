@@ -278,9 +278,7 @@ export default Vue.extend({
         }
       }).catch(err => {
       }).finally(() => {
-        setTimeout(() => {
-          this.toggle();
-        }, 1000)
+
       })
     },
     getList() {
