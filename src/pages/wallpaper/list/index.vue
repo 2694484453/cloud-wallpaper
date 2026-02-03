@@ -12,7 +12,7 @@
             :title="item.name">
             <template #trigger="{ open }">
               <t-skeleton :loading="dataLoading" :animation="'gradient'" :theme="'tab'">
-                <t-tooltip :content="'文件名称：'+item.name+'，分辨率：'+item.width+'x'+item.height">
+                <t-tooltip :content="item.name">
                   <t-card bordered
                           hover-shadow>
                     <template #cover>
@@ -151,6 +151,7 @@ import CommonFooter from "@/layouts/components/CommonFooter.vue";
 import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
 import {BrowseIcon, DownloadIcon, InfoCircleIcon} from "tdesign-icons-vue";
 import {download} from "@/utils/download";
+import {setItem} from "@/config/storage";
 
 export default Vue.extend({
   name: 'ListBase',
@@ -264,6 +265,7 @@ export default Vue.extend({
       console.log("xx", to, from);
       this.searchForm.cateName = to.name;
       this.searchForm.name = to.query.name;
+      setItem('wallpaper.searchForm.cateName', this.searchForm.cateName);
       this.getList();
     },
   },
