@@ -155,6 +155,7 @@ import {setItem} from "@/config/storage";
 
 export default Vue.extend({
   name: 'ListBase',
+  props: ['cateName'],
   components: {
     CommonHeader,
     CommonFooter,
@@ -260,12 +261,20 @@ export default Vue.extend({
         this.getList();
       }
     },
+    "cateName"(newVal, oldVal) {
+      console.log(newVal);
+      if (oldVal !== newVal) {
+        this.searchForm.cateName = newVal;
+        // 刷新数据
+        this.getList();
+      }
+    },
     // 监听 $route 对象
     '$route'(to, from) {
       console.log("xx", to, from);
-      this.searchForm.cateName = to.name;
       this.searchForm.name = to.query.name;
       setItem('wallpaper.searchForm.cateName', this.searchForm.cateName);
+      // 刷新数据
       this.getList();
     },
   },

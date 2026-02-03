@@ -80,7 +80,7 @@ switch (envName) {
     break;
   case "wallpaper":
     routerList.push(...wallpaperRouters)
-    routerList.push(...noticeRouters)
+    //routerList.push(...noticeRouters)
     //routerList.push(...nasRouters)
     routerList.push(...commonRouters)
     break;

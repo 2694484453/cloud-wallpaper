@@ -1,7 +1,6 @@
 import Layout from "@/layouts/index.vue";
 import {
   ImageIcon,
-  VideoIcon,
   MobileIcon,
   DesktopIcon,
   ServerIcon,
@@ -13,7 +12,7 @@ import {
 export default [
   {
     path: "/",
-    redirect: "/static/2d",
+    redirect: "/pc/2d",
   },
   {
     path: '/dashboard',
@@ -29,7 +28,7 @@ export default [
         path: 'base',
         name: 'DashboardBase',
         component: () => import('@/pages/wallpaper/index.vue'),
-        meta: { title: '概览仪表盘' },
+        meta: {title: '概览仪表盘'},
       },
       // {
       //   path: 'detail',
@@ -40,9 +39,9 @@ export default [
     ],
   },
   {
-    path: '/static',
-    name: 'static',
-    meta: {title: '静态壁纸', icon: ImageIcon},
+    path: '/pc',
+    name: 'pc',
+    meta: {title: '桌面壁纸', icon: ImageIcon},
     component: Layout,
     children: [
       {
@@ -50,50 +49,73 @@ export default [
         name: '2d',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '二次元', icon: ImageIcon},
+        // 直接写死参数
+        props: {cateName: '2d', type: String}
       },
       {
         path: '3d',
         name: '3d',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '三次元', icon: ImageIcon},
-      },
-      {
-        path: 'iphone',
-        name: 'iphone',
-        component: () => import('@/pages/wallpaper/list/index.vue'),
-        meta: {title: '手机壁纸', icon: MobileIcon},
-      },
-      {
-        path: 'ai',
-        name: 'ai',
-        component: () => import('@/pages/wallpaper/list/index.vue'),
-        meta: {title: 'Ai画廊', icon: ImageIcon},
+        props: {cateName: '3d', type: String}
       },
       {
         path: 'other',
         name: 'other',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '其他', icon: ImageIcon},
-      }
-    ]
-  },
-  {
-    path: '/dynamicW',
-    name: 'dynamicW',
-    meta: {title: '动态壁纸', icon: VideoIcon},
-    component: Layout,
-    children: [
+        props: {cateName: 'other', type: String}
+      },
       {
-        path: 'dynamic_phone',
-        name: 'dynamic_phone',
+        path: 'widescreen',
+        name: 'widescreen',
         component: () => import('@/pages/wallpaper/list/index.vue'),
-        meta: {title: '手机动态壁纸', icon: MobileIcon},
+        meta: {title: '超宽屏', icon: ImageIcon},
+        props: {cateName: 'widescreen', type: String}
       },
       {
         path: 'dynamic',
         name: 'dynamic',
         component: () => import('@/pages/wallpaper/list/index.vue'),
-        meta: {title: 'Pc动态壁纸', icon: DesktopIcon},
+        meta: {title: '动态壁纸', icon: DesktopIcon},
+        props: {cateName: 'dynamic', type: String}
+      }
+    ]
+  },
+  {
+    path: '/phone',
+    name: 'phone',
+    meta: {title: '手机壁纸', icon: ImageIcon},
+    component: Layout,
+    children: [
+      {
+        path: 'iphone',
+        name: 'iphone',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '手机静态壁纸', icon: MobileIcon},
+        props: {cateName: 'iphone', type: String}
+      },
+      {
+        path: 'dynamic_phone',
+        name: 'dynamic_phone',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '手机动态壁纸', icon: MobileIcon},
+        props: {cateName: 'dynamic_phone', type: String}
+      },
+    ]
+  },
+  {
+    path: '/ai',
+    name: 'ai',
+    meta: {title: 'Ai画廊', icon: ImageIcon},
+    component: Layout,
+    children: [
+      {
+        name: "all",
+        path: 'all',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: "全部", icon: ImageIcon},
+        props: [{cateName: 'ai', type: String}, {name: "", type: String}],
       }
     ]
   },
@@ -106,10 +128,6 @@ export default [
     path: '/share',
     name: 'share',
     component: () => import('@/pages/wallpaper/share/index.vue'),
-  },
-  {
-    path: '/download',
-    name: 'download',
   },
   {
     path: '/stableDiffusion',
@@ -127,7 +145,7 @@ export default [
         path: "minePrompt",
         name: 'minePrompt',
         component: () => import("@/pages/wallpaper/prompt/index.vue"),
-        meta: {title: '我的词条',  icon: FileWordIcon},
+        meta: {title: '我的词条', icon: FileWordIcon},
       },
       {
         path: "use",
