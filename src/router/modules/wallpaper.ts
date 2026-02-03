@@ -50,35 +50,35 @@ export default [
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '二次元', icon: ImageIcon},
         // 直接写死参数
-        props: {cateName: '2d', type: String}
+        props: {cateName: '2d'}
       },
       {
         path: '3d',
         name: '3d',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '三次元', icon: ImageIcon},
-        props: {cateName: '3d', type: String}
+        props: {cateName: '3d'}
       },
       {
         path: 'other',
         name: 'other',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '其他', icon: ImageIcon},
-        props: {cateName: 'other', type: String}
+        props: {cateName: 'other'}
       },
       {
         path: 'widescreen',
         name: 'widescreen',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '超宽屏', icon: ImageIcon},
-        props: {cateName: 'widescreen', type: String}
+        props: {cateName: 'widescreen'}
       },
       {
         path: 'dynamic',
         name: 'dynamic',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '动态壁纸', icon: DesktopIcon},
-        props: {cateName: 'dynamic', type: String}
+        props: {cateName: 'dynamic'}
       }
     ]
   },
@@ -93,14 +93,14 @@ export default [
         name: 'iphone',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '手机静态壁纸', icon: MobileIcon},
-        props: {cateName: 'iphone', type: String}
+        props: {cateName: 'iphone'}
       },
       {
         path: 'dynamic_phone',
         name: 'dynamic_phone',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '手机动态壁纸', icon: MobileIcon},
-        props: {cateName: 'dynamic_phone', type: String}
+        props: {cateName: 'dynamic_phone'}
       },
     ]
   },
@@ -115,7 +115,7 @@ export default [
         path: 'all',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: "全部", icon: ImageIcon},
-        props: [{cateName: 'ai', type: String}, {name: "", type: String}],
+        props: {cateName: 'ai', name: ''},
       }
     ]
   },

@@ -155,7 +155,7 @@ import {setItem} from "@/config/storage";
 
 export default Vue.extend({
   name: 'ListBase',
-  props: ['cateName'],
+  props: ['cateName','name'],
   components: {
     CommonHeader,
     CommonFooter,
@@ -265,6 +265,14 @@ export default Vue.extend({
       console.log(newVal);
       if (oldVal !== newVal) {
         this.searchForm.cateName = newVal;
+        // 刷新数据
+        this.getList();
+      }
+    },
+    "name"(newVal, oldVal) {
+      console.log(newVal);
+      if (oldVal !== newVal && newVal !== '' && newVal !== null) {
+        this.searchForm.name = newVal;
         // 刷新数据
         this.getList();
       }
