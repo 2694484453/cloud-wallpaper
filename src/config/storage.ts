@@ -12,7 +12,7 @@ export const getUserInfo = () => {
 
 //
 export const getUserName = () => {
-  return JSON.parse(localStorage.getItem('username'));
+  return localStorage.getItem('username');
 }
 
 //

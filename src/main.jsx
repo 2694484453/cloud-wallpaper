@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import CronExpressionGenerator from '@/components/cron/cron.vue'
 import {sync} from 'vuex-router-sync';
 import TDesign from 'tdesign-vue';
 import VueClipboard from 'vue-clipboard2';
@@ -20,6 +21,7 @@ Vue.use(TDesign);
 Vue.use(VueClipboard);
 Vue.use(VueCookies);
 Vue.component('t-page-header');
+Vue.component('CronExpressionGenerator', CronExpressionGenerator)
 Vue.prototype.$request = axiosInstance;
 
 const originPush = VueRouter.prototype.push;

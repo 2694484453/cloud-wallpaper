@@ -49,12 +49,14 @@
                 <mail-icon/>
               </t-button>
             </t-tooltip>
-            <t-button v-show="username === null || username === ''" theme="primary" href="/login">
-              <user-icon slot="icon"/>
-              登录
+            <t-button v-show="username === null || username === ''" theme="primary" href="/login" tag="a" variant="text">
+              <user-icon slot="icon">登录</user-icon>
+            </t-button>
+            <t-button v-show="username !== null && username !== ''" theme="primary" href="/dashboard/base" tag="a" variant="text">
+              控制台
             </t-button>
             <t-tooltip v-show="username !== null && username !== ''" placement="bottom" content="用户信息">
-              <HeaderUser/>
+              <header-user/>
             </t-tooltip>
             <t-button variant="text" shape="square">
               <ellipsis-icon slot="icon"/>
@@ -221,7 +223,7 @@
           <div class="footer-section">
             <h4>联系我们</h4>
             <p>邮箱：2694484453@qq.com</p>
-            <p>电话：18439406854</p>
+<!--            <p>电话：18439406854</p>-->
           </div>
         </div>
         <div class="footer-bottom">
@@ -254,28 +256,28 @@ export default Vue.extend({
     prometheusLogo
   },
   mounted() {
-    this.userName = getUserName() ?? '访客';
+    this.username = getUserName() ?? '访客';
   },
   data() {
     return {
       banners: [
         {
           title: 'Prometheus监控&告警&可视化',
-          desc: '不想购买额外服务器？不想搭建服务？还不想因复杂操作和浪费精力管理而头疼吗？分布式监控&告警平台可通过web页面2步即可快速配置，如：添加/导入/导出端点；添加/导入/导出告警规则；在线查看和编辑可视化数据大盘，查看告警消息、持久化数据等',
+          desc: '平台可通过web页面2步即可快速配置，如：添加/导入/导出端点；添加/导入/导出告警规则；在线查看和编辑可视化数据大盘，查看告警消息、持久化数据等。',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/1.png',
           url: 'https://gpg123.vip/prometheus/targets',
           icon: prometheusLogo,
         },
         {
           title: 'Kubernetes&Helm应用托管',
-          desc: '托管您的边缘云集群，可页面化运维，通过公共市场/私有仓库快速部署helm-chart应用',
+          desc: '托管您的边缘云集群，可页面化运维；通过公共市场/私有仓库快速部署helm-chart应用；支持设置安装参数、通过页面进行管理，一键部署一键卸载应用。',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/2.png',
           url: 'https://gpg123.vip/app/market',
           icon: kubernetesLogo,
         },
         {
           title: '一站式 DevOps',
-          desc: '从代码到上线，到制品/镜像构建，实现全流程自动化',
+          desc: '可接入公网仓库，如：github、gitlab、gitee等；配置仓库简易流水线，实现从代码到上线，到制品/镜像构建，仓库推送，再到平台镜像部署，实现全流程自动化。',
           image: 'https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/cloud-plus/3.png',
           url: 'https://gpg123.vip/devops/job',
           icon: devopsLogo,

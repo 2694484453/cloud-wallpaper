@@ -113,8 +113,8 @@
               </t-select>
             </t-form-item>
             <t-form-item label="表达式" name="cronExpression">
-<!--              <t-input v-model="formData.cronExpression"  placeholder="请输入"></t-input>-->
-              <CronExpressionGenerator v-model="formData.cronExpression"/>
+              <t-input v-model="formData.cronExpression"  placeholder="请输入"></t-input>
+              <cron-expression-generator v-model="formData.cronExpression" />
             </t-form-item>
             <t-form-item label="备注" name="remotePort" >
               <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="120" with="200"></t-textarea>
