@@ -10,16 +10,11 @@ interface ImportMetaEnv {
   readonly VITE_APP_CN_NAME: string;
   readonly VITE_OTEL_ENDPOINT: string;
   readonly VITE_OTEL_SERVICE_NAME: string;
-  readonly VITE_UMAMI_ID: string;
-  readonly VITE_UMAMI_HOST: string;
   readonly VITE_BEI_AN: string;
   readonly VITE_BAN_QUAN: string;
   // 主题
   readonly VITE_APP_THEME_LAYOUT: string;
   readonly VITE_APP_THEME_MODE: string;
-  // meta
-  readonly VITE_META_NAME:string;
-  readonly VITE_META_CONTENT:string;
 }
 
 declare interface ImportMeta {

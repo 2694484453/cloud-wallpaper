@@ -34,23 +34,8 @@ VueRouter.prototype.replace = function replace(location) {
     return originReplace.call(this, location).catch((err) => err);
 };
 
-// --- 动态注入 Script 的逻辑 ---
-const initExternalScript = () => {
-    const meta = document.createElement('meta');
-    meta.name = import.meta.env.VITE_META_NAME;
-    meta.content = import.meta.env.VITE_META_CONTENT;
-    const script = document.createElement('script');
-    script.src = umamiHost + '/script.js';
-    script.defer = true;
-    script.setAttribute('data-website-id', umamiId);
-    document.head.appendChild(script);
-    document.head.appendChild(meta);
-    document.title = appCnName;
-}
-
 Vue.config.productionTip = false;
 sync(store, router);
-initExternalScript();
 new Vue({
     router,
     store,
