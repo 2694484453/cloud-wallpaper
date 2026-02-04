@@ -4,6 +4,7 @@ import {createVuePlugin} from 'vite-plugin-vue2';
 import {createSvgPlugin} from 'vite-plugin-vue2-svg';
 const MonacoWebpackPlugin = require('monaco-editor-esm-webpack-plugin');
 import path from 'path';
+import { resolve } from 'path';
 
 const CWD = process.cwd();
 
@@ -43,6 +44,13 @@ export default ({mode}) => {
     },
     build: {
       cssCodeSplit: false,
+      rollupOptions: {
+        input: {
+          // key 可以自定义，对应输出的文件夹名
+          cloud_web: resolve(__dirname, './index.html'),
+          cloud_wallpaper: resolve(__dirname, './wallpaper.html'),
+        },
+      },
     },
     server: {
       host: '0.0.0.0',
