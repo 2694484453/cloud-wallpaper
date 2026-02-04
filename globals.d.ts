@@ -17,6 +17,9 @@ interface ImportMetaEnv {
   // 主题
   readonly VITE_APP_THEME_LAYOUT: string;
   readonly VITE_APP_THEME_MODE: string;
+  // meta
+  readonly VITE_META_NAME:string;
+  readonly VITE_META_CONTENT:string;
 }
 
 declare interface ImportMeta {
