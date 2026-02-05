@@ -2,9 +2,7 @@ import {loadEnv} from 'vite';
 import {viteMockServe} from 'vite-plugin-mock';
 import {createVuePlugin} from 'vite-plugin-vue2';
 import {createSvgPlugin} from 'vite-plugin-vue2-svg';
-const SitemapPlugin = require('sitemap-webpack-plugin').default;
 import path from 'path';
-import { resolve } from 'path';
 import {paths} from "./src/config/sitemap.ts";
 
 //
@@ -37,7 +35,7 @@ export default ({mode}) => {
       }),
       createSvgPlugin(),
       // 生成sitemap.xml
-      new SitemapPlugin({ base: 'https://wallpaper.gpg123.vip', paths })
+
     ],
     optimizeDeps: {
       include: [
