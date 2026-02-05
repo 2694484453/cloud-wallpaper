@@ -2,7 +2,6 @@ import {loadEnv} from 'vite';
 import {viteMockServe} from 'vite-plugin-mock';
 import {createVuePlugin} from 'vite-plugin-vue2';
 import {createSvgPlugin} from 'vite-plugin-vue2-svg';
-const MonacoWebpackPlugin = require('monaco-editor-esm-webpack-plugin');
 const SitemapPlugin = require('sitemap-webpack-plugin').default;
 import path from 'path';
 import { resolve } from 'path';
@@ -37,7 +36,6 @@ export default ({mode}) => {
         localEnabled: true,
       }),
       createSvgPlugin(),
-      //MonacoWebpackPlugin()
       // 生成sitemap.xml
       new SitemapPlugin({ base: 'https://wallpaper.gpg123.vip', paths })
     ],
@@ -49,14 +47,6 @@ export default ({mode}) => {
     },
     build: {
       cssCodeSplit: false,
-      rollupOptions: {
-        input: {
-          // key 可以自定义，对应输出的文件夹名
-          cloud_web: resolve(__dirname, './web.html'),
-          cloud_wallpaper: resolve(__dirname, './wallpaper.html'),
-          cloud_tools: resolve(__dirname, './tools.html'),
-        },
-      },
     },
     server: {
       host: '0.0.0.0',
