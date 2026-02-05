@@ -11,7 +11,7 @@
         :style="{ marginBottom: '8px' }"
       >
         <t-form-item label="选择提示词">
-          <t-select v-for="(item,index) in words" clearable @change="changeWords(item)">
+          <t-select v-for="(item,index) in words" clearable @change="changeWords(item)" @clear="clearWords">
             <t-option :label="item.promptName" :value="item"></t-option>
           </t-select>
         </t-form-item>
@@ -23,9 +23,6 @@
             :maxlength="200"
           />
         </t-form-item>
-<!--        <t-form-item>-->
-<!--          <t-button @click="importRandom" theme="primary" size="medium">从随机词库导入</t-button>-->
-<!--        </t-form-item>-->
         <!-- 反向提示词区域 -->
         <t-form-item label="反向提示词" help="">
           <t-textarea
@@ -34,6 +31,11 @@
             :autosize="{minRows: 5, maxRows:10}"
             :maxlength="200"
           />
+        </t-form-item>
+        <!-- 备注 -->
+        <t-form-item v-show="description !== '' && description !== null" label="提示词备注">
+          <span>{{description}}</span>
+          <!--          <t-button @click="importRandom" theme="primary" size="medium">从随机词库导入</t-button>-->
         </t-form-item>
         <!-- 参数设置区域 -->
         <t-form-item label="参数设置">
@@ -171,7 +173,8 @@ export default Vue.extend({
       },
       dataLoading: false,
       logs: "",
-      remainTimes: 20
+      remainTimes: 20,
+      description: ""
     }
   },
   mounted() {
@@ -198,6 +201,17 @@ export default Vue.extend({
       console.log("change:",words);
       this.formData.prompt = words.prompt;
       this.formData.negative_prompt = words.negativePrompt;
+      this.formData.width = words.width ?? 512;
+      this.formData.height = words.height ?? 512;
+      //
+      this.description = words.description ?? null;
+    },
+    clearWords() {
+      this.formData.prompt = "";
+      this.formData.negative_prompt = "";
+      this.formData.width = 512;
+      this.formData.height = 512;
+      this.description = null
     },
     // 从随机词库导入提示词
     importRandom() {

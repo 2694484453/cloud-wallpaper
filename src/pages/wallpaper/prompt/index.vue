@@ -105,24 +105,28 @@
           :label-width="120"
           @reset="onReset"
         >
-          <t-form-item label="词条名称" name="branch">
+          <t-form-item label="词条名称" name="branch" help="起个名字吧" required-mark>
             <t-input v-model="formData.promptName" placeholder="请输入词条名称" :maxlength="64" with="200"
                      clearable></t-input>
           </t-form-item>
-          <t-form-item label="正词条">
+          <t-form-item label="正词条" required-mark>
             <t-textarea v-model="formData.prompt" placeholder="请输入表达式" :autosize="{minRows:5}"></t-textarea>
           </t-form-item>
-          <t-form-item label="负词条" name="chartUrl">
+          <t-form-item label="负词条" name="chartUrl" required-mark>
             <t-textarea v-model="formData.negativePrompt" placeholder="请输入备注内容" :maxlength="9999" with="200"
                         :autosize="{minRows:3}"></t-textarea>
           </t-form-item>
-          <t-form-item label="宽">
-            <t-input-number :theme="'column'" v-model="formData.width"></t-input-number>
+          <t-form-item label="宽" help="不能大于1024" required-mark>
+            <t-input-adornment :append="'px'">
+              <t-input-number :theme="'column'" v-model="formData.width"></t-input-number>
+            </t-input-adornment>
           </t-form-item>
-          <t-form-item label="高">
-            <t-input-number :theme="'column'" v-model="formData.height"></t-input-number>
+          <t-form-item label="高" help="不能大于1024" required-mark>
+            <t-input-adornment :append="'px'">
+               <t-input-number :theme="'column'" v-model="formData.height"></t-input-number>
+            </t-input-adornment>
           </t-form-item>
-          <t-form-item label="描述" name="description">
+          <t-form-item label="描述" name="description" help="描述您的提示词的特性">
             <t-textarea v-model="formData.description" placeholder="请输入备注内容" :maxlength="200" with="200"
                         :autosize="{minRows:3}"></t-textarea>
           </t-form-item>
@@ -410,7 +414,10 @@ export default Vue.extend({
       this.drawer.header = row.name;
     },
     handleSetupContract() {
-      this.formData = {}
+      this.formData = {
+        width: 512,
+        height: 512
+      }
       this.drawer.visible = true;
       this.drawer.operation = 'add';
       this.drawer.header = '新增';
