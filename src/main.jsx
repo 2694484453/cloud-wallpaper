@@ -14,7 +14,6 @@ import 'tdesign-vue/es/style/index.css';
 import '@/style/index.less';
 import './permission';
 import store from './store';
-import {umamiId, umamiHost, appCnName} from '@/config/global';
 
 Vue.use(VueRouter);
 Vue.use(TDesign);

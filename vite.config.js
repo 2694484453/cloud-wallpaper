@@ -47,8 +47,9 @@ export default ({mode}) => {
       rollupOptions: {
         input: {
           // key 可以自定义，对应输出的文件夹名
-          cloud_web: resolve(__dirname, './index.html'),
+          cloud_web: resolve(__dirname, './web.html'),
           cloud_wallpaper: resolve(__dirname, './wallpaper.html'),
+          cloud_tools: resolve(__dirname, './tools.html'),
         },
       },
     },
