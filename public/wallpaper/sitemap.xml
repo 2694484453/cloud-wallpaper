@@ -14,7 +14,7 @@
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
-    <!--    -->
+    <!---->
     <url>
         <loc>https://wallpaper.gpg123.vip/dashboard/base</loc>
         <lastmod>2026-02-05</lastmod>
@@ -64,10 +64,22 @@
         <priority>1.0</priority>
     </url>
     <url>
+        <loc>https://wallpaper.gpg123.vip/stableDiffusion/minePrompt</loc>
+        <lastmod>2026-02-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://wallpaper.gpg123.vip/share</loc>
+        <lastmod>2026-02-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://wallpaper.gpg123.vip/stableDiffusion/use</loc>
         <lastmod>2026-02-05</lastmod>
         <changefreq>daily</changefreq>
-        <priority>1.0</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://wallpaper.gpg123.vip/about</loc>
