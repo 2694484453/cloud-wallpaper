@@ -3,9 +3,12 @@ import {viteMockServe} from 'vite-plugin-mock';
 import {createVuePlugin} from 'vite-plugin-vue2';
 import {createSvgPlugin} from 'vite-plugin-vue2-svg';
 const MonacoWebpackPlugin = require('monaco-editor-esm-webpack-plugin');
+const SitemapPlugin = require('sitemap-webpack-plugin').default;
 import path from 'path';
 import { resolve } from 'path';
+import {paths} from "./src/config/sitemap.ts";
 
+//
 const CWD = process.cwd();
 
 export default ({mode}) => {
@@ -35,6 +38,8 @@ export default ({mode}) => {
       }),
       createSvgPlugin(),
       //MonacoWebpackPlugin()
+      // 生成sitemap.xml
+      new SitemapPlugin({ base: 'https://wallpaper.gpg123.vip', paths })
     ],
     optimizeDeps: {
       include: [

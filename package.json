@@ -1,17 +1,12 @@
 {
-  "name": "cloud-web",
+  "name": "cloud-wallpaper",
+  "type": "module",
   "version": "0.6.2",
   "scripts": {
     "dev:mock": "vite --open --mode mock",
-    "cloud-web:prod": "vite --open --mode web",
-    "cloud-web:dev": "vite --open --mode web",
     "wallpaper:prod": "vite --open --mode wallpaper",
     "wallpaper:dev": "vite --open --mode wallpaper",
-    "tools:dev": "vite --open --mode tools",
-    "tools:prod": "vite --open --mode tools",
     "build:wallpaper": "vite build --mode wallpaper",
-    "build:tools": "vite build --mode tools",
-    "build:cloud-web": "vite build --mode web",
     "build:site": "vite build --mode site",
     "site:preview": "npm run build && cp -r dist _site",
     "preview": "vite preview"
@@ -61,6 +56,7 @@
     "mockjs": "^1.1.0",
     "monaco-editor-esm-webpack-plugin": "^2.1.0",
     "prettier": "^2.6.0",
+    "sitemap-webpack-plugin": "^1.1.1",
     "stylelint": "~13.13.1",
     "stylelint-config-prettier": "~9.0.3",
     "stylelint-less": "1.0.5",
