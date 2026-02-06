@@ -151,7 +151,7 @@ import CommonFooter from "@/layouts/components/CommonFooter.vue";
 import WallpaperHeader from "@/layouts/components/WallpaperHeader.vue";
 import {BrowseIcon, DownloadIcon, InfoCircleIcon} from "tdesign-icons-vue";
 import {download} from "@/utils/download";
-import {setItem} from "@/config/storage";
+import {getJsonItem, setItem} from "@/config/storage";
 
 export default Vue.extend({
   name: 'ListBase',
@@ -231,18 +231,15 @@ export default Vue.extend({
   mounted() {
     this.getTags();
     this.getOverView();
-    // 确保在 DOM 更新后执行
-    const path = window.location.pathname;
-    this.searchForm.cateName = path.split('/').pop();
-    const savedCurrent = localStorage.getItem("wallpaper.searchForm.current");
-    const savedSize = localStorage.getItem("wallpaper.searchForm.size");
-    // 假设你有一个方法来处理分页点击
-    this.searchForm.current = savedCurrent ? Number.parseInt(savedCurrent) : 1;
-    this.searchForm.size = savedSize ? Number.parseInt(savedSize) : 24;
-    this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName') || '2d';
     this.getList();
+    //
+    setItem('wallpaper.searchForm.path',this.$route.fullPath)
+    this.searchForm.name = this.$route.query.name ?? ""
+    setItem('wallpaper.searchForm.name',this.searchForm.name);
+    setItem('wallpaper.searchForm.cateName', this.cateName);
   },
   beforeDestroy() {
+
   },
   watch: {
     "searchForm.current"(newVal, oldVal) {
@@ -265,14 +262,8 @@ export default Vue.extend({
       console.log(newVal);
       if (oldVal !== newVal) {
         this.searchForm.cateName = newVal;
-        // 刷新数据
-        this.getList();
-      }
-    },
-    "name"(newVal, oldVal) {
-      console.log(newVal);
-      if (oldVal !== newVal && newVal !== '' && newVal !== null) {
-        this.searchForm.name = newVal;
+        this.searchForm.current = 1;
+        this.searchForm.size = 24;
         // 刷新数据
         this.getList();
       }
@@ -280,10 +271,13 @@ export default Vue.extend({
     // 监听 $route 对象
     '$route'(to, from) {
       console.log("xx", to, from);
-      this.searchForm.name = to.query.name;
-      setItem('wallpaper.searchForm.cateName', this.searchForm.cateName);
-      // 刷新数据
-      this.getList();
+      setItem('wallpaper.searchForm.path',to.fullPath)
+      setItem('wallpaper.searchForm.cateName', this.cateName);
+      if (to.query.name === localStorage.getItem('wallpaper.searchForm.name')) {
+        this.searchForm.name = to.query.name;
+        this.searchForm.cateName = this.cateName;
+        this.getList();
+      }
     },
   },
   methods: {

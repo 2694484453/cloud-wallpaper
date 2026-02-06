@@ -71,7 +71,8 @@ export default Vue.extend({
     onEnter(val) {
       console.log("回车",val);
       this.$emit('searchData', this.searchData);
-      this.$router.push({ path: '/static/2d', query: { name: val } });
+      localStorage.setItem('wallpaper.searchForm.name',val)
+      this.$router.push({ path: localStorage.getItem('wallpaper.searchForm.path'), query: { name: val } });
     }
   },
 });
