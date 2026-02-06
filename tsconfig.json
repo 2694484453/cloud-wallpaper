@@ -12,11 +12,11 @@
     "noImplicitThis": false,
     "strictNullChecks": false,
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "resolveJsonModule": true,
     "jsx": "preserve",
     "noEmit": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

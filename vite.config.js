@@ -3,8 +3,6 @@ import {viteMockServe} from 'vite-plugin-mock';
 import {createVuePlugin} from 'vite-plugin-vue2';
 import {createSvgPlugin} from 'vite-plugin-vue2-svg';
 import path from 'path';
-import {paths} from "./src/config/sitemap.ts";
-
 //
 const CWD = process.cwd();
 

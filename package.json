@@ -9,7 +9,7 @@
     "build": "vite build --mode prod",
     "build:site": "vite build --mode site",
     "site:preview": "npm run build && cp -r dist _site",
-    "sitemap": "npx ts-node -r ts-node/register scripts/generate-sitemap.mjs",
+    "sitemap": "npx ts-node -r tsconfig-paths/register -r ts-node/register scripts/generate-sitemap.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -58,6 +58,7 @@
     "stylelint-less": "1.0.5",
     "stylelint-order": "~4.1.0",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
     "vite": "^4.1.4",
     "vite-plugin-mock": "^3.0.0",
