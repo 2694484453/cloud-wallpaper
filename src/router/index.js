@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router';
-import commonRouters from '@/router/modules/common';
+import commonRouters from './modules/common';
 // 壁纸
-import wallpaperRouters from "@/router/modules/wallpaper";
+import wallpaperRouters from "./modules/wallpaper";
 // 基础路由
 export const routerList = [
   ...wallpaperRouters,

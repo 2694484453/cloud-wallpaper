@@ -4,11 +4,12 @@
   "version": "0.6.2",
   "scripts": {
     "dev:mock": "vite --open --mode mock",
-    "wallpaper:prod": "vite --open --mode wallpaper",
-    "wallpaper:dev": "vite --open --mode wallpaper",
-    "build:wallpaper": "vite build --mode wallpaper",
+    "prod": "vite --open --mode prod",
+    "development": "vite --open --mode development",
+    "build": "vite build --mode prod",
     "build:site": "vite build --mode site",
     "site:preview": "npm run build && cp -r dist _site",
+    "sitemap": "npx ts-node -r ts-node/register scripts/generate-sitemap.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -25,13 +26,13 @@
     "tdesign-icons-vue": "^0.1.6",
     "tdesign-vue": "^1.14.1",
     "tvision-color": "~1.6.0",
-    "typescript": "^5.1.6",
     "vue": "~2.6.14",
     "vue-clipboard2": "^0.3.1",
     "vue-cookies": "^1.8.4",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",
-    "vuex-router-sync": "^5.0.0"
+    "vuex-router-sync": "^5.0.0",
+    "xmlbuilder": "^15.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
@@ -56,6 +57,8 @@
     "stylelint-config-prettier": "~9.0.3",
     "stylelint-less": "1.0.5",
     "stylelint-order": "~4.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
     "vite": "^4.1.4",
     "vite-plugin-mock": "^3.0.0",
     "vite-plugin-theme": "^0.8.1",
