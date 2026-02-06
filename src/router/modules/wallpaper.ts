@@ -6,7 +6,7 @@ import {
   ServerIcon,
   FileWordIcon,
   CloudIcon,
-  DashboardIcon
+  DashboardIcon, FileIconIcon, DownloadIcon, FileIcon,AiImageIcon,ModuleIcon,ArticleIcon,Desktop1Icon,MobileListIcon,AiImage1Icon,FileZipIcon,InfoCircleIcon
 } from "tdesign-icons-vue";
 
 export default [
@@ -41,7 +41,7 @@ export default [
   {
     path: '/pc',
     name: 'pc',
-    meta: {title: '桌面壁纸', icon: ImageIcon},
+    meta: {title: '桌面壁纸', icon: Desktop1Icon},
     component: Layout,
     children: [
       {
@@ -85,7 +85,7 @@ export default [
   {
     path: '/phone',
     name: 'phone',
-    meta: {title: '手机壁纸', icon: ImageIcon},
+    meta: {title: '手机壁纸', icon: MobileListIcon},
     component: Layout,
     children: [
       {
@@ -107,7 +107,7 @@ export default [
   {
     path: '/ai',
     name: 'ai',
-    meta: {title: 'Ai画廊', icon: ImageIcon},
+    meta: {title: 'Ai画廊', icon: AiImage1Icon},
     component: Layout,
     children: [
       {
@@ -133,7 +133,7 @@ export default [
     path: '/stableDiffusion',
     name: 'stableDiffusion',
     component: Layout,
-    meta: {title: '壁纸生成', icon: ServerIcon},
+    meta: {title: '在线生图', icon: AiImageIcon},
     children: [
       // {
       //   path: 'overview',
@@ -155,23 +155,66 @@ export default [
       }
     ],
   },
-  // {
-  //   path: '/models',
-  //   name: 'models',
-  //   component: Layout,
-  //   meta: {title: '模型管理', icon: FileIconIcon},
-  //   children: [
-  //     {
-  //       path: 'list',
-  //       name: 'list',
-  //       component: () => import("@/pages/wallpaper/models/index.vue"),
-  //       meta: {title: '模型列表', icon: FileIcon},
-  //     },
-  //     {
-  //       path: 'http://hongkong.gpg123.vip:5000',
-  //       name: 'proxy',
-  //       meta: {title: '代理加速', icon: DownloadIcon},
-  //     }
-  //   ]
-  // }
+  {
+    path: '/models',
+    name: 'models',
+    component: Layout,
+    meta: {title: '离线模型', icon: ModuleIcon},
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        component: () => import("@/pages/wallpaper/models/index.vue"),
+        meta: {title: '模型列表', icon: ArticleIcon},
+      },
+      {
+        path: 'http://hongkong.gpg123.vip:5000',
+        name: 'proxy',
+        meta: {title: '代理加速', icon: DownloadIcon},
+      }
+    ]
+  },
+  {
+    path: '/resources',
+    name: 'resources',
+    component: Layout,
+    meta: {title: '工具包下载', icon: FileZipIcon},
+    children: [
+      {
+        path: 'https://pan.quark.cn/s/2c832199b09b',
+        name: 'sd',
+        meta: {title: 'Stable Diffusion整合包', icon: FileIcon},
+      },
+      {
+        path: 'https://pan.quark.cn/s/b4081a86e842',
+        name: 'sd-modules',
+        meta: {title: '模型包下载', icon: FileIcon},
+      },
+      {
+        path: 'https://hubproxy.gpg123.cn',
+        name: 'hubproxy',
+        meta: {title: 'HuggingFace加速', icon: FileIcon},
+      },
+    ]
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: Layout,
+    meta: {title: '关于', icon: InfoCircleIcon},
+    children: [
+      {
+        path: 'gpu',
+        name: 'gpu',
+        component: () => import("@/pages/wallpaper/share/index.vue"),
+        meta: {title: 'GPU合租与赞助', icon: FileIcon},
+      },
+      {
+        path: 'https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip',
+        name: 'umami',
+        component: () => import("@/pages/wallpaper/share/index.vue"),
+        meta: {title: '站点统计', icon: FileIcon},
+      },
+    ]
+  }
 ]

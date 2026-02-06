@@ -22,62 +22,6 @@
             <notice/>
           </t-tooltip>
         </div>
-        <t-menu-item>
-          <t-submenu>
-            <template #title style="font-size: 24px;color: #3399ff">
-              <span style="color: red">Hot!</span>AI在线工具
-            </template>
-            <t-menu-item>
-              <t-button theme="default" variant="text" tag="a" href="/stableDiffusion/use">
-                <span style="color: red">Hot!</span>&nbsp;文生图
-              </t-button>
-            </t-menu-item>
-            <t-menu-item>
-              <t-button theme="default" variant="text" tag="a" href="/">
-                <span style="color: red">Hot!</span>&nbsp;图生图(开发中)
-              </t-button>
-            </t-menu-item>
-            <t-menu-item>
-              <t-button theme="default" variant="text" tag="a" href="/">
-                <span style="color: red">Hot!</span>&nbsp;图生视频(开发中)
-              </t-button>
-            </t-menu-item>
-          </t-submenu>
-        </t-menu-item>
-        <t-menu-item>
-          <t-submenu>
-            <template #title>
-              资源下载
-            </template>
-            <t-menu-item href="https://pan.quark.cn/s/2c832199b09b" target="_blank">
-              Stable Diffusion整合包
-            </t-menu-item>
-            <t-menu-item href="https://pan.quark.cn/s/b4081a86e842" target="_blank">
-              离线模型包下载
-            </t-menu-item>
-            <t-menu-item href="http://hongkong.gpg123.vip:5000" target="_blank">
-              HuggingFace加速
-            </t-menu-item>
-          </t-submenu>
-        </t-menu-item>
-        <t-menu-item>
-          <t-submenu>
-            <template #title>
-              关于
-            </template>
-            <t-menu-item>
-              <t-button theme="default" variant="text" tag="a" href="/share">
-                GPU合租与赞助
-              </t-button>
-            </t-menu-item>
-            <t-menu-item>
-              <t-button theme="default" variant="text" tag="a"
-                        href="https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip">
-                站点统计
-              </t-button>
-            </t-menu-item>
-          </t-submenu>
-        </t-menu-item>
         <div class="operations-container">
           <t-dropdown :min-column-width="125" trigger="click">
             <HeaderUser/>
