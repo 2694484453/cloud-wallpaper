@@ -167,11 +167,6 @@ export default [
         component: () => import("@/pages/wallpaper/models/index.vue"),
         meta: {title: '模型列表', icon: ArticleIcon},
       },
-      {
-        path: 'http://hongkong.gpg123.vip:5000',
-        name: 'proxy',
-        meta: {title: '代理加速', icon: DownloadIcon},
-      }
     ]
   },
   {
