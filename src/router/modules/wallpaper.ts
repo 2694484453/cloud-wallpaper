@@ -159,7 +159,7 @@ export default [
     path: '/models',
     name: 'models',
     component: Layout,
-    meta: {title: '离线模型', icon: ModuleIcon},
+    meta: {title: '离线sd模型', icon: ModuleIcon},
     children: [
       {
         path: 'list',
@@ -173,12 +173,22 @@ export default [
     path: '/resources',
     name: 'resources',
     component: Layout,
-    meta: {title: '工具包下载', icon: FileZipIcon},
+    meta: {title: '跑图工具包下载', icon: FileZipIcon},
     children: [
       {
         path: 'https://pan.quark.cn/s/2c832199b09b',
         name: 'sd',
-        meta: {title: 'Stable Diffusion整合包', icon: FileIcon},
+        meta: {title: '秋叶Stable-Diffusion整合包', icon: FileIcon},
+      },
+      {
+        path: "https://pan.quark.cn/s/4e9459b17c94",
+        name: 'sd-forge',
+        meta: {title: '秋叶Stable-Diffusion-Forge整合包',icon: FileIcon}
+      },
+      {
+        path: 'https://pan.quark.cn/s/64b808baa960',
+        name: "ComfyUI",
+        meta: {title: '秋叶ComfyUI整合包', icon: FileIcon},
       },
       {
         path: 'https://pan.quark.cn/s/b4081a86e842',
