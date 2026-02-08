@@ -293,6 +293,7 @@ export default Vue.extend({
       })
     },
     getList() {
+      this.imageList = [];
       this.dataLoading = true;
       this.$request.get('/wallpaper/page', {
         params: this.searchForm
