@@ -92,12 +92,12 @@ export default [
     ]
   },
   {
-    name: "dynamic",
+    name: "/dynamic",
     meta: {title: '动态壁纸', icon: MobileListIcon},
     component: Layout,
     children: [
       {
-        path: 'dynamic',
+        path: 'dynamic_pc',
         name: 'dynamic',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '桌面动态壁纸', icon: DesktopIcon},
