@@ -92,7 +92,8 @@ export default [
     ]
   },
   {
-    name: "/dynamic",
+    path: "/dynamic",
+    name: "dynamic",
     meta: {title: '动态壁纸', icon: MobileListIcon},
     component: Layout,
     children: [
