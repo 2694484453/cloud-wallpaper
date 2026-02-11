@@ -73,13 +73,6 @@ export default [
         meta: {title: '超宽屏', icon: ImageIcon},
         props: {cateName: 'widescreen'}
       },
-      {
-        path: 'dynamic',
-        name: 'dynamic',
-        component: () => import('@/pages/wallpaper/list/index.vue'),
-        meta: {title: '动态壁纸', icon: DesktopIcon},
-        props: {cateName: 'dynamic'}
-      }
     ]
   },
   {
@@ -94,6 +87,21 @@ export default [
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '手机静态壁纸', icon: MobileIcon},
         props: {cateName: 'iphone'}
+      },
+
+    ]
+  },
+  {
+    name: "dynamic",
+    meta: {title: '动态壁纸', icon: MobileListIcon},
+    component: Layout,
+    children: [
+      {
+        path: 'dynamic',
+        name: 'dynamic',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '桌面动态壁纸', icon: DesktopIcon},
+        props: {cateName: 'dynamic'}
       },
       {
         path: 'dynamic_phone',
