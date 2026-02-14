@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 内容区域 -->
-    <div class="list-content">
+    <div>
       <div class="image-grid-container">
         <div class="grid-container">
           <t-image-viewer
@@ -21,7 +21,9 @@
                         :loading="dataLoading"
                         :src="dynamic(item)"
                         :lazy="true"
-                        class="cover-image"
+                        fit="cover"
+                        position="center"
+                        :style="{ width: width+35+'px', height: height+35+'px' }"
                       />
                     </template>
                     <template #footer>
@@ -425,7 +427,8 @@ export default Vue.extend({
     },
     onReset() {
       this.searchForm.name = ''
-    }
+    },
+
   },
 });
 </script>
@@ -466,7 +469,7 @@ export default Vue.extend({
 
 /* 分页等其他样式保持不变 */
 .pagination-wrap {
-  margin-top: 25px;
+  margin-top: 15px;
   text-align: left;
 }
 
@@ -478,7 +481,7 @@ export default Vue.extend({
 /* 1. 容器设置 - 每行6个 */
 .image-grid-container {
   max-width: 100%;
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
 .grid-container {

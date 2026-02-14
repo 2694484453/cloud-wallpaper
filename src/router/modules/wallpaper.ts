@@ -3,10 +3,9 @@ import {
   ImageIcon,
   MobileIcon,
   DesktopIcon,
-  ServerIcon,
   FileWordIcon,
   CloudIcon,
-  DashboardIcon, FileIconIcon, DownloadIcon, FileIcon,AiImageIcon,ModuleIcon,ArticleIcon,Desktop1Icon,MobileListIcon,AiImage1Icon,FileZipIcon,InfoCircleIcon
+  DashboardIcon, FileIcon,AiImageIcon,ModuleIcon,ArticleIcon,Desktop1Icon,MobileListIcon,AiImage1Icon,FileZipIcon,InfoCircleIcon,AiVideoIcon
 } from "tdesign-icons-vue";
 
 export default [
@@ -94,7 +93,7 @@ export default [
   {
     path: "/dynamic",
     name: "dynamic",
-    meta: {title: '动态壁纸', icon: MobileListIcon},
+    meta: {title: '动态壁纸', icon: AiVideoIcon},
     component: Layout,
     children: [
       {
