@@ -169,20 +169,20 @@ export default [
       }
     ],
   },
-  {
-    path: '/models',
-    name: 'models',
-    component: Layout,
-    meta: {title: '离线sd模型', icon: ModuleIcon},
-    children: [
-      {
-        path: 'list',
-        name: 'list',
-        component: () => import("@/pages/wallpaper/models/index.vue"),
-        meta: {title: '模型列表', icon: ArticleIcon},
-      },
-    ]
-  },
+  // {
+  //   path: '/models',
+  //   name: 'models',
+  //   component: Layout,
+  //   meta: {title: '离线sd模型', icon: ModuleIcon},
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: 'list',
+  //       component: () => import("@/pages/wallpaper/models/index.vue"),
+  //       meta: {title: '模型列表', icon: ArticleIcon},
+  //     },
+  //   ]
+  // },
   {
     path: '/resources',
     name: 'resources',
