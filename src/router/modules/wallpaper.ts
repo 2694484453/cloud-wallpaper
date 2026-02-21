@@ -141,7 +141,7 @@ export default [
     path: '/stableDiffusion',
     name: 'stableDiffusion',
     component: Layout,
-    meta: {title: '在线生图', icon: AiImageIcon},
+    meta: {title: '在线工具', icon: AiImageIcon},
     children: [
       // {
       //   path: 'overview',
@@ -149,17 +149,23 @@ export default [
       //   component: () => import('@/pages/nas/index.vue'),
       //   meta: {title: '概览'},
       // },
-      {
-        path: "minePrompt",
-        name: 'minePrompt',
-        component: () => import("@/pages/wallpaper/prompt/index.vue"),
-        meta: {title: '我的词条', icon: FileWordIcon},
-      },
+      // {
+      //   path: "minePrompt",
+      //   name: 'minePrompt',
+      //   component: () => import("@/pages/wallpaper/prompt/index.vue"),
+      //   meta: {title: '我的词条', icon: FileWordIcon},
+      // },
       {
         path: "use",
         name: 'UseBase',
         component: () => import("@/pages/wallpaper/ai/index.vue"),
-        meta: {title: '模型调用', icon: CloudIcon},
+        meta: {title: '在线生图', icon: CloudIcon},
+      },
+      {
+        path: "inspector",
+        name: "inspector",
+        component: () => import("@/pages/wallpaper/inspector/index.vue"),
+        meta: {title: '读取提示词', icon: CloudIcon},
       }
     ],
   },
