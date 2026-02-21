@@ -159,7 +159,7 @@ export default [
         path: "use",
         name: 'UseBase',
         component: () => import("@/pages/wallpaper/ai/index.vue"),
-        meta: {title: '在线生图', icon: CloudIcon},
+        meta: {title: '在线文生图', icon: CloudIcon},
       },
       {
         path: "inspector",
