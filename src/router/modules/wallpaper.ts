@@ -176,23 +176,28 @@ export default [
         name: "inspector",
         component: () => import("@/pages/wallpaper/inspector/index.vue"),
         meta: {title: '读取提示词', icon: CloudIcon},
-      }
+      },
+      {
+        path: 'https://hubproxy.gpg123.cn',
+        name: 'hubproxy',
+        meta: {title: 'HuggingFace加速', icon: FileIcon},
+      },
     ],
   },
-  // {
-  //   path: '/models',
-  //   name: 'models',
-  //   component: Layout,
-  //   meta: {title: '离线sd模型', icon: ModuleIcon},
-  //   children: [
-  //     {
-  //       path: 'list',
-  //       name: 'list',
-  //       component: () => import("@/pages/wallpaper/models/index.vue"),
-  //       meta: {title: '模型列表', icon: ArticleIcon},
-  //     },
-  //   ]
-  // },
+  {
+    path: '/models',
+    name: 'models',
+    component: Layout,
+    meta: {title: '模型资源', icon: ModuleIcon},
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        component: () => import("@/pages/wallpaper/models/index.vue"),
+        meta: {title: '模型列表', icon: ArticleIcon},
+      },
+    ]
+  },
   {
     path: '/resources',
     name: 'resources',
@@ -212,17 +217,12 @@ export default [
       {
         path: 'https://pan.quark.cn/s/64b808baa960',
         name: "ComfyUI",
-        meta: {title: '秋叶ComfyUI整合包', icon: FileIcon},
+        meta: {title: '秋叶ComfyUI整合包V2/V3', icon: FileIcon},
       },
       {
         path: 'https://pan.quark.cn/s/b4081a86e842',
         name: 'sd-modules',
         meta: {title: '模型包下载', icon: FileIcon},
-      },
-      {
-        path: 'https://hubproxy.gpg123.cn',
-        name: 'hubproxy',
-        meta: {title: 'HuggingFace加速', icon: FileIcon},
       },
     ]
   },

@@ -173,7 +173,7 @@ export default Vue.extend({
   },
   computed: {
     confirmBody(): string {
-      const { deleteProduct } = this;
+      const { deleteProduct } = this;w
       return deleteProduct ? `删除后，${deleteProduct.name}的所有产品信息将被清空, 且无法恢复` : '';
     },
   },
