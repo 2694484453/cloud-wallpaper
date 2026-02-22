@@ -5,7 +5,17 @@ import {
   DesktopIcon,
   FileWordIcon,
   CloudIcon,
-  DashboardIcon, FileIcon,AiImageIcon,ModuleIcon,ArticleIcon,Desktop1Icon,MobileListIcon,AiImage1Icon,FileZipIcon,InfoCircleIcon,AiVideoIcon
+  DashboardIcon,
+  FileIcon,
+  AiImageIcon,
+  ModuleIcon,
+  ArticleIcon,
+  Desktop1Icon,
+  MobileListIcon,
+  AiImage1Icon,
+  FileZipIcon,
+  InfoCircleIcon,
+  AiVideoIcon
 } from "tdesign-icons-vue";
 
 export default [
@@ -123,7 +133,7 @@ export default [
         path: 'all',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: "全部", icon: ImageIcon},
-        props: {cateName: 'ai', name: ''},
+        props: {cateName: 'ai'},
       }
     ]
   },
