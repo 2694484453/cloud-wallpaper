@@ -82,6 +82,13 @@ export default [
         meta: {title: '超宽屏', icon: ImageIcon},
         props: {cateName: 'widescreen'}
       },
+      {
+        path: 'vertical_screen',
+        name: 'vertical_screen',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '竖屏专享', icon: ImageIcon},
+        props: {cateName: 'vertical_screen'}
+      },
     ]
   },
   {
