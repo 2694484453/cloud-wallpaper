@@ -7,9 +7,8 @@
     "prod": "vite --open --mode prod",
     "development": "vite --open --mode development",
     "build": "vite build --mode prod",
-    "build:site": "vite build --mode site",
     "site:preview": "npm run build && cp -r dist _site",
-    "sitemap": "npx ts-node -r tsconfig-paths/register -r ts-node/register scripts/generate-sitemap.mjs",
+    "sitemap": "node scripts/generate-sitemap.js",
     "preview": "vite preview"
   },
   "dependencies": {
