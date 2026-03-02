@@ -10,11 +10,6 @@
         :data="formData"
         :style="{ marginBottom: '8px' }"
       >
-        <t-form-item label="选择提示词">
-          <t-select v-for="(item,index) in words" clearable @change="changeWords(item)" @clear="clearWords">
-            <t-option :label="item.promptName" :value="item"></t-option>
-          </t-select>
-        </t-form-item>
         <t-form-item label="提示词" required-mark help="">
           <t-textarea
             v-model="formData.prompt"
@@ -31,11 +26,6 @@
             :autosize="{minRows: 5, maxRows:10}"
             :maxlength="200"
           />
-        </t-form-item>
-        <!-- 备注 -->
-        <t-form-item v-show="description !== '' && description !== null" label="提示词备注">
-          <span>{{description}}</span>
-          <!--          <t-button @click="importRandom" theme="primary" size="medium">从随机词库导入</t-button>-->
         </t-form-item>
         <!-- 参数设置区域 -->
         <t-form-item label="参数设置">

@@ -3,10 +3,19 @@ import {
   ImageIcon,
   MobileIcon,
   DesktopIcon,
-  ServerIcon,
   FileWordIcon,
   CloudIcon,
-  DashboardIcon, FileIconIcon, DownloadIcon, FileIcon,AiImageIcon,ModuleIcon,ArticleIcon,Desktop1Icon,MobileListIcon,AiImage1Icon,FileZipIcon,InfoCircleIcon
+  DashboardIcon,
+  FileIcon,
+  AiImageIcon,
+  ModuleIcon,
+  ArticleIcon,
+  Desktop1Icon,
+  MobileListIcon,
+  AiImage1Icon,
+  FileZipIcon,
+  InfoCircleIcon,
+  AiVideoIcon
 } from "tdesign-icons-vue";
 
 export default [
@@ -73,13 +82,6 @@ export default [
         meta: {title: '超宽屏', icon: ImageIcon},
         props: {cateName: 'widescreen'}
       },
-      {
-        path: 'dynamic',
-        name: 'dynamic',
-        component: () => import('@/pages/wallpaper/list/index.vue'),
-        meta: {title: '动态壁纸', icon: DesktopIcon},
-        props: {cateName: 'dynamic'}
-      }
     ]
   },
   {
@@ -94,6 +96,22 @@ export default [
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: '手机静态壁纸', icon: MobileIcon},
         props: {cateName: 'iphone'}
+      },
+
+    ]
+  },
+  {
+    path: "/dynamic",
+    name: "dynamic",
+    meta: {title: '动态壁纸', icon: AiVideoIcon},
+    component: Layout,
+    children: [
+      {
+        path: 'dynamic_pc',
+        name: 'dynamic',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '桌面动态壁纸', icon: DesktopIcon},
+        props: {cateName: 'dynamic'}
       },
       {
         path: 'dynamic_phone',
@@ -115,7 +133,7 @@ export default [
         path: 'all',
         component: () => import('@/pages/wallpaper/list/index.vue'),
         meta: {title: "全部", icon: ImageIcon},
-        props: {cateName: 'ai', name: ''},
+        props: {cateName: 'ai'},
       }
     ]
   },
@@ -133,7 +151,7 @@ export default [
     path: '/stableDiffusion',
     name: 'stableDiffusion',
     component: Layout,
-    meta: {title: '在线生图', icon: AiImageIcon},
+    meta: {title: '在线工具', icon: AiImageIcon},
     children: [
       // {
       //   path: 'overview',
@@ -141,25 +159,36 @@ export default [
       //   component: () => import('@/pages/nas/index.vue'),
       //   meta: {title: '概览'},
       // },
-      {
-        path: "minePrompt",
-        name: 'minePrompt',
-        component: () => import("@/pages/wallpaper/prompt/index.vue"),
-        meta: {title: '我的词条', icon: FileWordIcon},
-      },
+      // {
+      //   path: "minePrompt",
+      //   name: 'minePrompt',
+      //   component: () => import("@/pages/wallpaper/prompt/index.vue"),
+      //   meta: {title: '我的词条', icon: FileWordIcon},
+      // },
       {
         path: "use",
         name: 'UseBase',
         component: () => import("@/pages/wallpaper/ai/index.vue"),
-        meta: {title: '模型调用', icon: CloudIcon},
-      }
+        meta: {title: '在线文生图', icon: CloudIcon},
+      },
+      {
+        path: "inspector",
+        name: "inspector",
+        component: () => import("@/pages/wallpaper/inspector/index.vue"),
+        meta: {title: '读取提示词', icon: CloudIcon},
+      },
+      {
+        path: 'https://hubproxy.gpg123.cn',
+        name: 'hubproxy',
+        meta: {title: 'HuggingFace加速', icon: FileIcon},
+      },
     ],
   },
   {
     path: '/models',
     name: 'models',
     component: Layout,
-    meta: {title: '离线sd模型', icon: ModuleIcon},
+    meta: {title: '模型资源', icon: ModuleIcon},
     children: [
       {
         path: 'list',
@@ -188,17 +217,12 @@ export default [
       {
         path: 'https://pan.quark.cn/s/64b808baa960',
         name: "ComfyUI",
-        meta: {title: '秋叶ComfyUI整合包', icon: FileIcon},
+        meta: {title: '秋叶ComfyUI整合包V2/V3', icon: FileIcon},
       },
       {
         path: 'https://pan.quark.cn/s/b4081a86e842',
         name: 'sd-modules',
         meta: {title: '模型包下载', icon: FileIcon},
-      },
-      {
-        path: 'https://hubproxy.gpg123.cn',
-        name: 'hubproxy',
-        meta: {title: 'HuggingFace加速', icon: FileIcon},
       },
     ]
   },
