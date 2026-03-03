@@ -16,34 +16,56 @@
                   <t-card bordered
                           hover-shadow>
                     <template #cover>
-                      <t-image
-                        @click="open(index);handleView(item)"
-                        :loading="dataLoading"
-                        :src="dynamic(item)"
-                        :lazy="true"
-                        fit="cover"
-                        position="center"
-                        :style="{ width: width+35+'px', height: height+35+'px' }"
-                      />
+                      <div class="wallpaper-card" :style="{
+                            position: 'relative',
+                            width: '100%',
+                            aspectRatio: computerRatio(item),
+                            backgroundColor: '#f0f0f0',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                            transition: 'transform 0.3s ease'
+                          }">
+                        <t-image
+                          @click="open(index);handleView(item)"
+                          :loading="dataLoading"
+                          :src="computerSrc(item)"
+                          :lazy="true"
+                          class="wallpaper-image"
+                          alt="Wallpaper"
+                          fit="cover"
+                          position="center"
+                        />
+                      </div>
                     </template>
                     <template #footer>
-                      <t-space :size="24" direction="horizontal" style="font-size: 12px">
-                        <t-tooltip content="浏览次数">
-                          <browse-icon class="icon"/>
-                          <span>{{ item.viewCount }}</span>
+                      <t-space
+                        wrap
+                        :size="12"
+                        style="width: 100%; font-size: 12px;"
+                        class="adaptive-footer"
+                        direction="horizontal"
+                      >
+                        <t-tooltip content="浏览">
+                          <div class="stat-item">
+                            <browse-icon class="icon"/>
+                            <span class="stat-text">{{ item.viewCount }}</span>
+                          </div>
                         </t-tooltip>
-                        <t-tooltip content="下载次数">
-                          <download-icon class="icon"/>
-                          <span>{{ item.downloadCount }}</span>
+                        <t-tooltip content="下载">
+                          <div class="stat-item">
+                            <download-icon class="icon"/>
+                            <span class="stat-text">{{ item.downloadCount }}</span>
+                          </div>
                         </t-tooltip>
-                        <t-tooltip content="查看">
-                          <info-circle-icon/>
-                          <t-button size="small" theme="primary" variant="text" @click="handleDetail(item)">详情
+                        <t-tooltip content="详情">
+                          <t-button size="small" theme="primary" variant="text" @click="handleDetail(item)">
+                            <info-circle-icon/> <span class="btn-text">详情</span>
                           </t-button>
                         </t-tooltip>
                         <t-tooltip content="下载">
-                          <download-icon class="icon"/>
-                          <t-button size="small" theme="primary" variant="text" @click="handleDownload(item)">下载
+                          <t-button size="small" theme="primary" variant="text" @click="handleDownload(item)">
+                            <download-icon/> <span class="btn-text">下载</span>
                           </t-button>
                         </t-tooltip>
                       </t-space>
@@ -235,10 +257,10 @@ export default Vue.extend({
     this.getOverView();
     this.getList();
     //
-    setItem('wallpaper.searchForm.path',this.$route.fullPath)
-    this.searchForm.name = this.$route.query.name ?? ""
-    setItem('wallpaper.searchForm.name',this.searchForm.name);
-    setItem('wallpaper.searchForm.cateName', this.cateName);
+    // setItem('wallpaper.searchForm.path',this.$route.fullPath)
+    // this.searchForm.name = this.$route.query.name ?? ""
+    // setItem('wallpaper.searchForm.name',this.searchForm.name);
+    // setItem('wallpaper.searchForm.cateName', this.cateName);
   },
   beforeDestroy() {
 
@@ -378,49 +400,25 @@ export default Vue.extend({
 
       })
     },
-    dynamic(item: any) {
-      // 计算显示宽高
-      switch (this.searchForm.cateName) {
-        // 动态壁纸
-        case 'dynamic':
-          this.width = 284;
-          this.height = 140;
-          return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,w_' + this.width + ',h_' + this.height;
-        case 'dynamic_phone':
-          this.width = 160;
-          this.height = 284;
-          return item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,w_' + this.width + ',h_' + this.height;
-        // 手机
+    computerRatio(item: any) {
+      switch (item.dirName) {
+        case 'ai':
+          return '9/14';
         case 'iphone':
-          this.width = 160;
-          this.height = 320;
-          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
-        // 带鱼屏
+          return '9/16';
+        case 'vertical_screen':
+          return '9/18';
+        case 'dynamic_phone':
+          return '9/16';
         case 'widescreen':
-          this.height = 160;
-          this.width = 320;
-          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
-        // ai
-        case  'ai':
-          this.width = 160;
-          this.height = 248;
-          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
-        // fuli
-        case 'fuli':
-          this.width = 160;
-          this.height = 248;
-          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
-        // fuli
-        case 'other':
-          this.width = 284;
-          this.height = 160;
-          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
-        // 默认
+          return '21/9'
         default:
-          this.width = 284;
-          this.height = 160;
-          return item.url + '?x-oss-process=image/resize,w_' + this.width + ',h_' + this.height;
+          return '16:9';
       }
+    },
+    computerSrc(item: any) {
+      const isVideo = /\.mp4(\?.*)?$/i.test(item.url);
+      return isVideo ? (item.url + '?x-oss-process=video/snapshot,t_0,f_jpg,p_30') : (item.url + '?x-oss-process=image/resize,p_30')
     },
     onSubmit() {
       this.getList();
@@ -432,50 +430,18 @@ export default Vue.extend({
   },
 });
 </script>
-
 <style lang="less" scoped>
-.header-fixed {
-  position: fixed; /* 关键：固定定位 */
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 999; /* 确保在最上层 */
-  background-color: #008489; /* 主题色 */
-  color: #fff;
-  text-align: center;
-  font-size: 18px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 添加一点阴影 */
+.media-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 关键：保证视频和图片都填满容器且不变形 */
+  display: block;
+  border-radius: 8px;
 }
-
-.wallpaper-list-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
-.list-content {
-  flex: 1;
-  overflow: hidden;
-}
-
-.image-grid {
-  flex: 1 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 15px;
-  padding: 10px 0;
-}
-
 /* 分页等其他样式保持不变 */
 .pagination-wrap {
   margin-top: 15px;
   text-align: left;
-}
-
-/* 关键：添加悬停样式 */
-.hover-pointer:hover {
-  cursor: pointer !important; /* 确保覆盖其他样式 */
 }
 
 /* 1. 容器设置 - 每行6个 */
@@ -504,31 +470,27 @@ export default Vue.extend({
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
-/* 3. 图片容器 - 固定284x160 */
-.image-wrapper {
-  border-radius: 8px;
-  overflow: hidden;
+/* 2. 卡片容器：固定宽高比 (Aspect Ratio) */
+.wallpaper-card {
   position: relative;
+  width: 100%;
+  /* 核心：强制容器保持 21:9 的比例 (约 2.38) */
+  /* 无论屏幕多宽，高度都会自动根据宽度计算，保持比例一致 */
+  aspect-ratio: 16 / 9;
+  background-color: #f0f0f0; /* 加载前的背景色 */
+  border-radius: 8px;
+  overflow: hidden; /* 隐藏超出容器的图片部分 */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
 }
 
-.grid-image {
+.wallpaper-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
   border-radius: 8px;
-}
-
-/* 4. 底部信息栏 */
-.image-footer {
-  padding: 4px 30px;
-  font-size: 12px;
-  color: #666;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #fff;
-  border-top: 1px solid #eee;
 }
 
 .icon {
@@ -553,21 +515,6 @@ export default Vue.extend({
   /* 确保内部图片不撑破容器 */
   overflow: hidden;
   position: relative;
-}
-
-/* 3. 图片样式：铺满容器并裁剪 */
-.cover-image {
-  width: 100%;
-  height: 100%;
-  /* 让 img 标签本身铺满父容器 */
-
-  :deep(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 裁剪图片以填满区域 */
-    /* 点击卡片时的默认手势 */
-    cursor: pointer;
-  }
 }
 
 /* 5. 响应式调整 - 当屏幕较小时自动调整列数 */
@@ -598,6 +545,29 @@ export default Vue.extend({
 @media (max-width: 400px) {
   .grid-container {
     grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.stat-item, .t-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* 关键：当容器非常窄时，隐藏文字，只留图标 */
+@media (max-width: 400px) {
+  .stat-text, .btn-text {
+    display: none;
+  }
+
+  /* 按钮去掉内边距，变成纯图标按钮 */
+  .t-button {
+    padding: 4px;
   }
 }
 </style>
