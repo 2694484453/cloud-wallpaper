@@ -1,49 +1,66 @@
 <template>
   <div style="padding: 20px">
-    <t-card :shadow="true"
-            :bordered="true"
-            size="medium"
-    >
+<!--    <t-card :shadow="true"-->
+<!--            :bordered="true"-->
+<!--            size="medium"-->
+<!--    >-->
+<!--      <template #title>-->
+<!--        <h2>Stable Diffusion合租计划</h2>-->
+<!--      </template>-->
+<!--      <h2>-->
+<!--        资源选择-->
+<!--      </h2>-->
+<!--      <t-space direction="horizontal">-->
+<!--        <span>-->
+<!--          GPU极智算-->
+<!--        </span>-->
+<!--        <span>-->
+<!--               <a href="https://www.jygpu.com/markets">https://www.jygpu.com/markets</a>-->
+<!--        </span>-->
+<!--      </t-space>-->
+<!--      <div style="margin-top: 15px">-->
+<!--        <h2>资源套餐费用</h2>-->
+<!--        <t-space direction="horizontal" style="padding: 20px">-->
+<!--          <t-image shape="square" style="width: 720px;height: 420px"-->
+<!--                   src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/jygpu/截屏2026-01-11 18.25.04.png">-->
+
+<!--          </t-image>-->
+<!--          <t-image shape="square" style="width: 720px;height: 420px"-->
+<!--                   src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/jygpu/截屏2026-01-11 18.25.44.png">-->
+
+<!--          </t-image>-->
+<!--        </t-space>-->
+<!--      </div>-->
+
+<!--      <template #footer>-->
+<!--        <h3>博主打算开通一个GPU计算实例，需要找人合租分担费用（每人每月费用=资源每月费用/人数），期望合租人数>=5人，那么每人每月只需要200元就能用上RTX4090</h3>-->
+<!--        <h4>用途：Ai绘画、跑图、渲染测试等</h4>-->
+<!--        <h3>有兴趣/打算的请添加QQ群：2694484453</h3>-->
+<!--        <t-image style="width: 220px;height: 240px" src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/qq/IMG_1554 2.JPG">-->
+<!--        </t-image>-->
+<!--      </template>-->
+<!--    </t-card>-->
+    <t-card>
       <template #title>
-        <h2>Stable Diffusion合租计划</h2>
+        <h2>完整资源购买</h2>
       </template>
-      <h2>
-        资源选择
-      </h2>
-      <t-space direction="horizontal">
+      <span>
+        一次购买永久更新
+      </span>
+      <t-space direction="vertical">
         <span>
-          GPU极智算
+          【闲鱼】
+          <a target="_blank" href="https://m.tb.cn/h.iWJzRJ0?tk=JJowUF2O5CN">https://m.tb.cn/h.iWJzRJ0?tk=JJowUF2O5CN</a> CZ057 「我在闲鱼发布了【AI绘画模型工具包、部署】」
+           点击链接直接打开
         </span>
         <span>
-               <a href="https://www.jygpu.com/markets">https://www.jygpu.com/markets</a>
+          【闲鱼】<a target="_blank" href="https://m.tb.cn/h.id2idY7?tk=wJqfUF2Op23">https://m.tb.cn/h.id2idY7?tk=wJqfUF2Op23</a> CZ057 「我在闲鱼发布了【壁纸AI跑图动漫资源分享】」
+           点击链接直接打开
         </span>
       </t-space>
-      <div style="margin-top: 15px">
-        <h2>资源套餐费用</h2>
-        <t-space direction="horizontal" style="padding: 20px">
-          <t-image shape="square" style="width: 720px;height: 420px"
-                   src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/jygpu/截屏2026-01-11 18.25.04.png">
-
-          </t-image>
-          <t-image shape="square" style="width: 720px;height: 420px"
-                   src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/jygpu/截屏2026-01-11 18.25.44.png">
-
-          </t-image>
-        </t-space>
-      </div>
-
-      <template #footer>
-        <h3>博主打算开通一个GPU计算实例，需要找人合租分担费用（每人每月费用=资源每月费用/人数），期望合租人数>=5人，那么每人每月只需要200元就能用上RTX4090</h3>
-        <h4>用途：Ai绘画、跑图、渲染测试等</h4>
-        <h3>有兴趣/打算的请添加QQ群：2694484453</h3>
-        <t-image style="width: 220px;height: 240px"
-                 src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/qq/IMG_1554 2.JPG">
-        </t-image>
-      </template>
     </t-card>
     <t-card
       size="medium"
-      style="margin-top: 10px"
       :bordered="true"
       :shadow="true"
     >
@@ -53,18 +70,18 @@
         </h2>
       </template>
       <span>
-        <t-image style="width: 220px;height: 220px" shape="square"
-                 src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/wx/IMG_1555.JPG">
-
+        <t-image style="width: 220px;height: 220px" shape="square" src="https://dev-gpg.oss-cn-hangzhou.aliyuncs.com/image/wx/IMG_1555.JPG">
         </t-image>
       </span>
       <template #footer>
         <h3>您的支持就是我前进的动力！</h3>
       </template>
     </t-card>
-    <t-card title="其他">
-      <h2>阿里云优惠活动</h2>
-      <a href="https://www.aliyun.com/minisite/goods?userCode=bbtle8h8">https://www.aliyun.com/minisite/goods?userCode=bbtle8h8</a>
+    <t-card>
+      <template #title>
+        <h2>阿里云优惠活动</h2>
+      </template>
+        <a href="https://www.aliyun.com/minisite/goods?userCode=bbtle8h8">https://www.aliyun.com/minisite/goods?userCode=bbtle8h8</a>
     </t-card>
   </div>
 </template>

@@ -243,7 +243,7 @@ export default [
         path: 'gpu',
         name: 'gpu',
         component: () => import("@/pages/wallpaper/share/index.vue"),
-        meta: {title: 'GPU合租与赞助', icon: FileIcon},
+        meta: {title: '资源购买', icon: FileIcon},
       },
       {
         path: 'https://umami.gpg123.vip/share/vV0lArsoXUhPpAZK/wallpaper.gpg123.vip',
