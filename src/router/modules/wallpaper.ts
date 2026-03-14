@@ -183,33 +183,14 @@ export default [
         name: "inspector",
         component: () => import("@/pages/wallpaper/inspector/index.vue"),
         meta: {title: '读取提示词', icon: CloudIcon},
-      },
-      {
-        path: 'https://hubproxy.gpg123.cn',
-        name: 'hubproxy',
-        meta: {title: 'HuggingFace加速', icon: FileIcon},
-      },
+      }
     ],
-  },
-  {
-    path: '/models',
-    name: 'models',
-    component: Layout,
-    meta: {title: '模型资源', icon: ModuleIcon},
-    children: [
-      {
-        path: 'list',
-        name: 'list',
-        component: () => import("@/pages/wallpaper/models/index.vue"),
-        meta: {title: '模型列表', icon: ArticleIcon},
-      },
-    ]
   },
   {
     path: '/resources',
     name: 'resources',
     component: Layout,
-    meta: {title: '跑图工具包下载', icon: FileZipIcon},
+    meta: {title: '资源下载', icon: FileZipIcon},
     children: [
       {
         path: 'https://pan.quark.cn/s/2c832199b09b',
@@ -227,10 +208,24 @@ export default [
         meta: {title: '秋叶ComfyUI整合包V2/V3', icon: FileIcon},
       },
       {
-        path: 'https://pan.quark.cn/s/b4081a86e842',
-        name: 'sd-modules',
-        meta: {title: '模型包下载', icon: FileIcon},
+        path: 'list',
+        name: 'list',
+        component: () => import("@/pages/wallpaper/models/index.vue"),
+        meta: {title: '模型列表', icon: ArticleIcon},
       },
+    ]
+  },
+  {
+    path: '/jiaocheng',
+    name: 'jiaocheng',
+    component: Layout,
+    meta: {title: '部署教程', icon: ModuleIcon},
+    children: [
+      {
+        path: "https://docs.gpg123.vip/Ai/comfyui-cuda%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/",
+        name: "docker",
+        meta: {title: "基于docker部署", icon: FileIcon}
+      }
     ]
   },
   {

@@ -8,15 +8,6 @@
         一次购买永久更新
       </span>
       <t-space direction="vertical">
-        <span>
-          【闲鱼】
-          <a target="_blank" href="https://m.tb.cn/h.iWJzRJ0?tk=JJowUF2O5CN">https://m.tb.cn/h.iWJzRJ0?tk=JJowUF2O5CN</a> CZ057 「我在闲鱼发布了【AI绘画模型工具包、部署】」
-           点击链接直接打开
-        </span>
-        <span>
-          【闲鱼】<a target="_blank" href="https://m.tb.cn/h.id2idY7?tk=wJqfUF2Op23">https://m.tb.cn/h.id2idY7?tk=wJqfUF2Op23</a> CZ057 「我在闲鱼发布了【壁纸AI跑图动漫资源分享】」
-           点击链接直接打开
-        </span>
       </t-space>
     </t-card>
     <t-card
