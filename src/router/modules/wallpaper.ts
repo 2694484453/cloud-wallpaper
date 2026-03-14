@@ -213,6 +213,12 @@ export default [
         component: () => import("@/pages/wallpaper/models/index.vue"),
         meta: {title: '模型列表', icon: ArticleIcon},
       },
+      {
+        path: 'https://github.com/yolain/ComfyUI-Yolain-Workflows?tab=readme-ov-file#%E5%9F%BA%E7%A1%80%E5%B7%A5%E4%BD%9C%E6%B5%81',
+        name: 'workflow',
+        //component: () => import("@/pages/wallpaper/workflow/index.vue"),
+        meta: {title: '工作流模型', icon: ArticleIcon},
+      },
     ]
   },
   {
