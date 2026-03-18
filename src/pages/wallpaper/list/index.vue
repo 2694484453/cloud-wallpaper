@@ -410,8 +410,10 @@ export default Vue.extend({
           return '9/18';
         case 'dynamic_phone':
           return '9/16';
+        case 'dynamic_wide':
+          return '21/9';
         case 'widescreen':
-          return '21/9'
+          return '21/9';
         default:
           return '16:9';
       }
