@@ -69,6 +69,27 @@ export default [
         props: {cateName: '3d'}
       },
       {
+        path: 'windows',
+        name: 'windows',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: 'windows壁纸', icon: ImageIcon},
+        props: {cateName: 'windows'}
+      },
+      {
+        path: 'macos',
+        name: 'macos',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: 'macos壁纸', icon: ImageIcon},
+        props: {cateName: 'macos'}
+      },
+      {
+        path: 'linux',
+        name: 'linux',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: 'linux壁纸', icon: ImageIcon},
+        props: {cateName: 'linux'}
+      },
+      {
         path: 'other',
         name: 'other',
         component: () => import('@/pages/wallpaper/list/index.vue'),
@@ -127,6 +148,13 @@ export default [
         meta: {title: '手机动态壁纸', icon: MobileIcon},
         props: {cateName: 'dynamic_phone'}
       },
+      {
+        path: 'dynamic_wide',
+        name: 'dynamic_wide',
+        component: () => import('@/pages/wallpaper/list/index.vue'),
+        meta: {title: '宽屏动态壁纸', icon: MobileIcon},
+        props: {cateName: 'dynamic_wide'}
+      }
     ]
   },
   {
