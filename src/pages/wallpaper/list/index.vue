@@ -420,7 +420,7 @@ export default Vue.extend({
     },
     computerSrc(item: any) {
       const isVideo = /\.mp4(\?.*)?$/i.test(item.url);
-      return isVideo ? (item.url + '?x-oss-process=video/animation,start_2,duration_3,t_0,f_jpg,p_30') : (item.url + '?x-oss-process=image/resize,p_30')
+      return isVideo ? (item.url + '?x-oss-process=video/animation,start_2,duration_3,f_jpg,p_30') : (item.url + '?x-oss-process=image/resize,p_30')
     },
     onSubmit() {
       this.getList();
