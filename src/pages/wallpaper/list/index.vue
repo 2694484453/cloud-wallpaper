@@ -29,7 +29,7 @@
                         <t-image
                           @click="open(index);handleView(item)"
                           :loading="dataLoading"
-                          :src="computerSrc(item)"
+                          :src="isDynamic(item.url) ? (item.url.replaceAll('.mp4','.gif')) : (item.url + '?x-oss-process=image/resize,p_30')"
                           :lazy="true"
                           class="wallpaper-image"
                           alt="Wallpaper"
@@ -60,12 +60,14 @@
                         </t-tooltip>
                         <t-tooltip content="详情">
                           <t-button size="small" theme="primary" variant="text" @click="handleDetail(item)">
-                            <info-circle-icon/> <span class="btn-text">详情</span>
+                            <info-circle-icon/>
+                            <span class="btn-text">详情</span>
                           </t-button>
                         </t-tooltip>
                         <t-tooltip content="下载">
                           <t-button size="small" theme="primary" variant="text" @click="handleDownload(item)">
-                            <download-icon/> <span class="btn-text">下载</span>
+                            <download-icon/>
+                            <span class="btn-text">下载</span>
                           </t-button>
                         </t-tooltip>
                       </t-space>
@@ -179,7 +181,7 @@ import {getJsonItem, setItem} from "@/config/storage";
 
 export default Vue.extend({
   name: 'ListBase',
-  props: ['cateName','name'],
+  props: ['cateName', 'name'],
   components: {
     CommonHeader,
     CommonFooter,
@@ -253,6 +255,9 @@ export default Vue.extend({
     }
   },
   mounted() {
+    if (localStorage.getItem('wallpaper.searchForm.cateName')) {
+      this.searchForm.cateName = localStorage.getItem('wallpaper.searchForm.cateName')
+    }
     this.getTags();
     this.getOverView();
     this.getList();
@@ -269,7 +274,7 @@ export default Vue.extend({
     "searchForm.current"(newVal, oldVal) {
       if (oldVal !== newVal) {
         // 存储
-        localStorage.setItem('wallpaper.searchForm.current', newVal);
+        //localStorage.setItem('wallpaper.searchForm.current', newVal);
         // 刷新数据
         this.getList();
       }
@@ -277,7 +282,7 @@ export default Vue.extend({
     "searchForm.size"(newVal, oldVal) {
       if (oldVal !== newVal) {
         // 存储
-        localStorage.setItem('wallpaper.searchForm.size', newVal);
+        //localStorage.setItem('wallpaper.searchForm.size', newVal);
         // 刷新数据
         this.getList();
       }
@@ -295,7 +300,7 @@ export default Vue.extend({
     // 监听 $route 对象
     '$route'(to, from) {
       console.log("xx", to, from);
-      setItem('wallpaper.searchForm.path',to.fullPath)
+      setItem('wallpaper.searchForm.path', to.fullPath)
       setItem('wallpaper.searchForm.cateName', this.cateName);
       if (to.query.name === localStorage.getItem('wallpaper.searchForm.name')) {
         this.searchForm.name = to.query.name;
@@ -325,7 +330,7 @@ export default Vue.extend({
         if (res.data.code === 200) {
           this.data = res.data.rows;
           res.data.rows.forEach(row => {
-            this.imageList.push(row.url)
+            this.imageList.push(this.isDynamic(row.url) ? row.url.replaceAll('.mp4', '.gif') : row.url)
           })
           this.pagination.total = res.data.total;
         }
@@ -418,9 +423,8 @@ export default Vue.extend({
           return '16:9';
       }
     },
-    computerSrc(item: any) {
-      const isVideo = /\.mp4(\?.*)?$/i.test(item.url);
-      return isVideo ? (item.url + '?x-oss-process=video/animation,start_2,duration_3,f_jpg,p_30') : (item.url + '?x-oss-process=image/resize,p_30')
+    isDynamic(url: any) {
+      return /\.mp4(\?.*)?$/i.test(url);
     },
     onSubmit() {
       this.getList();
@@ -440,6 +444,7 @@ export default Vue.extend({
   display: block;
   border-radius: 8px;
 }
+
 /* 分页等其他样式保持不变 */
 .pagination-wrap {
   margin-top: 15px;
@@ -482,7 +487,7 @@ export default Vue.extend({
   background-color: #f0f0f0; /* 加载前的背景色 */
   border-radius: 8px;
   overflow: hidden; /* 隐藏超出容器的图片部分 */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
