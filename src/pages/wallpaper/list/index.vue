@@ -29,7 +29,7 @@
                         <t-image
                           @click="open(index);handleView(item)"
                           :loading="dataLoading"
-                          :src="isDynamic(item.url) ? (item.url.replaceAll('.mp4','.gif')) : (item.url + '?x-oss-process=image/resize,p_30')"
+                          :src="isDynamic(item.url) ? (item.url.replaceAll('.mp4','.gif')) : (item.url + '?x-oss-process=image/resize,p_10')"
                           :lazy="true"
                           class="wallpaper-image"
                           alt="Wallpaper"
