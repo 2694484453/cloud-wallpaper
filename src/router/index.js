@@ -15,7 +15,7 @@ const defaultRouterList = [
 
 const createRouter = () =>
   new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     base: env === 'site' ? '/starter/vue/' : null,
     routes: defaultRouterList,
     scrollBehavior() {
