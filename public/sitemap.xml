@@ -2,355 +2,385 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wallpaper.gpg123.vip/</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/about</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/about/gpu</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/ai</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/ai/all</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/dashboard</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/dashboard/base</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/dashboard/detail</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/detail</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/detail/advanced</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/detail/base</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/detail/deploy</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/detail/secondary</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/dynamic</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/dynamic/dynamic_pc</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/dynamic/dynamic_phone</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wallpaper.gpg123.vip/dynamic/dynamic_wide</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/form</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/form/base</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/form/step</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/frame</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/frame/TDesign</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/frame/doc</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/info</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wallpaper.gpg123.vip/jiaocheng</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/list</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/list/base</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/list/card</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/list/filter</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/list/tree</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/login</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wallpaper.gpg123.vip/models</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wallpaper.gpg123.vip/models/list</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/notice</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/notice/dashboard</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/notice/list</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/pc</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/pc/2d</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/pc/3d</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wallpaper.gpg123.vip/pc/linux</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wallpaper.gpg123.vip/pc/macos</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/pc/other</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wallpaper.gpg123.vip/pc/vertical_screen</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/pc/widescreen</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wallpaper.gpg123.vip/pc/windows</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/phone</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/phone/iphone</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/resources</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wallpaper.gpg123.vip/resources/list</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/403</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/404</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/500</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/browser-incompatible</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/fail</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/maintenance</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/network-error</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/result/success</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/share</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/stableDiffusion</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/stableDiffusion/inspector</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/stableDiffusion/minePrompt</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/stableDiffusion/overview</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/stableDiffusion/use</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/user</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://wallpaper.gpg123.vip/user/index</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
