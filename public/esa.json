@@ -1,4 +1,12 @@
 {
+  "name": "cloud-wallpaper",
+  "entry": "./src/main.jsx",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "assets": {
+    "directory": "./dist",
+    "notFoundStrategy": "singlePageApplication"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
